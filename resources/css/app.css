@@ -1,0 +1,107 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Google Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-navy: #0b1f4d;
+    --color-navy-light: #1a3a7a;
+    --color-navy-dark: #060f26;
+    --color-orange: #f5a623;
+    --color-orange-light: #f7bc5a;
+    --color-orange-dark: #d4881a;
+}
+
+html {
+    scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
+}
+
+/* ── Hero CSS animations (no JS flash) ───────────────────── */
+@keyframes heroIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroBadgeIn {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.hero-anim-badge { animation: heroBadgeIn 0.6s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.1s; }
+.hero-anim-title { animation: heroIn 0.8s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.25s; }
+.hero-anim-sub   { animation: heroIn 0.7s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.45s; }
+.hero-anim-ctas  { animation: heroIn 0.6s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.6s; }
+.hero-anim-b1    { animation: heroIn 0.5s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.72s; }
+.hero-anim-b2    { animation: heroIn 0.5s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.82s; }
+.hero-anim-b3    { animation: heroIn 0.5s cubic-bezier(0.22,1,0.36,1) both; animation-delay: 0.92s; }
+
+/* ── Scroll reveal (IntersectionObserver, zero flash) ─────── */
+.sr {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.65s cubic-bezier(0.22,1,0.36,1),
+                transform 0.65s cubic-bezier(0.22,1,0.36,1);
+}
+.sr.sr-left  { transform: translateX(-28px); }
+.sr.sr-right { transform: translateX(28px); }
+.sr.visible  { opacity: 1; transform: none; }
+
+/* Tabs horizontal scroll – hide scrollbar */
+.tabs-scroll { scrollbar-width: none; }
+.tabs-scroll::-webkit-scrollbar { display: none; }
+
+/* ── React Bits: Aurora ───────────────────────────────────── */
+@keyframes aurora-1 {
+    0%, 100% { transform: translate(0%, 0%) scale(1); }
+    33%       { transform: translate(8%, -12%) scale(1.15); }
+    66%       { transform: translate(-6%, 8%) scale(0.9); }
+}
+@keyframes aurora-2 {
+    0%, 100% { transform: translate(0%, 0%) scale(1); }
+    40%       { transform: translate(-10%, 10%) scale(1.2); }
+    70%       { transform: translate(5%, -8%) scale(0.95); }
+}
+@keyframes aurora-3 {
+    0%, 100% { transform: translate(0%, 0%) scale(1); }
+    50%       { transform: translate(12%, 5%) scale(1.1); }
+}
+
+.aurora-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    mix-blend-mode: screen;
+}
+
+.aurora-blob-1 {
+    width: 70%; height: 70%;
+    top: -15%; left: 5%;
+    background: radial-gradient(ellipse at center, #1e40af 0%, #1d4ed8 40%, transparent 70%);
+    animation: aurora-1 14s ease-in-out infinite;
+    opacity: 0.18;
+}
+
+.aurora-blob-2 {
+    width: 55%; height: 55%;
+    top: 15%; right: -5%;
+    background: radial-gradient(ellipse at center, #f5a623 0%, #d4881a 40%, transparent 70%);
+    animation: aurora-2 10s ease-in-out infinite;
+    opacity: 0.10;
+}
+
+.aurora-blob-3 {
+    width: 50%; height: 50%;
+    bottom: -5%; left: 25%;
+    background: radial-gradient(ellipse at center, #4c1d95 0%, #6d28d9 40%, transparent 70%);
+    animation: aurora-3 18s ease-in-out infinite;
+    opacity: 0.14;
+}
