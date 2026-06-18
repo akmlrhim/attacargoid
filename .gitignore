@@ -30,5 +30,6 @@ Thumbs.db
 .docs/
 .ai/
 .agents/
-.CLAUDE.md 
-.AGENTS.md 
+
+CLAUDE.md 
+AGENTS.md 
