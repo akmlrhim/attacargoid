@@ -10,8 +10,8 @@
     "sail": false,
     "skills": [
         "laravel-best-practices",
-        "livewire-development",
         "pest-testing",
+        "inertia-react-development",
         "tailwindcss-development",
         "laravel-inertia-react",
         "laravel-specialist"

@@ -1,18 +1,20 @@
+import { Link, usePage } from "@inertiajs/react";
 import DotField from "../ReactBits/DotField";
 
 const navLinks = [
-  { href: "#tentang", label: "Tentang Kami" },
-  { href: "#layanan", label: "Layanan" },
-  { href: "#proses", label: "Proses" },
-  { href: "#jangkauan", label: "Jangkauan" },
-  { href: "#kontak", label: "Kontak" },
+  { href: "/tentang-kami", label: "Tentang Kami", type: "page" },
+  { href: "#layanan",      label: "Layanan",       type: "anchor" },
+  { href: "#proses",       label: "Proses",         type: "anchor" },
+  { href: "#jangkauan",    label: "Jangkauan",      type: "anchor" },
+  { href: "#kontak",       label: "Kontak",         type: "anchor" },
 ];
 
 const serviceLinks = [
-  { href: "#layanan", label: "Pengiriman Reguler" },
-  { href: "#layanan", label: "Kargo Express" },
-  { href: "#layanan", label: "Last Mile Delivery" },
-  { href: "#layanan", label: "Penerusan Barang" },
+  { href: "#layanan", label: "Mitra Penerusan Barang" },
+  { href: "#layanan", label: "Distribusi Retail & Modern Trade" },
+  { href: "#layanan", label: "Pengiriman B2B" },
+  { href: "#layanan", label: "Pengiriman Proyek & Industri" },
+  { href: "#layanan", label: "Pengiriman Khusus" },
 ];
 
 const socialLinks = [
@@ -46,11 +48,16 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-  const handleClick = (e, href) => {
+  const { url } = usePage();
+  const isHome = url === "/" || url.startsWith("/?");
+
+  const handleAnchorClick = (e, href) => {
     e.preventDefault();
-    document
-      .getElementById(href.slice(1))
-      ?.scrollIntoView({ behavior: "smooth" });
+    if (isHome) {
+      document.getElementById(href.slice(1))?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      window.location.href = `/${href}`;
+    }
   };
 
   return (
@@ -205,13 +212,22 @@ export default function Footer() {
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => handleClick(e, link.href)}
-                    className="text-white/70 hover:text-orange text-xs sm:text-sm transition-colors"
-                  >
-                    {link.label}
-                  </a>
+                  {link.type === "page" ? (
+                    <Link
+                      href={link.href}
+                      className="text-white/70 hover:text-orange text-xs sm:text-sm transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      href={isHome ? link.href : `/${link.href}`}
+                      onClick={(e) => handleAnchorClick(e, link.href)}
+                      className="text-white/70 hover:text-orange text-xs sm:text-sm transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

@@ -6,6 +6,7 @@
 @theme {
     --font-sans: 'Google Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-serif: 'Playfair Display', ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 
     --color-navy: #0b1f4d;
     --color-navy-light: #1a3a7a;
@@ -58,6 +59,39 @@ html {
 /* Tabs horizontal scroll – hide scrollbar */
 .tabs-scroll { scrollbar-width: none; }
 .tabs-scroll::-webkit-scrollbar { display: none; }
+
+/* ── Broadsheet newspaper utilities ──────────────────────── */
+
+/* Drop cap: float the first letter large, serif, tight to text */
+.drop-cap::first-letter {
+    font-family: 'Playfair Display', ui-serif, Georgia, serif;
+    font-size: 5.25rem;
+    font-weight: 900;
+    line-height: 0.78;
+    float: left;
+    margin-right: 0.12em;
+    margin-top: 0.08em;
+    color: #000;
+}
+
+/* Newspaper column text — 2-col on md+, readable measure */
+.newspaper-columns {
+    column-count: 1;
+    column-gap: 2.5rem;
+}
+@media (min-width: 768px) {
+    .newspaper-columns {
+        column-count: 2;
+    }
+}
+
+/* Pull-quote rule lines above and below */
+.pull-quote-rule {
+    border-top: 3px solid #000;
+    border-bottom: 1px solid #000;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
 
 /* ── React Bits: Aurora ───────────────────────────────────── */
 @keyframes aurora-1 {

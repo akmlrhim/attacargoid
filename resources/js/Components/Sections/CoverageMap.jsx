@@ -11,6 +11,7 @@ const regions = {
             'Banjarmasin', 'Banjarbaru', 'Martapura', 'Pelaihari',
             'Batulicin', 'Kotabaru', 'Kandangan', 'Barabai',
             'Amuntai', 'Tanjung', 'Paringin', 'Rantau', 'Marabahan',
+            'Dan wilayah sekitarnya',
         ],
     },
     kalteng: {
@@ -19,6 +20,7 @@ const regions = {
         cities: [
             'Palangka Raya', 'Sampit', 'Pangkalan Bun', 'Kuala Kapuas',
             'Pulang Pisau', 'Kasongan', 'Muara Teweh', 'Buntok', 'Puruk Cahu',
+            'Dan wilayah sekitarnya',
         ],
     },
 };
@@ -59,7 +61,7 @@ export default function CoverageMap() {
                                 onClick={() => setActiveRegion(key)}
                                 className={`flex-1 sm:flex-none px-5 sm:px-6 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${
                                     activeRegion === key
-                                        ? 'bg-navy text-white shadow-lg'
+                                        ? 'bg-navy text-white'
                                         : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                                 }`}
                             >
@@ -91,13 +93,21 @@ export default function CoverageMap() {
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
                         {region.cities.map((city) => {
                             const isHub = city === 'Banjarmasin';
+                            const isEtc = city === 'Dan wilayah sekitarnya';
+                            if (isEtc) {
+                                return (
+                                    <div key={city} className="flex items-center gap-2 px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-xl border border-dashed border-gray-200 col-span-2 sm:col-span-1">
+                                        <span className="text-xs sm:text-sm text-gray-400 italic">{city}</span>
+                                    </div>
+                                );
+                            }
                             return (
                                 <div
                                     key={city}
                                     className={`flex items-center gap-2 px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-xl border transition-all duration-150 ${
                                         isHub
-                                            ? 'bg-orange text-white border-orange shadow-md shadow-orange/20'
-                                            : 'bg-white border-gray-100 hover:border-navy/20 hover:shadow-sm'
+                                            ? 'bg-orange text-white border-orange'
+                                            : 'bg-white border-gray-100 hover:border-navy/20'
                                     }`}
                                 >
                                     <svg
