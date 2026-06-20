@@ -1,181 +1,164 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useState, useRef, useEffect, useCallback } from "react";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import SectionHeading from "../Shared/SectionHeading";
-import DotField from "../ReactBits/DotField";
+import { STEP_ICONS, STEP_DETAILS, STEP_GRADIENTS, STEP_ILLUSTRATIONS } from "../../constants/processTimeline";
 
-const stepIcons = [
-  <svg
-    key={0}
-    className="w-6 h-6"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={1.8}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-    />
-  </svg>,
-  <svg
-    key={1}
-    className="w-6 h-6"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={1.8}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"
-    />
-  </svg>,
-  <svg
-    key={2}
-    className="w-6 h-6"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={1.8}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M8 7h.01M4 10h16M3 10l2-5h14l2 5M3 10v9a2 2 0 002 2h14a2 2 0 002-2v-9"
-    />
-  </svg>,
-  <svg
-    key={3}
-    className="w-6 h-6"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-    strokeWidth={1.8}
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-    />
-  </svg>,
-];
+const AUTOPLAY_MS = 4500;
 
 export default function ProcessTimeline({ processSteps = [] }) {
-  const sectionRef = useScrollReveal();
-  const lineRef = useRef(null);
-  const stepsRef = useRef(null);
+  const [active, setActive] = useState(0);
+  const [progressKey, setProgressKey] = useState(0);
+  const ref = useScrollReveal();
+  const timerRef = useRef(null);
+  const pausedRef = useRef(false);
+  const current = processSteps[active] ?? {};
+  const details = STEP_DETAILS[active] ?? [];
+
+  const advance = useCallback(() => {
+    if (!pausedRef.current) {
+      setActive((prev) => (prev + 1) % processSteps.length);
+      setProgressKey((k) => k + 1);
+    }
+  }, [processSteps.length]);
+
+  const resetTimer = useCallback(() => {
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(advance, AUTOPLAY_MS);
+    setProgressKey((k) => k + 1);
+  }, [advance]);
 
   useEffect(() => {
-    if (!lineRef.current || !stepsRef.current) return;
+    resetTimer();
+    return () => clearInterval(timerRef.current);
+  }, [resetTimer]);
 
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        lineRef.current,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: "none",
-          transformOrigin: "top center",
-          scrollTrigger: {
-            trigger: stepsRef.current,
-            start: "top 65%",
-            end: "bottom 75%",
-            scrub: 1.2,
-          },
-        },
-      );
-    });
-
-    return () => ctx.revert();
-  }, []);
+  const handleTabClick = (i) => {
+    setActive(i);
+    resetTimer();
+  };
 
   if (!processSteps.length) return null;
 
   return (
     <section
       id="proses"
-      ref={sectionRef}
-      className="bg-navy py-16 sm:py-24 relative overflow-hidden"
+      ref={ref}
+      className="bg-white py-16 sm:py-24"
+      onMouseEnter={() => { pausedRef.current = true; }}
+      onMouseLeave={() => { pausedRef.current = false; }}
     >
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-      <div className="absolute inset-0 pointer-events-none">
-        <DotField
-          dotRadius={1.5}
-          dotSpacing={20}
-          bulgeStrength={60}
-          glowRadius={140}
-          gradientFrom="rgba(255,255,255,0.20)"
-          gradientTo="rgba(245,166,35,0.15)"
-          glowColor="rgba(245,166,35,0.18)"
-        />
-      </div>
-
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        {/* Heading */}
         <div className="sr">
           <SectionHeading
             tag="Proses Layanan"
             title="Bagaimana Kami Bekerja"
-            subtitle={`${processSteps.length} tahap operasional terstruktur untuk memastikan setiap kiriman ditangani dengan baik.`}
-            light
+            subtitle={`${processSteps.length} tahap operasional terstruktur untuk memastikan setiap kiriman ditangani dengan standar terbaik.`}
           />
         </div>
 
-        <div ref={stepsRef} className="max-w-2xl mx-auto relative">
-          <div className="absolute left-8 top-8 bottom-8 w-px bg-white/10 hidden md:block">
-            <div
-              ref={lineRef}
-              className="absolute inset-0 bg-orange origin-top"
-            />
+        {/* Tab bar */}
+        <div className="sr mb-8 sm:mb-10">
+          {/* Mobile: scroll */}
+          <div className="flex sm:hidden overflow-x-auto gap-2 pb-1 scrollbar-none">
+            {processSteps.map((step, i) => (
+              <button
+                key={step.id}
+                onClick={() => handleTabClick(i)}
+                className={[
+                  "shrink-0 flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 border whitespace-nowrap",
+                  active === i
+                    ? "bg-navy text-white border-navy"
+                    : "bg-white text-navy/50 border-gray-200 hover:text-navy",
+                ].join(" ")}
+              >
+                <span className={active === i ? "text-white/80" : "text-navy/30"}>
+                  {STEP_ICONS[i]}
+                </span>
+                {step.title}
+              </button>
+            ))}
           </div>
 
-          <div className="space-y-2">
+          {/* Desktop: segmented control */}
+          <div className="hidden sm:flex border border-gray-200 rounded-2xl overflow-hidden divide-x divide-gray-200 bg-white">
             {processSteps.map((step, i) => (
-              <div
+              <button
                 key={step.id}
-                className="sr flex gap-4 sm:gap-8 py-3.5 sm:py-4"
-                style={{ transitionDelay: `${i * 0.1}s` }}
+                onClick={() => handleTabClick(i)}
+                className={[
+                  "relative flex-1 flex flex-col sm:flex-row items-center gap-2 px-4 py-4 text-sm font-semibold transition-all duration-200 text-left overflow-hidden",
+                  active === i
+                    ? "bg-navy/5 text-navy"
+                    : "bg-white text-gray-400 hover:text-gray-600 hover:bg-gray-50",
+                ].join(" ")}
               >
-                {/* Icon column */}
-                <div className="flex flex-col items-center shrink-0 w-11 sm:w-16">
-                  <div className="w-11 h-11 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-orange flex items-center justify-center text-white relative z-10">
-                    <span className="[&>svg]:w-5 [&>svg]:h-5 sm:[&>svg]:w-6 sm:[&>svg]:h-6">
-                      {stepIcons[i % stepIcons.length]}
-                    </span>
-                  </div>
-                  {i < processSteps.length - 1 && (
-                    <div className="w-px flex-1 bg-white/10 mt-2 md:hidden min-h-[1.5rem]" />
-                  )}
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 pb-1 pt-1">
-                  <div className="flex items-baseline gap-2 mb-1.5">
-                    <span className="text-orange/50 font-black text-[10px] sm:text-xs tracking-widest">
-                      {step.step_number}
-                    </span>
-                    <h3 className="text-white font-black text-base sm:text-lg leading-snug">
-                      {step.title}
-                    </h3>
-                  </div>
-                  <p className="text-white/55 text-xs sm:text-sm leading-relaxed">
-                    {step.description}
-                  </p>
-                </div>
-              </div>
+                {active === i && (
+                  <span
+                    key={progressKey}
+                    className="absolute bottom-0 left-0 h-0.5 bg-navy"
+                    style={{ animation: `tabProgress ${AUTOPLAY_MS}ms linear forwards` }}
+                  />
+                )}
+                <span
+                  className={[
+                    "p-2 rounded-lg transition-colors shrink-0",
+                    active === i ? "bg-navy text-white" : "bg-gray-100 text-gray-400",
+                  ].join(" ")}
+                >
+                  {STEP_ICONS[i]}
+                </span>
+                <span className="leading-snug text-center sm:text-left">{step.title}</span>
+              </button>
             ))}
           </div>
         </div>
+
+        {/* Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* Left: text */}
+          <div key={`text-${active}`} style={{ animation: "ptFadeUp .35s ease both" }}>
+            <h3 className="text-2xl sm:text-3xl lg:text-[2rem] font-black text-navy leading-tight mb-4">
+              {current.title}
+            </h3>
+            <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-7">
+              {current.description}
+            </p>
+            <ul className="space-y-3">
+              {details.map((d, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <span className="mt-0.5 w-5 h-5 rounded-full bg-navy/8 flex items-center justify-center shrink-0">
+                    <svg viewBox="0 0 12 12" fill="none" className="w-3 h-3">
+                      <path d="M2.5 6l2.5 2.5L9.5 3" stroke="#0b1f4d" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                  <span className="text-sm text-gray-700 font-medium leading-snug">{d}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Right: illustration */}
+          <div
+            key={`illus-${active}`}
+            className="rounded-3xl overflow-hidden"
+            style={{ background: STEP_GRADIENTS[active], animation: "ptFadeUp .45s ease both" }}
+          >
+            {STEP_ILLUSTRATIONS[active]}
+          </div>
+        </div>
       </div>
+
+      <style>{`
+        @keyframes ptFadeUp {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes tabProgress {
+          from { width: 0%; }
+          to   { width: 100%; }
+        }
+      `}</style>
     </section>
   );
 }

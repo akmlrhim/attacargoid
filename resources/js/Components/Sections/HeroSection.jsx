@@ -30,6 +30,7 @@ export default function HeroSection() {
           aria-hidden="true"
           loading="eager"
           decoding="async"
+          fetchPriority="high"
           className="w-full h-full object-cover object-center"
         />
         {/* Multi-layer overlay: dark base + left-side vignette for text readability */}

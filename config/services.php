@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'google_places' => [
+        'key' => env('SERP_API_KEY'),
+        'place_id' => env('GOOGLE_DATA_ID', '0x2de423f11a3ef387:0x46a58758dffcbd56'),
+    ],
+
 ];

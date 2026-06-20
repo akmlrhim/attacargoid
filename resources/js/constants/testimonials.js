@@ -1,0 +1,88 @@
+export const AVATAR_COLORS = ["#4285f4", "#ea4335", "#34a853", "#fbbc04", "#a142f4", "#24c1e0"];
+
+export const FALLBACK_REVIEWS = [
+  {
+    name: "Andi Firmansyah",
+    avatar: null,
+    rating: 5,
+    text: "Pengiriman sangat tepat waktu dan barang sampai dalam kondisi aman. Tim ATTA Cargo sangat responsif dan profesional. Highly recommended!",
+    date: "2 minggu lalu",
+  },
+  {
+    name: "Siti Rahayu",
+    avatar: null,
+    rating: 5,
+    text: "Sudah 6 bulan bermitra untuk distribusi retail ke seluruh Kalsel. Pengiriman selalu tepat jadwal dan koordinasi tim sangat mudah.",
+    date: "1 bulan lalu",
+  },
+  {
+    name: "Budi Santoso",
+    avatar: null,
+    rating: 5,
+    text: "Layanan penerusan barang ke Kalimantan Tengah berjalan sangat lancar. Proses pickup cepat, tracking aktif, konfirmasi penerimaan langsung dikirim.",
+    date: "3 minggu lalu",
+  },
+  {
+    name: "Dewi Lestari",
+    avatar: null,
+    rating: 5,
+    text: "ATTA Cargo sudah jadi andalan distribusi FMCG kami ke Modern Trade. Penanganan barang hati-hati, laporan lengkap, harga sangat bersaing.",
+    date: "1 bulan lalu",
+  },
+  {
+    name: "Hendra Wijaya",
+    avatar: null,
+    rating: 5,
+    text: "Pengiriman material proyek dari Banjarmasin ke Palangkaraya selesai tepat waktu. Tim lapangan sangat membantu dalam proses bongkar muat.",
+    date: "2 bulan lalu",
+  },
+  {
+    name: "Rizky Pratama",
+    avatar: null,
+    rating: 5,
+    text: "Sudah 2 tahun pakai ATTA Cargo untuk distribusi produk ke warung-warung di Kalsel. Tidak pernah ada masalah berarti, tim selalu standby.",
+    date: "3 minggu lalu",
+  },
+  {
+    name: "Nurul Hidayah",
+    avatar: null,
+    rating: 5,
+    text: "Amanah dan profesional. Barang elektronik saya dikirim dengan packaging tambahan tanpa diminta, sampai sempurna. Terima kasih ATTA Cargo!",
+    date: "1 bulan lalu",
+  },
+  {
+    name: "Faisal Rahman",
+    avatar: null,
+    rating: 4,
+    text: "Layanan distribusi ke daerah terpencil di Kalteng yang tidak semua ekspedisi mau terima. ATTA Cargo selalu bisa. Harga kompetitif juga.",
+    date: "5 minggu lalu",
+  },
+  {
+    name: "Yuni Astuti",
+    avatar: null,
+    rating: 5,
+    text: "Baru pertama coba tapi langsung puas. Respon WhatsApp cepat, jadwal pickup sesuai, barang tiba 1 hari lebih cepat dari estimasi. Lanjut terus!",
+    date: "2 minggu lalu",
+  },
+  {
+    name: "Agus Setiawan",
+    avatar: null,
+    rating: 5,
+    text: "Distribusi spare part kendaraan ke bengkel-bengkel di Banjarmasin dan sekitarnya lancar sekali. Tidak ada yang hilang, kondisi selalu mulus.",
+    date: "6 minggu lalu",
+  },
+  {
+    name: "Maya Sari",
+    avatar: null,
+    rating: 5,
+    text: "Pengiriman produk frozen food kami selalu on time dan suhu terjaga. ATTA Cargo benar-benar paham kebutuhan distribusi barang khusus.",
+    date: "1 bulan lalu",
+  },
+  {
+    name: "Deni Kurniawan",
+    avatar: null,
+    rating: 4,
+    text: "Mitra distribusi yang reliable untuk bisnis kami. Pelaporan pengiriman rapi, bisa diaudit kapan saja. Tim juga komunikatif dan ramah.",
+    date: "3 minggu lalu",
+  },
+];

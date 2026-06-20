@@ -1,17 +1,51 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import useScrollReveal from '../../hooks/useScrollReveal';
 import SectionHeading from '../Shared/SectionHeading';
 import DotField from '../ReactBits/DotField';
 
+const AUTOPLAY_MS = 4500;
+
 export default function ServicesSection({ services = [] }) {
     const [active, setActive] = useState(0);
+    const [progressKey, setProgressKey] = useState(0);
     const ref = useScrollReveal();
+    const timerRef = useRef(null);
+    const pausedRef = useRef(false);
     const current = services[active];
+
+    const advance = useCallback(() => {
+        if (!pausedRef.current) {
+            setActive((prev) => (prev + 1) % services.length);
+            setProgressKey((k) => k + 1);
+        }
+    }, [services.length]);
+
+    const resetTimer = useCallback(() => {
+        clearInterval(timerRef.current);
+        timerRef.current = setInterval(advance, AUTOPLAY_MS);
+        setProgressKey((k) => k + 1);
+    }, [advance]);
+
+    useEffect(() => {
+        resetTimer();
+        return () => clearInterval(timerRef.current);
+    }, [resetTimer]);
+
+    const handleTabClick = (i) => {
+        setActive(i);
+        resetTimer();
+    };
 
     if (!services.length) return null;
 
     return (
-        <section id="layanan" ref={ref} className="bg-gray-50 py-16 sm:py-24 relative overflow-hidden">
+        <section
+            id="layanan"
+            ref={ref}
+            className="bg-gray-50 py-16 sm:py-24 relative overflow-hidden"
+            onMouseEnter={() => { pausedRef.current = true; }}
+            onMouseLeave={() => { pausedRef.current = false; }}
+        >
             <div className="absolute inset-0 pointer-events-none">
                 <DotField
                     dotRadius={1.5}
@@ -38,7 +72,7 @@ export default function ServicesSection({ services = [] }) {
                         {services.map((s, i) => (
                             <button
                                 key={s.id}
-                                onClick={() => setActive(i)}
+                                onClick={() => handleTabClick(i)}
                                 className={`shrink-0 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 whitespace-nowrap ${
                                     active === i
                                         ? 'bg-navy text-white'
@@ -55,13 +89,20 @@ export default function ServicesSection({ services = [] }) {
                         {services.map((s, i) => (
                             <button
                                 key={s.id}
-                                onClick={() => setActive(i)}
-                                className={`text-left px-4 py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 leading-snug ${
+                                onClick={() => handleTabClick(i)}
+                                className={`relative text-left px-4 py-3.5 rounded-xl font-semibold text-sm transition-all duration-200 leading-snug overflow-hidden ${
                                     active === i
                                         ? 'bg-navy text-white'
                                         : 'bg-white text-navy/55 hover:text-navy hover:bg-white/80 border border-gray-100'
                                 }`}
                             >
+                                {active === i && (
+                                    <span
+                                        key={progressKey}
+                                        className="absolute bottom-0 left-0 h-0.5 bg-white/40"
+                                        style={{ animation: `svcProgress ${AUTOPLAY_MS}ms linear forwards` }}
+                                    />
+                                )}
                                 {s.title}
                             </button>
                         ))}
@@ -101,6 +142,12 @@ export default function ServicesSection({ services = [] }) {
                     </div>
                 </div>
             </div>
+            <style>{`
+                @keyframes svcProgress {
+                    from { width: 0%; }
+                    to   { width: 100%; }
+                }
+            `}</style>
         </section>
     );
 }

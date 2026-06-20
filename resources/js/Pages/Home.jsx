@@ -8,11 +8,14 @@ import ServicesSection from "../Components/Sections/ServicesSection";
 import ProcessTimeline from "../Components/Sections/ProcessTimeline";
 import CoverageMap from "../Components/Sections/CoverageMap";
 import ContactSection from "../Components/Sections/ContactSection";
+import TestimonialsSection from "../Components/Sections/TestimonialsSection";
 
 export default function Home({
   services = [],
   advantages = [],
   processSteps = [],
+  reviews = [],
+  googleRating = null,
 }) {
   return (
     <>
@@ -43,6 +46,7 @@ export default function Home({
         <ServicesSection services={services} />
         <ProcessTimeline processSteps={processSteps} />
         <CoverageMap />
+        <TestimonialsSection reviews={reviews} googleRating={googleRating} />
         <ContactSection />
       </AppLayout>
     </>

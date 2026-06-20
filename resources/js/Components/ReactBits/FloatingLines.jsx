@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import {
-  Clock,
+  Timer,
   Mesh,
   OrthographicCamera,
   PlaneGeometry,
@@ -367,7 +367,7 @@ export default function FloatingLines({
     const mesh = new Mesh(geometry, material);
     scene.add(mesh);
 
-    const clock = new Clock();
+    const timer = new Timer();
 
     const setSize = () => {
       if (!active) return;
@@ -392,6 +392,14 @@ export default function FloatingLines({
         : null;
 
     if (ro) ro.observe(container);
+
+    // Pause WebGL render when hero is off-screen
+    const visibleRef = { current: true };
+    const io = new IntersectionObserver(
+      ([entry]) => { visibleRef.current = entry.isIntersecting; },
+      { threshold: 0 }
+    );
+    io.observe(container);
 
     const handlePointerMove = event => {
       const rect = renderer.domElement.getBoundingClientRect();
@@ -423,8 +431,12 @@ export default function FloatingLines({
     let raf = 0;
     const renderLoop = () => {
       if (!active) return;
+      raf = requestAnimationFrame(renderLoop);
 
-      uniforms.iTime.value = clock.getElapsedTime();
+      if (!visibleRef.current) return;
+
+      timer.update();
+      uniforms.iTime.value = timer.getElapsed();
 
       if (interactive && !isMobile) {
         currentMouseRef.current.lerp(targetMouseRef.current, mouseDamping);
@@ -440,7 +452,6 @@ export default function FloatingLines({
       }
 
       renderer.render(scene, camera);
-      raf = requestAnimationFrame(renderLoop);
     };
     renderLoop();
 
@@ -450,6 +461,8 @@ export default function FloatingLines({
       cancelAnimationFrame(raf);
 
       if (ro) ro.disconnect();
+      io.disconnect();
+      timer.dispose();
 
       if (interactive && !isMobile) {
         renderer.domElement.removeEventListener('pointermove', handlePointerMove);
