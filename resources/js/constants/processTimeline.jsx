@@ -83,7 +83,7 @@ export function IllustrationStep1() {
         <div className="px-5 py-4">
           <div className="flex items-center gap-2 bg-blue-50 rounded-xl px-3 py-2.5">
             <span className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-            <span className="text-xs font-semibold text-navy">Dokumen Diverifikasi — Siap Proses</span>
+            <span className="text-xs font-semibold text-navy">Dokumen Diverifikasi: Siap Proses</span>
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@ export function IllustrationStep2() {
           ))}
           <div className="pt-1 flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-violet-500 animate-pulse" />
-            <span className="text-[11px] text-gray-500">Sortir berjalan — estimasi selesai 45 mnt</span>
+            <span className="text-[11px] text-gray-500">Sortir berjalan, estimasi selesai 45 mnt</span>
           </div>
         </div>
       </div>
@@ -132,7 +132,7 @@ export function IllustrationStep2() {
 export function IllustrationStep3() {
   const stops = [
     { label: "Hub Banjarmasin", sub: "Titik keberangkatan", done: true, active: false },
-    { label: "Banjarbaru", sub: "Transit — 30 mnt", done: true, active: false },
+    { label: "Banjarbaru", sub: "Transit 30 mnt", done: true, active: false },
     { label: "Palangkaraya", sub: "Dalam perjalanan", done: false, active: true },
     { label: "Tujuan Akhir", sub: "Estimasi 3 jam lagi", done: false, active: false },
   ];
@@ -252,7 +252,7 @@ export function IllustrationStep4() {
             <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.3" />
             <path d="M4.5 7l2 2 3-3" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <p className="text-xs font-semibold text-emerald-700">Pengiriman Selesai — Tanda Terima Terkirim</p>
+          <p className="text-xs font-semibold text-emerald-700">Pengiriman Selesai. Tanda Terima Terkirim</p>
         </div>
       </div>
     </div>

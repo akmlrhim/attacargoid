@@ -20,6 +20,10 @@ html {
     scroll-behavior: auto;
 }
 
+button {
+    cursor: pointer;
+}
+
 .lenis.lenis-smooth {
     scroll-behavior: auto !important;
 }

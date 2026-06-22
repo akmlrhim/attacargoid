@@ -15,10 +15,6 @@ export default function AdvantagesSection({ advantages = [] }) {
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-16 sm:pt-24 pb-16 sm:pb-20">
         {/* ── Heading ── */}
         <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
-          <span className="inline-block text-orange font-semibold text-sm tracking-widest uppercase mb-3">
-            Keunggulan Kami
-          </span>
-
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black leading-tight text-navy">
             Mengapa Memilih <span className="text-orange">ATTA Cargo</span>
             <span className="inline-flex justify-center items-baseline w-full gap-1.5 sm:gap-2 mt-1 flex-wrap">
@@ -41,7 +37,7 @@ export default function AdvantagesSection({ advantages = [] }) {
             </span>
           </h2>
 
-          <p className="mt-4 text-sm sm:text-lg text-gray-500 max-w-2xl mx-auto">
+          <p className="mt-4 text-base sm:text-md text-black max-w-2xl mx-auto">
             Komitmen kami adalah memberikan layanan logistik terbaik dengan
             standar operasional yang terukur.
           </p>
@@ -73,10 +69,7 @@ export default function AdvantagesSection({ advantages = [] }) {
                 <h3 className="font-bold text-white text-sm sm:text-base leading-snug mb-1">
                   {item.title}
                 </h3>
-                <p
-                  className="text-[11px] sm:text-xs leading-relaxed"
-                  style={{ color: "rgba(255,255,255,0.68)" }}
-                >
+                <p className="text-[11px] sm:text-xs leading-relaxed text-white">
                   {item.description}
                 </p>
               </div>

@@ -1,5 +1,13 @@
 import { useRef, useEffect, useState } from "react";
-import { AVATAR_COLORS, FALLBACK_REVIEWS } from "../../constants/testimonials";
+
+const AVATAR_COLORS = [
+  "#4285f4",
+  "#ea4335",
+  "#34a853",
+  "#fbbc04",
+  "#a142f4",
+  "#24c1e0",
+];
 import ScrollVelocity from "../ReactBits/ScrollVelocity";
 
 function initials(name = "") {
@@ -103,7 +111,7 @@ function ReviewCard({ r }) {
         <GoogleLogo size={4} />
       </div>
       <Stars rating={r.rating} />
-      <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
+      <p className="text-sm text-black leading-relaxed line-clamp-3">
         {r.text}
       </p>
     </div>
@@ -124,8 +132,7 @@ export default function TestimonialsSection({
   reviews = [],
   googleRating = null,
 }) {
-  const filtered = reviews.filter((r) => r.rating >= 4);
-  const displayReviews = filtered.length > 0 ? filtered : FALLBACK_REVIEWS;
+  const displayReviews = reviews.filter((r) => r.rating >= 4);
 
   const rating = googleRating?.rating ?? 5.0;
   const total = googleRating?.total ?? null;
@@ -157,11 +164,8 @@ export default function TestimonialsSection({
       className="bg-gray-50 py-16 sm:py-24 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 mb-10 sm:mb-14">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
-          <div>
-            <p className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-orange mb-3">
-              Ulasan Pelanggan
-            </p>
+        <div className="flex flex-col items-center sm:flex-row sm:items-end justify-between gap-5 sm:gap-6">
+          <div className="text-center sm:text-left">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-navy leading-tight">
               Apa Kata Mitra Kami
             </h2>
@@ -171,7 +175,7 @@ export default function TestimonialsSection({
             href="https://www.google.com/search?q=atta+cargo#lrd=0x2de423f11a3ef387:0x46a58758dffcbd56,1,,,,"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-5 py-3.5 hover:border-gray-300 transition-colors shrink-0 self-start sm:self-auto"
+            className="inline-flex items-center gap-3 bg-white border border-gray-200 rounded-2xl px-5 py-3.5 hover:border-gray-300 transition-colors shrink-0"
           >
             <GoogleLogo size={5} />
             <div>
@@ -181,7 +185,7 @@ export default function TestimonialsSection({
                   {Number(rating).toFixed(1)}
                 </span>
               </div>
-              <p className="text-[11px] text-gray-400 mt-0.5">
+              <p className="text-[11px] text-black mt-0.5">
                 {total ? `${total} ulasan di Google` : "Lihat di Google Maps"}
               </p>
             </div>

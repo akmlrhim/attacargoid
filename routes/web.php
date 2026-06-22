@@ -46,4 +46,12 @@ Route::get('/tentang-kami', function () {
     return Inertia::render('About');
 });
 
+Route::get('/kalkulator', function () {
+    return Inertia::render('Calculator');
+});
+
+Route::get('/kontak', function () {
+    return Inertia::render('Contact');
+});
+
 Route::post('/kontak', ContactController::class);

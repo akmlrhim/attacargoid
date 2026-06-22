@@ -7,7 +7,6 @@ import ScrollReveal from "../Components/ReactBits/ScrollReveal";
 import ServicesSection from "../Components/Sections/ServicesSection";
 import ProcessTimeline from "../Components/Sections/ProcessTimeline";
 import CoverageMap from "../Components/Sections/CoverageMap";
-import ContactSection from "../Components/Sections/ContactSection";
 import TestimonialsSection from "../Components/Sections/TestimonialsSection";
 
 export default function Home({
@@ -33,7 +32,7 @@ export default function Home({
               wordAnimationEnd="bottom center"
             >
               Distribusi barang ke pelosok Kalimantan sering jadi mimpi
-              buruk—telat, rusak, atau hilang kontak sama kurir. ATTA Cargo
+              buruk: telat, rusak, atau hilang kontak sama kurir. ATTA Cargo
               hadir sebagai mitra penerusan barang terpercaya dengan hub utama
               di Banjarmasin, menjangkau seluruh Kalimantan Selatan & Tengah.
               Saatnya bisnis Anda tumbuh kuat bersama distribusi yang cepat,
@@ -47,7 +46,6 @@ export default function Home({
         <ProcessTimeline processSteps={processSteps} />
         <CoverageMap />
         <TestimonialsSection reviews={reviews} googleRating={googleRating} />
-        <ContactSection />
       </AppLayout>
     </>
   );

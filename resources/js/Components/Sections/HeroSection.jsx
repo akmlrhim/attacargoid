@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import WhatsAppButton from "../Shared/WhatsAppButton";
 import BlurText from "../ReactBits/BlurText";
 import FloatingLines from "../ReactBits/FloatingLines";
 
@@ -81,37 +80,25 @@ export default function HeroSection() {
           </h1>
 
           {/* Tagline */}
-          <p className="hero-anim-sub text-white/60 text-[0.9rem] sm:text-lg lg:text-xl max-w-2xl mb-7 sm:mb-10 leading-relaxed">
-            Bisnis Tumbuh Bersama — Mitra penerusan barang &amp; last mile
+          <p className="hero-anim-sub text-white text-[0.9rem] sm:text-lg lg:text-xl max-w-2xl mb-7 sm:mb-10 leading-relaxed">
+            Bisnis Tumbuh Bersama. Mitra penerusan barang &amp; last mile
             distribution dengan hub strategis di Banjarmasin.
           </p>
 
           {/* CTAs */}
           <div className="hero-anim-ctas flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 sm:mb-14">
-            <WhatsAppButton
-              label="Konsultasi Gratis"
-              size="lg"
-              className="w-full sm:w-auto justify-center"
-            />
+            <a
+              href="/kontak"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-semibold px-8 py-4 text-base rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+            >
+              Konsultasi Sekarang
+            </a>
             <a
               href="#layanan"
               onClick={scrollToLayanan}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border-2 border-white/25 hover:border-white/60 text-white font-semibold px-6 py-3.5 sm:px-8 sm:py-4 text-sm sm:text-base rounded-xl transition-all duration-200 hover:bg-white/[0.06] backdrop-blur-sm"
             >
               Lihat Layanan
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2.5}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
             </a>
           </div>
         </div>

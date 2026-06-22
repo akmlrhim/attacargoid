@@ -1,13 +1,12 @@
-const WA_NUMBER = "62811510808";
-const WA_MESSAGE =
-  "Halo ATTA CARGO, saya ingin konsultasi mengenai kebutuhan distribusi barang saya.";
+import { buildWhatsAppUrl } from "../../constants/company";
 
 export default function WhatsAppButton({
-  label = "Konsultasi Gratis",
+  label = "Konsultasi Sekarang",
   size = "md",
+  message,
   className = "",
 }) {
-  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MESSAGE)}`;
+  const url = buildWhatsAppUrl(message);
 
   const sizes = {
     sm: "px-4 py-2 text-xs",
