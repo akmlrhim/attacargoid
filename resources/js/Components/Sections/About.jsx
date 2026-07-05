@@ -1,8 +1,7 @@
 import { Link } from "@inertiajs/react";
 import useScrollReveal from "../../hooks/useScrollReveal";
 
-const ABOUT_IMAGE =
-  "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1600&q=80";
+const ABOUT_IMAGE = "/images/tentang-operasional.webp";
 
 export default function AboutSection() {
   const ref = useScrollReveal();

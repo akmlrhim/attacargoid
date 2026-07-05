@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
 
 export default function Navbar() {
@@ -11,6 +11,22 @@ export default function Navbar() {
   const isServices = url.startsWith("/layanan");
   const isKalkulator = url.startsWith("/kalkulator");
   const isKontak = url.startsWith("/kontak");
+
+  const activeKey = isHome
+    ? "home"
+    : isAbout
+      ? "about"
+      : isServices
+        ? "services"
+        : isKalkulator
+          ? "kalkulator"
+          : isKontak
+            ? "kontak"
+            : null;
+
+  const navRef = useRef(null);
+  const linkRefs = useRef({});
+  const [underline, setUnderline] = useState({ left: 0, width: 0 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -30,13 +46,27 @@ export default function Navbar() {
     };
   }, [mobileOpen]);
 
+  useEffect(() => {
+    const updateUnderline = () => {
+      const el = linkRefs.current[activeKey];
+      if (el) {
+        setUnderline({ left: el.offsetLeft, width: el.offsetWidth });
+      } else {
+        setUnderline((prev) => ({ ...prev, width: 0 }));
+      }
+    };
+    updateUnderline();
+    window.addEventListener("resize", updateUnderline);
+    return () => window.removeEventListener("resize", updateUnderline);
+  }, [activeKey]);
+
   const transparent = !scrolled && !mobileOpen;
 
   const linkCls = transparent
     ? "text-white hover:text-white hover:bg-white/10"
     : "text-black hover:text-navy hover:bg-gray-50";
 
-  const activeCls = transparent ? "text-white/90" : "text-navy font-bold";
+  const activeCls = transparent ? "text-white" : "text-navy";
 
   return (
     <>
@@ -71,8 +101,13 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-0.5" aria-label="Navigasi utama">
+            <nav
+              ref={navRef}
+              className="hidden lg:flex items-center gap-0.5 relative"
+              aria-label="Navigasi utama"
+            >
               <Link
+                ref={(el) => (linkRefs.current.home = el)}
                 href="/"
                 onClick={(e) => {
                   if (url === "/" || url.startsWith("/?")) {
@@ -86,6 +121,7 @@ export default function Navbar() {
               </Link>
 
               <Link
+                ref={(el) => (linkRefs.current.about = el)}
                 href="/tentang-kami"
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isAbout ? activeCls : linkCls}`}
               >
@@ -93,6 +129,7 @@ export default function Navbar() {
               </Link>
 
               <Link
+                ref={(el) => (linkRefs.current.services = el)}
                 href="/layanan"
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isServices ? activeCls : linkCls}`}
               >
@@ -100,6 +137,7 @@ export default function Navbar() {
               </Link>
 
               <Link
+                ref={(el) => (linkRefs.current.kalkulator = el)}
                 href="/kalkulator"
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isKalkulator ? activeCls : linkCls}`}
               >
@@ -107,11 +145,24 @@ export default function Navbar() {
               </Link>
 
               <Link
+                ref={(el) => (linkRefs.current.kontak = el)}
                 href="/kontak"
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isKontak ? activeCls : linkCls}`}
               >
                 Kontak
               </Link>
+
+              {/* Sliding active-page underline */}
+              <span
+                className={`pointer-events-none absolute bottom-0 h-0.5 rounded-full transition-all duration-300 ease-out ${
+                  transparent ? "bg-white" : "bg-navy"
+                }`}
+                style={{
+                  left: underline.left,
+                  width: underline.width,
+                  opacity: underline.width ? 1 : 0,
+                }}
+              />
             </nav>
 
             {/* Desktop CTA */}
@@ -144,11 +195,25 @@ export default function Navbar() {
               aria-label={mobileOpen ? "Tutup menu" : "Buka menu"}
               aria-expanded={mobileOpen}
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
                 {mobileOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 )}
               </svg>
             </button>
@@ -166,11 +231,16 @@ export default function Navbar() {
         aria-hidden={!mobileOpen}
       >
         <div className="h-full overflow-y-auto">
-          <nav className="px-5 pt-4 pb-4 space-y-1" aria-label="Navigasi mobile">
+          <nav
+            className="px-5 pt-4 pb-4 space-y-1"
+            aria-label="Navigasi mobile"
+          >
             <Link
               href="/"
               className={`block px-4 py-3.5 text-base font-medium rounded-xl transition-colors ${
-                isHome ? "bg-navy/5 text-navy font-bold" : "text-black hover:text-navy hover:bg-gray-50"
+                isHome
+                  ? "bg-navy/5 text-navy font-bold"
+                  : "text-black hover:text-navy hover:bg-gray-50"
               }`}
             >
               Beranda
@@ -179,7 +249,9 @@ export default function Navbar() {
             <Link
               href="/tentang-kami"
               className={`block px-4 py-3.5 text-base font-medium rounded-xl transition-colors ${
-                isAbout ? "bg-navy/5 text-navy font-bold" : "text-black hover:text-navy hover:bg-gray-50"
+                isAbout
+                  ? "bg-navy/5 text-navy font-bold"
+                  : "text-black hover:text-navy hover:bg-gray-50"
               }`}
             >
               Tentang Kami
@@ -188,7 +260,9 @@ export default function Navbar() {
             <Link
               href="/layanan"
               className={`block px-4 py-3.5 text-base font-medium rounded-xl transition-colors ${
-                isServices ? "bg-navy/5 text-navy font-bold" : "text-black hover:text-navy hover:bg-gray-50"
+                isServices
+                  ? "bg-navy/5 text-navy font-bold"
+                  : "text-black hover:text-navy hover:bg-gray-50"
               }`}
             >
               Layanan
@@ -197,7 +271,9 @@ export default function Navbar() {
             <Link
               href="/kalkulator"
               className={`block px-4 py-3.5 text-base font-medium rounded-xl transition-colors ${
-                isKalkulator ? "bg-navy/5 text-navy font-bold" : "text-black hover:text-navy hover:bg-gray-50"
+                isKalkulator
+                  ? "bg-navy/5 text-navy font-bold"
+                  : "text-black hover:text-navy hover:bg-gray-50"
               }`}
             >
               Kalkulator
@@ -206,7 +282,9 @@ export default function Navbar() {
             <Link
               href="/kontak"
               className={`block px-4 py-3.5 text-base font-medium rounded-xl transition-colors ${
-                isKontak ? "bg-navy/5 text-navy font-bold" : "text-black hover:text-navy hover:bg-gray-50"
+                isKontak
+                  ? "bg-navy/5 text-navy font-bold"
+                  : "text-black hover:text-navy hover:bg-gray-50"
               }`}
             >
               Kontak
@@ -220,7 +298,13 @@ export default function Navbar() {
             >
               Hubungi Kami
               <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">
-                <path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Link>
           </div>

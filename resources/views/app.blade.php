@@ -66,12 +66,14 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap">
   </noscript>
 
-  {{-- Preload hero image (self-hosted WebP): browser picks the right size per viewport --}}
-  <link rel="preload" as="image" fetchpriority="high" href="/images/hero/hero-1200.webp"
-    imagesrcset="/images/hero/hero-800.webp 800w,
+  {{-- Preload hero image (self-hosted WebP): only on the Home page, where it's actually rendered --}}
+  @if (($page['component'] ?? null) === 'Home')
+    <link rel="preload" as="image" fetchpriority="high" href="/images/hero/hero-1200.webp"
+      imagesrcset="/images/hero/hero-800.webp 800w,
                            /images/hero/hero-1200.webp 1200w,
                            /images/hero/hero-1920.webp 1920w"
-    imagesizes="100vw">
+      imagesizes="100vw">
+  @endif
 
   {{-- Organization / LocalBusiness structured data --}}
   <script type="application/ld+json">

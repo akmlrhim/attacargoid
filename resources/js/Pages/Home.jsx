@@ -40,59 +40,59 @@ export default function Home({
   return (
     <>
       <Head title="Mitra Logistik Terpercaya di Kalimantan" />
-      <AppLayout>
-        <HeroSection />
 
-        <section className="bg-white py-20 sm:py-28">
-          <div className="max-w-4xl mx-auto px-6 lg:px-8">
-            <Suspense fallback={<Skeleton count={4} height={22} />}>
-              <ScrollReveal
-                baseOpacity={0}
-                enableBlur
-                baseRotation={4}
-                blurStrength={10}
-                textClassName="text-navy"
-                wordAnimationEnd="bottom center"
-              >
-                ATTA Cargo hadir sebagai mitra penerusan barang dan last mile
-                distribution terpercaya, dengan hub utama di Banjarmasin
-                menjangkau seluruh Kalimantan Selatan & Tengah. Kami
-                berkomitmen menghadirkan distribusi yang cepat, aman, dan
-                terpantau — solusi logistik terpercaya agar bisnis Anda tumbuh
-                kuat bersama.
-              </ScrollReveal>
-            </Suspense>
-          </div>
-        </section>
+      <HeroSection />
 
-        <Suspense fallback={<BannerSkeleton align="left" />}>
-          <AboutSection />
-        </Suspense>
+      <section className="bg-white py-20 sm:py-28">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <Suspense fallback={<Skeleton count={4} height={22} />}>
+            <ScrollReveal
+              baseOpacity={0}
+              enableBlur
+              baseRotation={4}
+              blurStrength={10}
+              textClassName="text-navy"
+              wordAnimationEnd="bottom center"
+            >
+              ATTA Cargo hadir sebagai mitra penerusan barang dan last mile
+              distribution terpercaya, dengan hub utama di Banjarmasin
+              menjangkau seluruh Kalimantan Selatan & Tengah. Kami berkomitmen
+              menghadirkan distribusi yang cepat, aman, dan terpantau — solusi
+              logistik terpercaya agar bisnis Anda tumbuh kuat bersama.
+            </ScrollReveal>
+          </Suspense>
+        </div>
+      </section>
 
-        <Suspense fallback={<AdvantagesSkeleton />}>
-          <AdvantagesSection advantages={advantages} />
-        </Suspense>
+      <Suspense fallback={<BannerSkeleton align="left" />}>
+        <AboutSection />
+      </Suspense>
 
-        <Suspense fallback={<BannerSkeleton align="right" />}>
-          <ServicesSection />
-        </Suspense>
+      <Suspense fallback={<AdvantagesSkeleton />}>
+        <AdvantagesSection advantages={advantages} />
+      </Suspense>
 
-        <Suspense fallback={<ProcessTimelineSkeleton />}>
-          <ProcessTimeline />
-        </Suspense>
+      <Suspense fallback={<BannerSkeleton align="right" />}>
+        <ServicesSection />
+      </Suspense>
 
-        <Suspense fallback={<CoverageMapSkeleton />}>
-          <CoverageMap regions={coverageRegions} />
-        </Suspense>
+      <Suspense fallback={<ProcessTimelineSkeleton />}>
+        <ProcessTimeline />
+      </Suspense>
 
-        <Suspense fallback={<TestimonialsSkeleton />}>
-          <TestimonialsSection reviews={reviews} googleRating={googleRating} />
-        </Suspense>
+      <Suspense fallback={<CoverageMapSkeleton />}>
+        <CoverageMap regions={coverageRegions} />
+      </Suspense>
 
-        <Suspense fallback={<FaqSkeleton />}>
-          <FaqSection />
-        </Suspense>
-      </AppLayout>
+      <Suspense fallback={<TestimonialsSkeleton />}>
+        <TestimonialsSection reviews={reviews} googleRating={googleRating} />
+      </Suspense>
+
+      <Suspense fallback={<FaqSkeleton />}>
+        <FaqSection />
+      </Suspense>
     </>
   );
 }
+
+Home.layout = (page) => <AppLayout>{page}</AppLayout>;

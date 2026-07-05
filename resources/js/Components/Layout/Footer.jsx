@@ -118,7 +118,7 @@ export default function Footer() {
               className="h-10 w-auto brightness-0 invert"
             />
 
-            <p className="text-white/70 text-sm leading-relaxed max-w-sm">
+            <p className="text-white text-sm leading-relaxed max-w-sm">
               Mitra penerusan barang &amp; last mile distribution terpercaya,
               dengan hub di Banjarmasin menjangkau seluruh Kalimantan Selatan
               &amp; Tengah.
@@ -149,7 +149,7 @@ export default function Footer() {
             <div className="space-y-3">
               <a
                 href={`tel:+${company.whatsapp_number}`}
-                className="flex items-start gap-2.5 text-sm text-white/70 hover:text-orange transition-colors cursor-pointer"
+                className="flex items-start gap-2.5 text-sm text-white hover:text-orange transition-colors cursor-pointer"
               >
                 <svg
                   className="w-4 h-4 text-orange shrink-0 mt-0.5"
@@ -168,7 +168,7 @@ export default function Footer() {
               </a>
               <a
                 href={`mailto:${company.email}`}
-                className="flex items-start gap-2.5 text-sm text-white/70 hover:text-orange transition-colors cursor-pointer"
+                className="flex items-start gap-2.5 text-sm text-white hover:text-orange transition-colors cursor-pointer"
               >
                 <svg
                   className="w-4 h-4 text-orange shrink-0 mt-0.5"
@@ -185,7 +185,7 @@ export default function Footer() {
                 </svg>
                 {company.email}
               </a>
-              <div className="flex items-start gap-2.5 text-sm text-white/70">
+              <div className="flex items-start gap-2.5 text-sm text-white">
                 <svg
                   className="w-4 h-4 text-orange shrink-0 mt-0.5"
                   fill="none"
@@ -243,28 +243,6 @@ export default function Footer() {
             © {new Date().getFullYear()} PT. Tumbuh Kuat Sejahtera
           </p>
         </div>
-      </div>
-
-      <div
-        className="relative overflow-hidden"
-        style={{ height: "clamp(80px, 11vw, 160px)" }}
-        aria-hidden="true"
-      >
-        <div className="absolute inset-x-0 top-0 flex justify-center">
-          <span
-            className="text-white font-black leading-none whitespace-nowrap select-none"
-            style={{ fontSize: "clamp(72px, 11vw, 160px)", opacity: 0.06 }}
-          >
-            Atta Cargo
-          </span>
-        </div>
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "linear-gradient(to top, #060f26 15%, transparent 100%)",
-          }}
-        />
       </div>
     </footer>
   );

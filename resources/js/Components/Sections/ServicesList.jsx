@@ -8,14 +8,18 @@ function ServiceCard({ service, index }) {
       className={`flex flex-col lg:flex-row gap-0 rounded-3xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-md transition-shadow duration-300 ${isEven ? "" : "lg:flex-row-reverse"}`}
     >
       {/* Image */}
-      <div className="lg:w-[45%] shrink-0 aspect-[4/3] lg:aspect-auto overflow-hidden bg-gray-100">
+      <div className="lg:w-[45%] shrink-0 aspect-[4/3] lg:aspect-auto overflow-hidden bg-white">
         {service.image_url ? (
           <img
             src={service.image_url}
             alt={service.image_alt || service.title}
             loading="lazy"
             decoding="async"
-            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+            className={`w-full h-full object-cover transition-transform duration-500 hover:scale-105 ${
+              isEven
+                ? "lg:[mask-image:linear-gradient(to_right,black_60%,transparent_100%)] lg:[-webkit-mask-image:linear-gradient(to_right,black_60%,transparent_100%)]"
+                : "lg:[mask-image:linear-gradient(to_left,black_60%,transparent_100%)] lg:[-webkit-mask-image:linear-gradient(to_left,black_60%,transparent_100%)]"
+            }`}
           />
         ) : (
           <div className="w-full h-full bg-navy/5 flex items-center justify-center">

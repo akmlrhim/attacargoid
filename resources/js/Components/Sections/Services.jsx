@@ -20,7 +20,7 @@ export default function ServicesSection() {
       />
 
       {/* Gradient overlay — dark on right, transparent on left */}
-      <div className="absolute inset-0 bg-gradient-to-l from-navy-dark/90 via-navy-dark/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-l from-navy-dark/90 via-navy-dark/60" />
 
       {/* Content — right-aligned */}
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full flex justify-end">

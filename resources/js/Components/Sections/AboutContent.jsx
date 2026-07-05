@@ -53,7 +53,7 @@ export default function AboutContent() {
             <div className="sr sr-right">
               <div className="relative rounded-3xl overflow-hidden aspect-[4/3]">
                 <img
-                  src="https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=900&q=80"
+                  src="/images/tentang-gudang.webp"
                   alt="ATTA Cargo warehouse operations"
                   loading="lazy"
                   decoding="async"

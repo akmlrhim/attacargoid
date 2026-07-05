@@ -55,10 +55,7 @@ export function BannerSkeleton({ align = "left" }) {
             <Skeleton width="55%" height={46} className="mb-6" />
             <Skeleton count={3} height={16} className="mb-2" />
             <Skeleton width="80%" height={16} className="mb-10" />
-            <div className="flex gap-3">
-              <Skeleton width={150} height={46} borderRadius={9999} />
-              <Skeleton width={130} height={46} borderRadius={9999} />
-            </div>
+            <Skeleton width={180} height={46} borderRadius={9999} />
           </DarkTheme>
         </div>
       </div>
@@ -79,13 +76,13 @@ export function AdvantagesSkeleton() {
           </div>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
                 className="flex flex-col overflow-hidden rounded-3xl min-h-80 bg-gray-50"
               >
-                <div className="p-6 sm:p-7">
+                <div className="p-6 sm:p-7 pb-0">
                   <Skeleton width="80%" height={20} className="mb-4" />
                   <Skeleton count={3} height={11} className="mb-1.5" />
                 </div>
@@ -120,7 +117,7 @@ export function ProcessTimelineSkeleton() {
                 key={i}
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-12 items-center"
               >
-                <div className="pl-10 sm:pl-12">
+                <div>
                   <div className="flex gap-3 sm:gap-4">
                     <Skeleton width={28} height={30} />
                     <div className="flex-1">
@@ -129,7 +126,7 @@ export function ProcessTimelineSkeleton() {
                     </div>
                   </div>
                 </div>
-                <div className="pl-10 sm:pl-0">
+                <div>
                   <Skeleton
                     className="block! max-w-xs"
                     height={210}
@@ -174,14 +171,20 @@ export function CoverageMapSkeleton() {
 
             {/* Sidebar */}
             <div className="lg:col-span-2 flex flex-col">
-              <Skeleton height={72} borderRadius={16} className="mb-4" />
-              <Skeleton width="70%" height={12} className="mb-2" />
+              <div className="flex items-center gap-1.5 mb-2 px-1">
+                <Skeleton width={14} height={14} circle />
+                <Skeleton width="70%" height={11} />
+              </div>
               <div className="grid grid-cols-2 gap-2">
                 {Array.from({ length: 12 }).map((_, i) => (
                   <Skeleton key={i} height={42} borderRadius={12} />
                 ))}
               </div>
             </div>
+          </div>
+
+          <div className="flex justify-center mt-8">
+            <Skeleton width={260} height={14} />
           </div>
         </LightTheme>
       </div>
@@ -192,8 +195,8 @@ export function CoverageMapSkeleton() {
 /* ── Testimonials ────────────────────────────────────────────── */
 function ReviewCardSkeleton() {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-5 mx-2 w-[300px] shrink-0">
-      <div className="flex items-start justify-between mb-3">
+    <div className="bg-white rounded-2xl border border-gray-100 p-5 flex flex-col gap-3">
+      <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2.5">
           <Skeleton width={36} height={36} circle />
           <div>
@@ -203,7 +206,7 @@ function ReviewCardSkeleton() {
         </div>
         <Skeleton width={16} height={16} circle />
       </div>
-      <Skeleton width={80} height={12} className="mb-3" />
+      <Skeleton width={80} height={12} />
       <Skeleton count={3} height={12} className="mb-1" />
     </div>
   );
@@ -220,13 +223,17 @@ export function TestimonialsSkeleton() {
           </div>
         </LightTheme>
       </div>
-      <LightTheme>
-        <div className="flex px-5">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <ReviewCardSkeleton key={i} />
-          ))}
-        </div>
-      </LightTheme>
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <LightTheme>
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-5">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="break-inside-avoid mb-4 sm:mb-5">
+                <ReviewCardSkeleton />
+              </div>
+            ))}
+          </div>
+        </LightTheme>
+      </div>
     </section>
   );
 }
@@ -243,8 +250,21 @@ export function FaqSkeleton() {
           </div>
           <div className="space-y-3">
             {Array.from({ length: 6 }).map((_, i) => (
-              <Skeleton key={i} height={58} borderRadius={16} />
+              <div key={i} className="border-b border-gray-200">
+                <div className="flex items-center justify-between gap-2 py-1">
+                  <Skeleton width={i === 0 ? "55%" : "70%"} height={16} />
+                  <Skeleton width={28} height={28} circle />
+                </div>
+                {i === 0 && (
+                  <div className="pb-5">
+                    <Skeleton count={2} height={13} className="mb-1" />
+                  </div>
+                )}
+              </div>
             ))}
+          </div>
+          <div className="mt-10 flex justify-center">
+            <Skeleton width={200} height={14} />
           </div>
         </LightTheme>
       </div>
@@ -283,20 +303,14 @@ export function PriceCalculatorSkeleton() {
             </LightTheme>
           </div>
 
-          {/* Result */}
+          {/* Result — default empty state (no estimate yet) */}
           <div className="bg-navy p-7 sm:p-10 flex flex-col">
             <DarkTheme>
-              <Skeleton width="60%" height={14} className="mb-3" />
-              <Skeleton width="80%" height={34} className="mb-7" />
-              <div className="space-y-3 border-t border-white/10 pt-6">
-                {Array.from({ length: 3 }).map((_, i) => (
-                  <div key={i} className="flex justify-between">
-                    <Skeleton width={90} height={14} />
-                    <Skeleton width={110} height={14} />
-                  </div>
-                ))}
+              <Skeleton width="60%" height={14} />
+              <div className="flex-1 flex flex-col items-center justify-center text-center py-12">
+                <Skeleton circle width={48} height={48} className="mb-4" />
+                <Skeleton width={180} height={14} />
               </div>
-              <Skeleton height={52} borderRadius={12} className="mt-8" />
             </DarkTheme>
           </div>
         </div>
@@ -319,7 +333,7 @@ export function ContactSkeleton() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
             {/* Info */}
             <div className="space-y-4">
-              {Array.from({ length: 4 }).map((_, i) => (
+              {Array.from({ length: 3 }).map((_, i) => (
                 <div key={i} className="flex items-start gap-3">
                   <Skeleton width={36} height={36} borderRadius={12} />
                   <div className="flex-1">
@@ -328,7 +342,22 @@ export function ContactSkeleton() {
                   </div>
                 </div>
               ))}
-              <Skeleton height={140} borderRadius={16} />
+
+              {/* Jam Operasional */}
+              <div className="rounded-2xl border border-gray-100 p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Skeleton width={16} height={16} circle />
+                  <Skeleton width={110} height={14} />
+                </div>
+                <div className="space-y-2">
+                  {Array.from({ length: 3 }).map((_, i) => (
+                    <div key={i} className="flex justify-between">
+                      <Skeleton width={80} height={12} />
+                      <Skeleton width={110} height={12} />
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
 
             {/* Form */}
@@ -374,25 +403,6 @@ export function AboutContentSkeleton() {
         </div>
       </section>
 
-      {/* Visi & Misi: two cards */}
-      <section className="bg-gray-50 py-20 sm:py-28">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <Skeleton width={220} height={30} className="mx-auto mb-8" />
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-            {Array.from({ length: 2 }).map((_, i) => (
-              <div
-                key={i}
-                className="rounded-3xl p-8 sm:p-10 bg-white border border-gray-100"
-              >
-                <Skeleton width={80} height={14} className="mb-5" />
-                <Skeleton width="85%" height={24} className="mb-4" />
-                <Skeleton count={4} height={14} className="mb-2" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Nilai-nilai: 6-card grid */}
       <section className="bg-white py-20 sm:py-28">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -407,6 +417,22 @@ export function AboutContentSkeleton() {
                 <Skeleton count={3} height={13} />
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
+        <div className="rounded-3xl py-16 sm:py-24 px-6 bg-gray-50">
+          <div className="max-w-2xl mx-auto text-center">
+            <Skeleton width="75%" height={34} className="mx-auto mb-2" />
+            <Skeleton width="55%" height={34} className="mx-auto mb-5" />
+            <Skeleton width="80%" height={16} className="mx-auto mb-2" />
+            <Skeleton width="55%" height={16} className="mx-auto mb-10" />
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Skeleton width={160} height={52} borderRadius={9999} />
+              <Skeleton width={230} height={52} borderRadius={9999} />
+            </div>
           </div>
         </div>
       </section>
@@ -430,12 +456,18 @@ export function ServicesListSkeleton() {
               <div className="lg:w-[45%] aspect-[4/3] lg:aspect-auto lg:min-h-[320px]">
                 <Skeleton height="100%" borderRadius={0} style={{ display: "block", height: "100%" }} />
               </div>
-              <div className="flex-1 p-6 sm:p-10">
-                <Skeleton width={110} height={12} className="mb-3" />
-                <Skeleton width="65%" height={28} className="mb-4" />
+              <div className="flex-1 p-6 sm:p-8 lg:p-10">
+                <Skeleton width="65%" height={28} className="mb-3" />
                 <Skeleton count={3} height={14} className="mb-2" />
-                <Skeleton width="50%" height={14} className="mb-6" />
-                <Skeleton width={200} height={46} borderRadius={12} />
+                <Skeleton width="50%" height={14} className="mb-5" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  {Array.from({ length: 4 }).map((_, j) => (
+                    <div key={j} className="flex items-center gap-2.5">
+                      <Skeleton width={16} height={16} circle />
+                      <Skeleton width="70%" height={13} />
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}

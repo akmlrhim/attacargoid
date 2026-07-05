@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-05T00:00:00.000Z",
+  "title": "Design System: ATTA Cargo",
+  "extensions": {
+    "colorMeta": {
+      "navy": {
+        "role": "primary",
+        "displayName": "Otoritas Navy",
+        "canonical": "oklch(24% 0.09 262)",
+        "tonalRamp": [
+          "oklch(12% 0.05 262)",
+          "oklch(18% 0.07 262)",
+          "oklch(24% 0.09 262)",
+          "oklch(32% 0.10 262)",
+          "oklch(45% 0.11 262)",
+          "oklch(60% 0.09 262)",
+          "oklch(78% 0.06 262)",
+          "oklch(93% 0.02 262)"
+        ]
+      },
+      "orange": {
+        "role": "secondary",
+        "displayName": "Aksi Orange",
+        "canonical": "oklch(78% 0.15 70)",
+        "tonalRamp": [
+          "oklch(25% 0.06 70)",
+          "oklch(38% 0.09 70)",
+          "oklch(52% 0.12 70)",
+          "oklch(65% 0.14 70)",
+          "oklch(78% 0.15 70)",
+          "oklch(85% 0.13 70)",
+          "oklch(91% 0.09 70)",
+          "oklch(96% 0.04 70)"
+        ]
+      },
+      "surface-muted": {
+        "role": "neutral",
+        "displayName": "Latar Alternating",
+        "canonical": "oklch(98% 0.002 262)",
+        "tonalRamp": [
+          "oklch(20% 0.005 262)",
+          "oklch(35% 0.005 262)",
+          "oklch(50% 0.005 262)",
+          "oklch(65% 0.005 262)",
+          "oklch(80% 0.004 262)",
+          "oklch(90% 0.003 262)",
+          "oklch(96% 0.002 262)",
+          "oklch(99% 0.001 262)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Hero Display", "purpose": "H1 hero saja, satu kali per halaman." },
+      "headline": { "displayName": "Section Headline", "purpose": "H2 tiap section (SectionHeading)." },
+      "body": { "displayName": "Body", "purpose": "Paragraf deskriptif, subtitle, maks ~65ch." }
+    },
+    "shadows": [
+      { "name": "hover-lift", "value": "0 20px 40px -8px rgba(100,116,139,0.4)", "purpose": "Respons hover pada kartu interaktif (Advantages), dipasangkan translateY(-8px)." },
+      { "name": "ambient-small", "value": "0 1px 2px rgba(0,0,0,0.05)", "purpose": "Elemen mengambang ringan (chip, tombol scroll)." }
+    ],
+    "motion": [
+      { "name": "ease-out-quart", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "Easing standar untuk hero-in dan scroll-reveal (.sr)." },
+      { "name": "duration-reveal", "value": "0.65s", "purpose": "Durasi scroll-reveal per-section." },
+      { "name": "duration-state", "value": "0.2s", "purpose": "Transisi warna/scale pada tombol dan link." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "CTA utama (\"Konsultasi Sekarang\") — satu per section, orange, scale-in on press.",
+      "html": "<button class=\"ds-btn-primary\">Konsultasi Sekarang</button>",
+      "css": ".ds-btn-primary { background: #f5a623; color: #fff; padding: 16px 32px; border-radius: 12px; font-weight: 600; font-size: 15px; border: none; transition: background 0.2s, transform 0.2s; } .ds-btn-primary:hover { background: #d4881a; transform: scale(1.05); } .ds-btn-primary:active { transform: scale(0.95); } .ds-btn-primary:focus-visible { outline: 2px solid #d4881a; outline-offset: 2px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Submit form / aksi resmi, navy solid.",
+      "html": "<button class=\"ds-btn-secondary\">Kirim Pesan</button>",
+      "css": ".ds-btn-secondary { background: #0b1f4d; color: #fff; padding: 12px 24px; border-radius: 12px; font-weight: 600; font-size: 14px; border: none; width: 100%; transition: background 0.2s, transform 0.2s; } .ds-btn-secondary:hover { background: #1a3a7a; } .ds-btn-secondary:active { transform: scale(0.99); }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "CTA sekunder di atas latar navy-dark (hero) — outline putih transparan.",
+      "html": "<button class=\"ds-btn-ghost\">Lihat Layanan</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: #fff; padding: 14px 32px; border-radius: 12px; font-weight: 600; font-size: 15px; border: 2px solid rgba(255,255,255,0.25); transition: border-color 0.2s, background 0.2s; } .ds-btn-ghost:hover { border-color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.06); }"
+    },
+    {
+      "name": "Advantage Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Kartu keunggulan dengan gradient tint halus dan ilustrasi berbayang di bawah; flat saat diam, terangkat saat hover.",
+      "html": "<div class=\"ds-card-advantage\"><h3 class=\"ds-card-title\">Judul Keunggulan</h3><p class=\"ds-card-body\">Deskripsi singkat keunggulan layanan.</p></div>",
+      "css": ".ds-card-advantage { background: linear-gradient(165deg, #eff6ff 0%, #ffffff 55%); border-radius: 24px; padding: 24px; min-height: 280px; transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; } .ds-card-advantage:hover { transform: translateY(-8px); box-shadow: 0 20px 40px -8px rgba(100,116,139,0.4); } .ds-card-title { color: #0b1f4d; font-weight: 800; font-size: 20px; letter-spacing: -0.01em; } .ds-card-body { color: #000; font-size: 14px; line-height: 1.6; margin-top: 16px; }"
+    },
+    {
+      "name": "Review Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Kartu testimoni masonry — avatar, bintang, kutipan singkat.",
+      "html": "<div class=\"ds-card-review\"><div class=\"ds-review-head\"><div class=\"ds-review-avatar\">RM</div><div><p class=\"ds-review-name\">Nama Pelanggan</p><p class=\"ds-review-date\">2 minggu lalu</p></div></div><p class=\"ds-review-text\">\"Pengiriman selalu tepat waktu dan tim responsif.\"</p></div>",
+      "css": ".ds-card-review { background: #fff; border: 1px solid #f3f4f6; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 12px; } .ds-review-head { display: flex; align-items: center; gap: 10px; } .ds-review-avatar { width: 36px; height: 36px; border-radius: 9999px; background: #4285f4; color: #fff; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; } .ds-review-name { font-size: 14px; font-weight: 700; color: #111827; } .ds-review-date { font-size: 11px; color: #9ca3af; } .ds-review-text { font-size: 14px; color: #000; line-height: 1.6; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Field form kontak — border navy on focus, bukan glow orange.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"Nama Anda\" />",
+      "css": ".ds-input { width: 100%; padding: 10px 16px; border-radius: 12px; border: 1px solid #e5e7eb; background: #fff; font-size: 14px; color: #000; transition: border-color 0.2s, box-shadow 0.2s; } .ds-input::placeholder { color: #6b7280; } .ds-input:focus { outline: none; border-color: #0b1f4d; box-shadow: 0 0 0 3px rgba(11,31,77,0.1); }"
+    },
+    {
+      "name": "Primary Navigation",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Navbar fixed, transparan di atas hero lalu solid+blur setelah scroll; logo invert saat transparan.",
+      "html": "<nav class=\"ds-navbar\"><a class=\"ds-nav-link ds-nav-link--active\">Beranda</a><a class=\"ds-nav-link\">Layanan</a><a class=\"ds-nav-cta\">Konsultasi</a></nav>",
+      "css": ".ds-navbar { display: flex; align-items: center; gap: 4px; padding: 12px 16px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid #f3f4f6; } .ds-nav-link { padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 700; color: #000; transition: color 0.2s, background 0.2s; } .ds-nav-link:hover { color: #0b1f4d; background: #f9fafb; } .ds-nav-link--active { color: #0b1f4d; font-weight: 800; } .ds-nav-cta { background: #f5a623; color: #fff; padding: 10px 20px; border-radius: 9999px; font-weight: 600; font-size: 14px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Hub Kalimantan",
+    "overview": "ATTA Cargo adalah simpul, bukan sekadar rute: navy tegas sebagai otoritas berdiri diam di dasar setiap layar, orange sebagai satu-satunya warna yang bergerak — arah, aksi, ajakan menghubungi. Sistem ini melayani dua audiens dalam satu tarikan napas: pemilik UMKM yang membuka situs dari HP di sela kerja, dan distributor besar yang mengevaluasi kredibilitas dari desktop. Keduanya butuh hal yang sama — kejelasan cepat tentang siapa yang mereka ajak bicara, bukan dekorasi yang menunda jawaban. Sistem ini menolak dua arah sekaligus: kesan startup SaaS generik (gradient text, kartu ikon seragam, hero-metric template, eyebrow uppercase) dan kesan situs pemerintah/birokratis-kaku.",
+    "keyCharacteristics": [
+      "Navy sebagai warna otoritas; orange dipakai selektif untuk CTA dan kata kunci.",
+      "Flat-by-default: shadow hanya sebagai respons hover/focus.",
+      "Rounded generous (12-24px) tapi tetap institusional, bukan playful.",
+      "Motion terarah per-section, bukan animasi seragam ditempel ke semua elemen.",
+      "Copy berbahasa Indonesia, langsung, hangat."
+    ],
+    "rules": [
+      { "name": "The Selective Orange Rule", "body": "Orange tidak pernah menjadi warna latar section atau body text; hanya CTA, kata kunci heading, dan ikon aksen kecil (≤10% luas layar).", "section": "colors" },
+      { "name": "The No-Gray-Body Rule", "body": "Body text di atas latar terang memakai text-black, bukan abu-abu medium; placeholder tetap ≥4.5:1 kontras.", "section": "colors" },
+      { "name": "The Weight-Not-Family Rule", "body": "Hierarki dibangun lewat font-weight (400/700/900), bukan gradient text atau ganti typeface.", "section": "typography" },
+      { "name": "The Flat-At-Rest Rule", "body": "Kartu dan section dimulai flat (border saja); shadow adalah jawaban interaksi, bukan dekorasi bawaan.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do jaga orange sebagai warna langka — CTA, kata kunci heading, ikon aksen saja.",
+      "Do gunakan text-black untuk body text di atas latar terang.",
+      "Do biarkan kartu flat saat diam; shadow hanya sebagai respons hover/focus.",
+      "Do hormati prefers-reduced-motion di semua animasi.",
+      "Do buat copy dan detail visual spesifik ke konteks Banjarmasin/Kalimantan.",
+      "Do bangun hierarki lewat font-weight, bukan gradient text."
+    ],
+    "donts": [
+      "Don't pakai gradient text untuk emphasis.",
+      "Don't ulangi grid kartu identik sebagai jawaban default fitur/keunggulan.",
+      "Don't tambahkan eyebrow uppercase kecil di atas tiap heading section.",
+      "Don't pakai side-stripe border sebagai aksen kartu atau alert.",
+      "Don't buat hero-metric template (angka besar + gradient accent).",
+      "Don't tambahkan shadow permanen pada kartu di kondisi diam.",
+      "Don't pakai orange sebagai warna latar section penuh atau body text panjang."
+    ]
+  }
+}
