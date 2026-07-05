@@ -21,5 +21,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        $this->call([
+            TariffZoneSeeder::class,
+            TariffServiceSeeder::class,
+            CoverageAreaSeeder::class,
+            CompanySettingSeeder::class,
+        ]);
     }
 }

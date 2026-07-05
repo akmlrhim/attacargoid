@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
-import BlurText from "../ReactBits/BlurText";
-import FloatingLines from "../ReactBits/FloatingLines";
+import { lazy, Suspense, useEffect, useState } from "react";
 
-const HERO_IMAGE =
-  "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1920&q=80";
+// Lightweight canvas dot-field (no Three.js) — deferred until after first paint.
+const DotField = lazy(() => import("../ReactBits/DotField"));
 
 export default function HeroSection() {
-  const [isDesktop, setIsDesktop] = useState(false);
+  const [showFx, setShowFx] = useState(false);
 
   useEffect(() => {
-    setIsDesktop(
-      !window.matchMedia("(hover: none) and (pointer: coarse)").matches,
-    );
+    // Defer the canvas FX until after first paint so LCP is not blocked
+    const id = setTimeout(() => setShowFx(true), 300);
+    return () => clearTimeout(id);
   }, []);
 
   const scrollToLayanan = (e) => {
@@ -21,10 +19,12 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
-      {/* ── Background photo ── */}
+      {/* Background photo — self-hosted WebP, responsive srcSet, preloaded in <head> */}
       <div className="absolute inset-0">
         <img
-          src={HERO_IMAGE}
+          src="/images/hero/hero-1200.webp"
+          srcSet="/images/hero/hero-800.webp 800w, /images/hero/hero-1200.webp 1200w, /images/hero/hero-1920.webp 1920w"
+          sizes="100vw"
           alt=""
           aria-hidden="true"
           loading="eager"
@@ -32,61 +32,46 @@ export default function HeroSection() {
           fetchPriority="high"
           className="w-full h-full object-cover object-center"
         />
-        {/* Multi-layer overlay: dark base + left-side vignette for text readability */}
         <div className="absolute inset-0 bg-navy-dark/80" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/60 via-navy-dark/30 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/50 via-transparent to-navy-dark/20" />
       </div>
 
-      {/* FloatingLines — animated wave lines over dark background */}
-      <div className="absolute inset-0" style={{ opacity: 0.35 }}>
-        <FloatingLines
-          linesGradient={["#1e40af", "#3b82f6", "#93c5fd", "#f5a623"]}
-          enabledWaves={["middle", "bottom"]}
-          lineCount={[6, 4]}
-          lineDistance={[5, 4]}
-          animationSpeed={0.5}
-          bendRadius={4.0}
-          bendStrength={-0.4}
-          interactive={isDesktop}
-          parallax={isDesktop}
-          parallaxStrength={0.08}
-          mixBlendMode="screen"
-        />
-      </div>
+      {/* DotField (canvas) — deferred until after first paint */}
+      {showFx && (
+        <div className="absolute inset-0 pointer-events-none">
+          <Suspense fallback={null}>
+            <DotField
+              dotRadius={1.5}
+              dotSpacing={22}
+              bulgeStrength={70}
+              glowRadius={180}
+              gradientFrom="rgba(245,166,35,0.30)"
+              gradientTo="rgba(147,197,253,0.18)"
+              glowColor="rgba(245,166,35,0.10)"
+            />
+          </Suspense>
+        </div>
+      )}
 
-      {/* ── Content ── */}
+      {/* Content */}
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-20 sm:pb-24 w-full">
-        <div className="max-w-3xl">
-          {/* Headline */}
-          <h1 className="text-[2rem] sm:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-black text-white leading-[1.1] sm:leading-[1.02] tracking-tight mb-4 sm:mb-6">
-            <BlurText text="Solusi" animateOnMount delay={0.25} />{" "}
-            <BlurText
-              text="Logistik"
-              className="text-orange"
-              animateOnMount
-              delay={0.35}
-            />
+        <div className="max-w-3xl mx-auto text-center">
+          {/* H1 rendered immediately — no opacity:0, LCP records at first paint */}
+          <h1 className="hero-anim-title text-[2rem] sm:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-black text-white leading-[1.1] sm:leading-[1.02] tracking-tight mb-4 sm:mb-6">
+            Solusi <span className="text-orange">Logistik</span>
             <br />
-            <BlurText text="Terpercaya," animateOnMount delay={0.47} />
+            Terpercaya,
             <br />
-            <BlurText text="Distribusi" animateOnMount delay={0.58} />{" "}
-            <BlurText
-              text="Andal"
-              className="text-orange"
-              animateOnMount
-              delay={0.68}
-            />
+            Distribusi <span className="text-orange">Andal</span>
           </h1>
 
-          {/* Tagline */}
-          <p className="hero-anim-sub text-white text-[0.9rem] sm:text-lg lg:text-xl max-w-2xl mb-7 sm:mb-10 leading-relaxed">
+          <p className="hero-anim-sub text-white text-[0.9rem] sm:text-md lg:text-lg max-w-2xl mx-auto mb-7 sm:mb-10 leading-relaxed">
             Bisnis Tumbuh Bersama. Mitra penerusan barang &amp; last mile
             distribution dengan hub strategis di Banjarmasin.
           </p>
 
-          {/* CTAs */}
-          <div className="hero-anim-ctas flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 sm:mb-14">
+          <div className="hero-anim-ctas flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 sm:mb-14 justify-center">
             <a
               href="/kontak"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-semibold px-8 py-4 text-base rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"

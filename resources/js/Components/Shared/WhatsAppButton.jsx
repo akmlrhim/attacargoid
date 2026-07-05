@@ -1,4 +1,5 @@
 import { buildWhatsAppUrl } from "../../constants/company";
+import useCompany from "../../hooks/useCompany";
 
 export default function WhatsAppButton({
   label = "Konsultasi Sekarang",
@@ -6,7 +7,8 @@ export default function WhatsAppButton({
   message,
   className = "",
 }) {
-  const url = buildWhatsAppUrl(message);
+  const { whatsapp_number } = useCompany();
+  const url = buildWhatsAppUrl(whatsapp_number, message);
 
   const sizes = {
     sm: "px-4 py-2 text-xs",

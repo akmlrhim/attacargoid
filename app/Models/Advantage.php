@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSortOrder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Advantage extends Model
 {
+    use HasSortOrder;
+
     protected $fillable = ['title', 'slug', 'description', 'image_url', 'sort_order', 'is_active'];
 
     protected $casts = [
@@ -34,6 +37,7 @@ class Advantage extends Model
             $slug = "{$base}-{$i}";
             $i++;
         }
+
         return $slug;
     }
 

@@ -1,14 +1,37 @@
+import { lazy, Suspense } from "react";
+import { usePage } from "@inertiajs/react";
 import { Head } from "@inertiajs/react";
 import AppLayout from "../Components/Layout/AppLayout";
-import PriceCalculator from "../Components/Sections/PriceCalculator";
+import { PriceCalculatorSkeleton } from "../Components/Skeletons/SectionSkeletons";
+
+const PriceCalculator = lazy(
+  () => import("../Components/Sections/PriceCalculator"),
+);
 
 export default function Calculator() {
+  const { tariffZones, tariffServices } = usePage().props;
+
   return (
     <>
-      <Head title="Kalkulator Estimasi | ATTA Cargo" />
+      <Head title="Kalkulator Estimasi Tarif" />
       <AppLayout>
         {/* Hero */}
-        <section className="relative overflow-hidden bg-navy-dark pt-36 pb-24 sm:pt-48 sm:pb-32">
+        <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
+          {/* Background photo */}
+          <div className="absolute inset-0">
+            <img
+              src="https://images.unsplash.com/photo-1695222833131-54ee679ae8e5?auto=format&fit=crop&w=1920&q=80"
+              alt=""
+              aria-hidden="true"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-navy-dark/80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-navy-dark/20 to-transparent" />
+          </div>
+
           {/* Dot grid — left */}
           <svg
             className="pointer-events-none absolute left-0 top-0 h-full w-48 sm:w-72"
@@ -116,7 +139,9 @@ export default function Calculator() {
           </div>
         </section>
 
-        <PriceCalculator />
+        <Suspense fallback={<PriceCalculatorSkeleton />}>
+          <PriceCalculator zones={tariffZones} services={tariffServices} />
+        </Suspense>
       </AppLayout>
     </>
   );

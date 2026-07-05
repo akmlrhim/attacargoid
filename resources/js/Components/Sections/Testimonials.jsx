@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 
 const AVATAR_COLORS = [
   "#4285f4",
@@ -8,7 +8,6 @@ const AVATAR_COLORS = [
   "#a142f4",
   "#24c1e0",
 ];
-import ScrollVelocity from "../ReactBits/ScrollVelocity";
 
 function initials(name = "") {
   return name
@@ -73,15 +72,7 @@ function GoogleLogo({ size = 5 }) {
 function ReviewCard({ r }) {
   return (
     <div
-      className="bg-white rounded-2xl border border-gray-100 p-5 mx-2"
-      style={{
-        display: "inline-flex",
-        flexDirection: "column",
-        gap: "12px",
-        width: "300px",
-        whiteSpace: "normal",
-        verticalAlign: "top",
-      }}
+      className="bg-white rounded-2xl border border-gray-100 p-5 flex flex-col gap-3"
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2.5">
@@ -111,19 +102,34 @@ function ReviewCard({ r }) {
         <GoogleLogo size={4} />
       </div>
       <Stars rating={r.rating} />
-      <p className="text-sm text-black leading-relaxed line-clamp-3">
-        {r.text}
-      </p>
+      <p className="text-sm text-black leading-relaxed">{r.text}</p>
     </div>
   );
 }
 
-function CardRow({ reviews }) {
+function AvatarStack({ reviews }) {
   return (
-    <div style={{ display: "inline-flex" }}>
-      {reviews.map((r, idx) => (
-        <ReviewCard key={idx} r={r} />
-      ))}
+    <div className="flex -space-x-2">
+      {reviews.map((r, i) =>
+        r.avatar ? (
+          <img
+            key={i}
+            src={r.avatar}
+            alt={r.name}
+            className="w-7 h-7 rounded-full border-2 border-white object-cover"
+            referrerPolicy="no-referrer"
+            loading="lazy"
+          />
+        ) : (
+          <div
+            key={i}
+            className="w-7 h-7 rounded-full border-2 border-white flex items-center justify-center text-white text-[10px] font-black"
+            style={{ backgroundColor: avatarColor(r.name) }}
+          >
+            {initials(r.name)}
+          </div>
+        ),
+      )}
     </div>
   );
 }
@@ -132,42 +138,25 @@ export default function TestimonialsSection({
   reviews = [],
   googleRating = null,
 }) {
-  const displayReviews = reviews.filter((r) => r.rating >= 4);
+  const displayReviews = reviews.filter((r) => r.rating === 5);
 
   const rating = googleRating?.rating ?? 5.0;
   const total = googleRating?.total ?? null;
 
-  const evenReviews = displayReviews.filter((_, i) => i % 2 === 0);
-  const oddReviews = displayReviews.filter((_, i) => i % 2 === 1);
-
-  const row1 = <CardRow reviews={evenReviews} />;
-  const row2 = (
-    <CardRow reviews={oddReviews.length > 0 ? oddReviews : evenReviews} />
-  );
-
-  const sectionRef = useRef(null);
-  const [visible, setVisible] = useState(false);
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => setVisible(entry.isIntersecting),
-      { rootMargin: "200px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+  const [expanded, setExpanded] = useState(false);
+  // Only collapse when there's more than the 6 shown by default.
+  const collapsible = displayReviews.length > 6;
+  const isCollapsed = collapsible && !expanded;
+  const visibleReviews = isCollapsed ? displayReviews.slice(0, 6) : displayReviews;
+  const stackReviews = displayReviews.filter((r) => r.avatar).slice(0, 4);
 
   return (
-    <section
-      ref={sectionRef}
-      className="bg-gray-50 py-16 sm:py-24 overflow-hidden"
-    >
+    <section className="bg-gray-50 py-16 sm:py-24">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 mb-10 sm:mb-14">
         <div className="flex flex-col items-center sm:flex-row sm:items-end justify-between gap-5 sm:gap-6">
           <div className="text-center sm:text-left">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-navy leading-tight">
-              Apa Kata Mitra Kami
+              Apa Kata Mereka
             </h2>
           </div>
 
@@ -193,15 +182,66 @@ export default function TestimonialsSection({
         </div>
       </div>
 
-      {visible && (
-        <ScrollVelocity
-          texts={[row1, row2]}
-          velocity={50}
-          numCopies={6}
-          parallaxStyle={{ paddingBottom: "12px" }}
-          scrollerStyle={{ alignItems: "flex-start" }}
-        />
-      )}
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <div className="relative">
+          {/* Masonry via CSS columns so each card keeps its natural height. */}
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 sm:gap-5">
+            {visibleReviews.map((r, idx) => (
+              <div key={idx} className="break-inside-avoid mb-4 sm:mb-5">
+                <ReviewCard r={r} />
+              </div>
+            ))}
+          </div>
+
+          {isCollapsed && (
+            <>
+              {/* Gradient fade at the bottom edge of the 6 cards. */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-t from-gray-50 via-gray-50/85 to-transparent" />
+
+              <div className="absolute inset-x-0 bottom-0 flex justify-center pb-2">
+                <button
+                  type="button"
+                  onClick={() => setExpanded(true)}
+                  className="inline-flex items-center gap-3 bg-white border border-gray-200 shadow-sm rounded-full pl-3 pr-2 py-2 hover:border-gray-300 transition-colors"
+                >
+                  <AvatarStack reviews={stackReviews} />
+                  <span className="text-sm font-bold text-gray-800">
+                    {total ? `${total}+` : `${displayReviews.length}+`} ulasan
+                  </span>
+                  <span className="h-4 w-px bg-gray-200" />
+                  <span className="flex items-center gap-2 text-sm font-semibold text-gray-700">
+                    Lihat semua
+                    <span className="inline-flex shrink-0 items-center justify-center w-6 h-6 rounded-full bg-navy text-white">
+                      <svg
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        className="block w-3.5 h-3.5"
+                      >
+                        <path d="M10 4v12M4 10h12" />
+                      </svg>
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
+        {collapsible && expanded && (
+          <div className="mt-8 text-center">
+            <button
+              type="button"
+              onClick={() => setExpanded(false)}
+              className="inline-flex items-center gap-2 text-sm font-semibold text-navy hover:underline"
+            >
+              Tampilkan lebih sedikit
+            </button>
+          </div>
+        )}
+      </div>
     </section>
   );
 }

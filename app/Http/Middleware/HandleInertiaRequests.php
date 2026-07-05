@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\CompanySetting;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -38,6 +39,12 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'flash' => fn () => $request->session()->get('flash'),
+            'company' => fn () => CompanySetting::current()->only([
+                'phone',
+                'whatsapp_number',
+                'email',
+                'social_links',
+            ]),
         ];
     }
 }

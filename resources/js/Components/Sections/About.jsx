@@ -28,10 +28,6 @@ export default function AboutSection() {
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full">
         <div className="sr sr-left max-w-lg">
-          <span className="block text-white text-xs font-semibold uppercase tracking-widest mb-4">
-            Sekilas ATTA Cargo
-          </span>
-
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
             Tentang Kami
           </h2>
@@ -58,27 +54,7 @@ export default function AboutSection() {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M7 17L17 7M7 7h10v10"
-                />
-              </svg>
-            </Link>
-
-            <Link
-              href="/tentang-kami#visi"
-              className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full border border-white/50 text-white text-sm font-semibold hover:border-white hover:bg-white/10 transition-colors duration-200"
-            >
-              Visi &amp; Misi
-              <svg
-                className="w-4 h-4"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M7 17L17 7M7 7h10v10"
+                  d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
                 />
               </svg>
             </Link>

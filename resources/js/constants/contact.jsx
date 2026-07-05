@@ -1,7 +1,11 @@
-export const contactInfo = [
+/**
+ * @param {{ phone: string, email: string }} company
+ */
+export function getContactInfo({ phone, email }) {
+  return [
   {
     label: "WhatsApp / Telepon",
-    value: "0811 510 808",
+    value: phone,
     icon: (
       <svg
         className="w-4 h-4"
@@ -20,7 +24,7 @@ export const contactInfo = [
   },
   {
     label: "Email",
-    value: "cargo.atta@gmail.com",
+    value: email,
     icon: (
       <svg
         className="w-4 h-4"
@@ -62,4 +66,5 @@ export const contactInfo = [
       </svg>
     ),
   },
-];
+  ];
+}

@@ -1,14 +1,32 @@
+import { lazy, Suspense } from "react";
 import { Head } from "@inertiajs/react";
 import AppLayout from "../Components/Layout/AppLayout";
-import ContactSection from "../Components/Sections/ContactSection";
+import { ContactSkeleton } from "../Components/Skeletons/SectionSkeletons";
+
+const ContactSection = lazy(() => import("../Components/Sections/Contact"));
 
 export default function Kontak() {
   return (
     <>
-      <Head title="Kontak | ATTA Cargo" />
+      <Head title="Kontak" />
       <AppLayout>
         {/* Hero */}
-        <section className="relative overflow-hidden bg-navy-dark pt-36 pb-24 sm:pt-48 sm:pb-32">
+        <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
+          {/* Background photo */}
+          <div className="absolute inset-0">
+            <img
+              src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1920&q=80"
+              alt=""
+              aria-hidden="true"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-navy-dark/80" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-navy-dark/20 to-transparent" />
+          </div>
+
           {/* Dot grid — left */}
           <svg
             className="pointer-events-none absolute left-0 top-0 h-full w-48 sm:w-72"
@@ -130,7 +148,9 @@ export default function Kontak() {
           </div>
         </section>
 
-        <ContactSection />
+        <Suspense fallback={<ContactSkeleton />}>
+          <ContactSection />
+        </Suspense>
       </AppLayout>
     </>
   );

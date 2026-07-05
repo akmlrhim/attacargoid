@@ -1,10 +1,7 @@
 import { useMemo, useState } from "react";
 import useScrollReveal from "../../hooks/useScrollReveal";
-import {
-  TARIFF_ZONES,
-  TARIFF_SERVICES,
-  buildWhatsAppUrl,
-} from "../../constants/company";
+import { buildWhatsAppUrl } from "../../constants/company";
+import useCompany from "../../hooks/useCompany";
 
 const formatIDR = (value) =>
   new Intl.NumberFormat("id-ID", {
@@ -13,23 +10,24 @@ const formatIDR = (value) =>
     maximumFractionDigits: 0,
   }).format(Math.round(value / 1000) * 1000);
 
-export default function PriceCalculator() {
+export default function PriceCalculator({ zones = [], services = [] }) {
   const ref = useScrollReveal();
-  const [zoneId, setZoneId] = useState(TARIFF_ZONES[0].id);
-  const [serviceId, setServiceId] = useState(TARIFF_SERVICES[0].id);
+  const { whatsapp_number } = useCompany();
+  const [zoneId, setZoneId] = useState(() => zones[0]?.slug ?? "");
+  const [serviceId, setServiceId] = useState(() => services[0]?.slug ?? "");
   const [weight, setWeight] = useState("");
 
   const estimate = useMemo(() => {
-    const zone = TARIFF_ZONES.find((z) => z.id === zoneId);
-    const service = TARIFF_SERVICES.find((s) => s.id === serviceId);
+    const zone = zones.find((z) => z.slug === zoneId);
+    const service = services.find((s) => s.slug === serviceId);
     const weightNum = parseFloat(weight);
 
     if (!zone || !service || !weightNum || weightNum <= 0) {
       return null;
     }
 
-    const billableKg = Math.max(weightNum, zone.minKg);
-    const base = zone.ratePerKg * billableKg * service.multiplier;
+    const billableKg = Math.max(weightNum, zone.min_kg);
+    const base = zone.rate_per_kg * billableKg * service.multiplier;
 
     return {
       zone,
@@ -39,7 +37,7 @@ export default function PriceCalculator() {
       low: base,
       high: base * 1.15,
     };
-  }, [zoneId, serviceId, weight]);
+  }, [zoneId, serviceId, weight, zones, services]);
 
   const waMessage = estimate
     ? `Halo ATTA Cargo, saya ingin minta penawaran pengiriman.\n` +
@@ -76,8 +74,8 @@ export default function PriceCalculator() {
                       onChange={(e) => setZoneId(e.target.value)}
                       className={`${fieldClass} appearance-none pr-11 cursor-pointer`}
                     >
-                      {TARIFF_ZONES.map((zone) => (
-                        <option key={zone.id} value={zone.id}>
+                      {zones.map((zone) => (
+                        <option key={zone.slug} value={zone.slug}>
                           {zone.label}
                         </option>
                       ))}
@@ -118,13 +116,13 @@ export default function PriceCalculator() {
                     Jenis Layanan
                   </label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                    {TARIFF_SERVICES.map((service) => {
-                      const active = service.id === serviceId;
+                    {services.map((service) => {
+                      const active = service.slug === serviceId;
                       return (
                         <button
-                          key={service.id}
+                          key={service.slug}
                           type="button"
-                          onClick={() => setServiceId(service.id)}
+                          onClick={() => setServiceId(service.slug)}
                           className={`text-left px-3.5 py-3 rounded-xl border transition-colors ${
                             active
                               ? "border-orange bg-orange/5 ring-1 ring-orange/30"
@@ -179,7 +177,7 @@ export default function PriceCalculator() {
                         {estimate.billableKg !== estimate.weightNum && (
                           <span className="text-white">
                             {" "}
-                            (min. {estimate.zone.minKg} kg)
+                            (min. {estimate.zone.min_kg} kg)
                           </span>
                         )}
                       </dd>
@@ -187,7 +185,7 @@ export default function PriceCalculator() {
                   </dl>
 
                   <a
-                    href={buildWhatsAppUrl(waMessage)}
+                    href={buildWhatsAppUrl(whatsapp_number, waMessage)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-8 flex items-center justify-center gap-2.5 w-full rounded-xl bg-[#25D366] hover:bg-[#1ebe5d] active:scale-95 transition-all px-5 py-3.5 text-white font-bold text-sm"

@@ -10,4 +10,6 @@
 
 .word {
   display: inline-block;
+  /* will-change is applied by GSAP only during the opacity reveal and cleared
+     on complete, so we don't pin a permanent GPU layer per word here. */
 }

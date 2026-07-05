@@ -2,14 +2,24 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSortOrder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Service extends Model
 {
+    use HasSortOrder;
+
     protected $fillable = [
-        'title', 'short_title', 'slug', 'description', 'details',
-        'image_url', 'image_alt', 'sort_order', 'is_active',
+        'title',
+        'short_title',
+        'slug',
+        'description',
+        'details',
+        'image_url',
+        'image_alt',
+        'sort_order',
+        'is_active',
     ];
 
     protected $casts = [
@@ -22,6 +32,14 @@ class Service extends Model
         static::saving(function (self $model) {
             if (empty($model->slug)) {
                 $model->slug = static::uniqueSlug(Str::slug($model->title));
+            }
+
+            if (empty($model->image_alt)) {
+                $model->image_alt = $model->title;
+            }
+
+            if (empty($model->short_title)) {
+                $model->short_title = $model->title;
             }
         });
     }
@@ -38,6 +56,7 @@ class Service extends Model
             $slug = "{$base}-{$i}";
             $i++;
         }
+
         return $slug;
     }
 

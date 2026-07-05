@@ -40,49 +40,37 @@ const ScrollReveal = ({
         ? scrollContainerRef.current
         : window;
 
-    gsap.fromTo(
-      el,
-      { transformOrigin: '0% 50%', rotate: baseRotation },
-      {
-        ease: 'none',
-        rotate: 0,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: 'top bottom',
-          end: rotationEnd,
-          scrub: true
-        }
-      }
-    );
-
-    const wordElements = el.querySelectorAll('.word');
-
-    gsap.fromTo(
-      wordElements,
-      { opacity: baseOpacity, willChange: 'opacity' },
-      {
-        ease: 'none',
-        opacity: 1,
-        stagger: 0.05,
-        scrollTrigger: {
-          trigger: el,
-          scroller,
-          start: 'top bottom-=20%',
-          end: wordAnimationEnd,
-          scrub: true
-        }
-      }
-    );
-
-    if (enableBlur) {
+    // Scope every tween/ScrollTrigger to this instance so cleanup only reverts
+    // what we created — never other sections' triggers.
+    const ctx = gsap.context(() => {
       gsap.fromTo(
-        wordElements,
-        { filter: `blur(${blurStrength}px)` },
+        el,
+        { transformOrigin: '0% 50%', rotate: baseRotation },
         {
           ease: 'none',
-          filter: 'blur(0px)',
+          rotate: 0,
+          scrollTrigger: {
+            trigger: el,
+            scroller,
+            start: 'top bottom',
+            end: rotationEnd,
+            scrub: true
+          }
+        }
+      );
+
+      const wordElements = el.querySelectorAll('.word');
+
+      gsap.fromTo(
+        wordElements,
+        { opacity: baseOpacity, willChange: 'opacity' },
+        {
+          ease: 'none',
+          opacity: 1,
           stagger: 0.05,
+          // Clear the compositor hint once the reveal finishes so the browser
+          // isn't holding a GPU layer for every word for the rest of the page.
+          onComplete: () => gsap.set(wordElements, { willChange: 'auto' }),
           scrollTrigger: {
             trigger: el,
             scroller,
@@ -92,11 +80,32 @@ const ScrollReveal = ({
           }
         }
       );
-    }
 
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
+      // Blur is the single most expensive scroll-time paint. Instead of
+      // recomputing a per-word blur on every scrub frame (which tanks the
+      // framerate and makes Lenis feel choppy), reveal it once on the whole
+      // block when it enters the viewport — same look, a fraction of the cost.
+      if (enableBlur) {
+        gsap.fromTo(
+          el,
+          { filter: `blur(${blurStrength}px)` },
+          {
+            filter: 'blur(0px)',
+            duration: 0.6,
+            ease: 'power2.out',
+            onComplete: () => gsap.set(el, { filter: 'none' }),
+            scrollTrigger: {
+              trigger: el,
+              scroller,
+              start: 'top bottom-=20%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
   }, [scrollContainerRef, enableBlur, baseRotation, baseOpacity, rotationEnd, wordAnimationEnd, blurStrength]);
 
   return (

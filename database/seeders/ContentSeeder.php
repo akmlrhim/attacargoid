@@ -20,7 +20,7 @@ class ContentSeeder extends Seeder
                 'title' => 'Mitra Penerusan Barang',
                 'short_title' => 'Penerusan',
                 'description' => 'Partner distribusi area Kalimantan untuk ekspedisi nasional dan regional. Kami menjadi jembatan antara ekspedisi besar dengan tujuan pengiriman di pelosok Kalimantan.',
-                'details' => [['item' => 'Kerjasama dengan ekspedisi nasional'], ['item' => 'Distribusi ke seluruh Kalsel & Kalteng'], ['item' => 'Sistem tracking terintegrasi'], ['item' => 'Penanganan dokumen pengiriman']],
+                'details' => [['item' => 'Kerjasama dengan ekspedisi nasional'], ['item' => 'Distribusi ke seluruh Kalsel & Kalteng'], ['item' => 'Respon cepat & komunikasi aktif'], ['item' => 'Penanganan dokumen pengiriman']],
                 'image_url' => 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=900&q=80',
                 'image_alt' => 'Truk pengiriman di jalan tol',
                 'sort_order' => 1,

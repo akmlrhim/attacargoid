@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { buildWhatsAppUrl } from "../../constants/company";
+import useCompany from "../../hooks/useCompany";
 
 const WaIcon = ({ className }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor">
@@ -15,6 +16,7 @@ const quickMessages = [
 
 export default function WhatsAppFloat() {
   const [open, setOpen] = useState(false);
+  const { whatsapp_number } = useCompany();
 
   return (
     <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[60] flex flex-col items-end gap-3">
@@ -70,7 +72,7 @@ export default function WhatsAppFloat() {
             {quickMessages.map((msg) => (
               <a
                 key={msg}
-                href={buildWhatsAppUrl(msg)}
+                href={buildWhatsAppUrl(whatsapp_number, msg)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full text-left px-3.5 py-2.5 rounded-xl border border-gray-200 text-sm text-navy hover:border-orange hover:bg-orange/5 transition-colors"
@@ -81,7 +83,7 @@ export default function WhatsAppFloat() {
           </div>
 
           <a
-            href={buildWhatsAppUrl()}
+            href={buildWhatsAppUrl(whatsapp_number)}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-3 flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
@@ -99,9 +101,7 @@ export default function WhatsAppFloat() {
         aria-expanded={open}
         className="relative w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95"
       >
-        {!open && (
-          <span className="absolute inset-0 rounded-full bg-[#25D366] animate-ping opacity-40" />
-        )}
+
         {open ? (
           <svg
             className="w-6 h-6 relative"

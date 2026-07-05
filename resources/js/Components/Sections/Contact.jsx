@@ -1,13 +1,17 @@
 import { useState } from "react";
-import { useForm } from "@inertiajs/react";
+import { useForm, usePage } from "@inertiajs/react";
 import useScrollReveal from "../../hooks/useScrollReveal";
-import WhatsAppButton from "../Shared/WhatsAppButton";
 import DotField from "../ReactBits/DotField";
 import SectionHeading from "../Shared/SectionHeading";
-import { contactInfo } from "../../constants/contact";
+import LocationMap from "../Shared/LocationMap";
+import { getContactInfo } from "../../constants/contact";
+import useCompany from "../../hooks/useCompany";
 
 export default function ContactSection() {
   const ref = useScrollReveal();
+  const { location } = usePage().props;
+  const company = useCompany();
+  const contactInfo = getContactInfo(company);
   const [submitted, setSubmitted] = useState(false);
 
   const { data, setData, post, processing, errors, reset } = useForm({
@@ -285,19 +289,19 @@ export default function ContactSection() {
           </div>
         </div>
 
-        {/* Map — full width */}
-        <div className="sr mt-10 sm:mt-12 rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3983.0682757317786!2d114.56958427497203!3d-3.3333094966414754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2de423f11a3ef387%3A0x46a58758dffcbd56!2sATTA%20Cargo%20Ekspedisi%20Murah%20Di%20Banjarmasin.%20Antar%20kota%20antar%20pulau!5e0!3m2!1sid!2sid!4v1782097746574!5m2!1sid!2sid"
-            width="100%"
-            height="380"
-            style={{ border: 0, display: "block" }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Lokasi ATTA Cargo Banjarmasin"
-          />
-        </div>
+        {/* Map — full width, posisi di-drive dari data backend */}
+        {location?.position && (
+          <div className="sr mt-10 sm:mt-12 rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+            <LocationMap
+              position={location.position}
+              zoom={location.zoom}
+              label={location.label}
+              address={location.address}
+              height={380}
+              className="z-0"
+            />
+          </div>
+        )}
       </div>
     </section>
   );

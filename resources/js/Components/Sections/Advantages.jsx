@@ -1,4 +1,5 @@
 import RotatingText from "../ReactBits/RotatingText";
+import useScrollReveal from "../../hooks/useScrollReveal";
 
 const rotatingWords = [
   "Strategis",
@@ -9,12 +10,19 @@ const rotatingWords = [
   "Terdepan",
 ];
 
+/* Soft pastel tints cycled across the cards (emerald, violet, sky, indigo) */
+const cardTints = ["#ecfdf5", "#f5f3ff", "#eff6ff", "#eef2ff"];
+
+/* ── Section ──────────────────────────────────────────────── */
+
 export default function AdvantagesSection({ advantages = [] }) {
+  const ref = useScrollReveal();
+
   return (
-    <section className="bg-white relative">
+    <section ref={ref} className="bg-white relative">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-16 sm:pt-24 pb-16 sm:pb-20">
         {/* ── Heading ── */}
-        <div className="max-w-3xl mx-auto text-center mb-10 sm:mb-14">
+        <div className="sr max-w-3xl mx-auto text-center mb-10 sm:mb-14">
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black leading-tight text-navy">
             Mengapa Memilih <span className="text-orange">ATTA Cargo</span>
             <span className="inline-flex justify-center items-baseline w-full gap-1.5 sm:gap-2 mt-1 flex-wrap">
@@ -36,45 +44,47 @@ export default function AdvantagesSection({ advantages = [] }) {
               <span>?</span>
             </span>
           </h2>
-
-          <p className="mt-4 text-base sm:text-md text-black max-w-2xl mx-auto">
-            Komitmen kami adalah memberikan layanan logistik terbaik dengan
-            standar operasional yang terukur.
-          </p>
         </div>
 
-        {/* ── Grid ── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          {advantages.map((item) => (
-            <div
-              key={item.id}
-              className="relative h-56 sm:h-72 rounded-2xl overflow-hidden group cursor-default"
-            >
-              {/* Photo */}
-              <img
-                src={item.image_url}
-                alt=""
-                aria-hidden="true"
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+        {/* ── Grid (data from DB) ── */}
+        <div className="sr grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {advantages.map((item, i) => {
+            const tint = cardTints[i % cardTints.length];
 
-              {/* Overlays */}
-              <div className="absolute inset-0 bg-navy/55" />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy/95 via-navy/25 to-transparent" />
+            return (
+              <div
+                key={item.id}
+                className="group relative flex flex-col overflow-hidden rounded-3xl min-h-80 transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-xl hover:shadow-slate-300/40"
+                style={{
+                  background: `linear-gradient(165deg, ${tint} 0%, #ffffff 55%)`,
+                }}
+              >
+                {/* Title + description */}
+                <div className="p-6 sm:p-7 pb-0">
+                  <h3 className="text-xl sm:text-md font-extrabold tracking-tight leading-tight text-navy">
+                    {item.title}
+                  </h3>
 
-              {/* Content */}
-              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6">
-                <h3 className="font-bold text-white text-sm sm:text-base leading-snug mb-1">
-                  {item.title}
-                </h3>
-                <p className="text-[11px] sm:text-xs leading-relaxed text-white">
-                  {item.description}
-                </p>
+                  <div
+                    className="mt-4 text-sm leading-relaxed text-black [&_p]:m-0"
+                    dangerouslySetInnerHTML={{ __html: item.description }}
+                  />
+                </div>
+
+                {/* Illustration anchored to bottom, blended into the card */}
+                <div className="relative mt-auto">
+                  <img
+                    src={item.image_url}
+                    alt={item.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-44 object-cover"
+                  />
+                  <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,white_0%,rgba(255,255,255,0.92)_18%,rgba(255,255,255,0.7)_38%,rgba(255,255,255,0.4)_60%,rgba(255,255,255,0.15)_80%,transparent_100%)]" />
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
