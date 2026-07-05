@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import { buildWhatsAppUrl } from "../../constants/company";
 import useCompany from "../../hooks/useCompany";
+import SearchableSelect from "../Shared/SearchableSelect";
 
 const formatIDR = (value) =>
   new Intl.NumberFormat("id-ID", {
@@ -68,32 +69,17 @@ export default function PriceCalculator({ zones = [], services = [] }) {
                   <label className="block text-xs font-semibold text-black mb-2">
                     Kota / Wilayah Tujuan
                   </label>
-                  <div className="relative">
-                    <select
-                      value={zoneId}
-                      onChange={(e) => setZoneId(e.target.value)}
-                      className={`${fieldClass} appearance-none pr-11 cursor-pointer`}
-                    >
-                      {zones.map((zone) => (
-                        <option key={zone.slug} value={zone.slug}>
-                          {zone.label}
-                        </option>
-                      ))}
-                    </select>
-                    <svg
-                      className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={2.5}
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M19 9l-7 7-7-7"
-                      />
-                    </svg>
-                  </div>
+                  <SearchableSelect
+                    options={zones.map((zone) => ({
+                      value: zone.slug,
+                      label: zone.label,
+                    }))}
+                    value={zoneId}
+                    onChange={setZoneId}
+                    placeholder="Pilih kota / wilayah"
+                    searchPlaceholder="Cari kota / wilayah..."
+                    emptyMessage="Wilayah tidak ditemukan"
+                  />
                 </div>
 
                 <div>
