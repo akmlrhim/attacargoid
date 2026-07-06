@@ -46,7 +46,7 @@ export default function ProcessTimeline() {
 
               {/* Right: illustration */}
               <div>
-                <div className="rounded-2xl overflow-hidden shadow-lg shadow-black/5 aspect-4/3 max-w-xs">
+                <div className="rounded-2xl overflow-hidden shadow-lg shadow-black/5 aspect-4/3 max-w-xs mx-auto sm:mx-0">
                   {STEP_ILLUSTRATIONS[i]}
                 </div>
               </div>

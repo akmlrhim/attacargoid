@@ -19,7 +19,7 @@ export default function WhatsAppFloat() {
   const { whatsapp_number } = useCompany();
 
   return (
-    <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[60] flex flex-col items-end gap-3">
+    <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[60] flex flex-col items-end gap-3 pointer-events-none">
       {/* Chat card */}
       <div
         className={`w-[min(20rem,calc(100vw-2.5rem))] origin-bottom-right rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 transition-all duration-200 ${
@@ -99,7 +99,7 @@ export default function WhatsAppFloat() {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Tutup chat WhatsApp" : "Buka chat WhatsApp"}
         aria-expanded={open}
-        className="relative w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95"
+        className="relative w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 pointer-events-auto"
       >
 
         {open ? (

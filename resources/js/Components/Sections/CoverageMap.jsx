@@ -252,63 +252,6 @@ export default function CoverageMap({ regions: regionsProp } = {}) {
                 <p className="text-sm text-white/70">Memuat peta…</p>
               </div>
             )}
-
-            {/* Docked detail card for the selected city. */}
-            {active && (
-              <div className="absolute bottom-3 left-3 right-3 z-500 mx-auto max-w-xs rounded-2xl bg-white shadow-2xl border border-gray-100 p-4 text-left">
-                <button
-                  type="button"
-                  onClick={() => setActiveCity(null)}
-                  aria-label="Tutup"
-                  className="absolute top-2.5 right-2.5 w-7 h-7 flex items-center justify-center rounded-full text-black/40 hover:text-black hover:bg-gray-100 transition-colors"
-                >
-                  <svg
-                    className="w-4 h-4"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </button>
-
-                <div className="flex items-center gap-2 mb-1 pr-7">
-                  <span className="text-base font-black text-navy leading-tight">
-                    {active.name}
-                  </span>
-                  <span
-                    className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                      active.hub
-                        ? "text-orange-dark bg-orange/15"
-                        : "text-navy bg-navy/8"
-                    }`}
-                  >
-                    {active.hub ? "Hub Utama" : region.shortName}
-                  </span>
-                </div>
-                <p className="text-xs text-black/50 mb-3">{region.name}</p>
-                <a
-                  href="/kontak"
-                  className="flex items-center justify-center gap-1.5 w-full bg-orange hover:bg-orange-dark text-white text-sm font-bold py-2.5 rounded-xl transition-colors"
-                >
-                  Kirim ke {active.name}
-                  <svg
-                    className="w-3.5 h-3.5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </a>
-              </div>
-            )}
           </div>
 
           {/* Sidebar: region info + city list */}
