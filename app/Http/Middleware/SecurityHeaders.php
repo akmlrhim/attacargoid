@@ -20,6 +20,13 @@ class SecurityHeaders
 
         $response = $next($request);
 
+        // Prevent proxies/CDNs/browsers from ever caching a dynamic Inertia
+        // response (HTML or its X-Inertia JSON variant) under the same URL.
+        // Without this, a cache that ignores the `Vary: X-Inertia` header can
+        // serve the JSON payload back as the page itself on reload/restore.
+        $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+        $response->headers->set('Pragma', 'no-cache');
+
         if (app()->environment('production')) {
             $response->headers->set('Content-Security-Policy', implode('; ', [
                 "default-src 'self'",
