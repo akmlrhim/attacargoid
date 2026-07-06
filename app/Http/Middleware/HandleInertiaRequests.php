@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'flash' => fn () => $request->session()->get('flash'),
+            'flash' => fn () => $request->hasSession() ? $request->session()->get('flash') : null,
             'company' => fn () => CompanySetting::current()->only([
                 'phone',
                 'whatsapp_number',

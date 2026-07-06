@@ -117,4 +117,4 @@ jobs:
             chmod -R 775 storage bootstrap/cache
             trap - EXIT
             $PHP artisan up
-            echo "Deploy sukses: $(date)"s
+            echo "Deploy sukses: $(date)"

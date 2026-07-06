@@ -6,6 +6,8 @@ use App\Models\CompanySetting;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Inertia\ExceptionResponse;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,14 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('app', function ($view) {
             $view->with('company', CompanySetting::current());
+        });
+
+        Inertia::handleExceptionsUsing(function (ExceptionResponse $response) {
+            if (in_array($response->statusCode(), [403, 404, 419, 429, 500, 503])) {
+                return $response->render('ErrorPage', [
+                    'status' => $response->statusCode(),
+                ])->withSharedData();
+            }
         });
     }
 }
