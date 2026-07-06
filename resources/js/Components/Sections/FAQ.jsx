@@ -83,7 +83,7 @@ export default function FaqSection() {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <p className="pb-5 text-sm leading-relaxed text-black">
+                    <p className="pb-5 text-xs leading-relaxed text-black">
                       {" "}
                       {item.answer}
                     </p>
