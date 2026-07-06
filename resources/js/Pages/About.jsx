@@ -15,7 +15,9 @@ export default function About() {
         {/* Background photo */}
         <div className="absolute inset-0">
           <img
-            src="/images/tentang-hero.webp"
+            src="/images/tentang-hero-1200.webp"
+            srcSet="/images/tentang-hero-800.webp 800w, /images/tentang-hero-1200.webp 1200w, /images/tentang-hero-1920.webp 1920w"
+            sizes="100vw"
             alt=""
             aria-hidden="true"
             loading="eager"

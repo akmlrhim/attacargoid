@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import useScrollReveal from "../../hooks/useScrollReveal";
 
-const ABOUT_IMAGE = "/images/tentang-operasional.webp";
+const ABOUT_IMAGE = "/images/tentang-operasional-900.webp";
 
 export default function AboutSection() {
   const ref = useScrollReveal();
@@ -15,6 +15,8 @@ export default function AboutSection() {
       {/* Background image */}
       <img
         src={ABOUT_IMAGE}
+        srcSet="/images/tentang-operasional-600.webp 600w, /images/tentang-operasional-900.webp 900w, /images/tentang-operasional-1200.webp 1200w"
+        sizes="100vw"
         alt="ATTA Cargo operations"
         loading="lazy"
         decoding="async"

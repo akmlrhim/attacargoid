@@ -16,7 +16,9 @@ export default function Services({ services = [] }) {
         {/* Background photo */}
         <div className="absolute inset-0">
           <img
-            src="/images/layanan-hero.webp"
+            src="/images/layanan-hero-1200.webp"
+            srcSet="/images/layanan-hero-800.webp 800w, /images/layanan-hero-1200.webp 1200w, /images/layanan-hero-1920.webp 1920w"
+            sizes="100vw"
             alt=""
             aria-hidden="true"
             loading="eager"

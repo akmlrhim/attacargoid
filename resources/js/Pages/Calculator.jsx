@@ -20,7 +20,9 @@ export default function Calculator() {
         {/* Background photo */}
         <div className="absolute inset-0">
           <img
-            src="/images/kalkulator-hero.webp"
+            src="/images/kalkulator-hero-1200.webp"
+            srcSet="/images/kalkulator-hero-800.webp 800w, /images/kalkulator-hero-1200.webp 1200w, /images/kalkulator-hero-1920.webp 1920w"
+            sizes="100vw"
             alt=""
             aria-hidden="true"
             loading="eager"

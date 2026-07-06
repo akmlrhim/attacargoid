@@ -1,0 +1,16 @@
+# Deny access to sensitive files/folders at the project root
+<FilesMatch "^\.(env|git)">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Serve existing files/folders inside /public directly (assets, images, etc.)
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f [OR]
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ public/$1 [L]
+
+    # Everything else goes through the Laravel front controller
+    RewriteRule ^(.*)$ public/index.php [L]
+</IfModule>

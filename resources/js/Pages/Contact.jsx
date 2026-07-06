@@ -15,7 +15,9 @@ export default function Kontak() {
         {/* Background photo */}
         <div className="absolute inset-0">
           <img
-            src="/images/kontak-hero.webp"
+            src="/images/kontak-hero-1200.webp"
+            srcSet="/images/kontak-hero-800.webp 800w, /images/kontak-hero-1200.webp 1200w, /images/kontak-hero-1920.webp 1920w"
+            sizes="100vw"
             alt=""
             aria-hidden="true"
             loading="eager"

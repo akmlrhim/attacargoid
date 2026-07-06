@@ -53,7 +53,9 @@ export default function AboutContent() {
             <div className="sr sr-right">
               <div className="relative rounded-3xl overflow-hidden aspect-[4/3]">
                 <img
-                  src="/images/tentang-gudang.webp"
+                  src="/images/tentang-gudang-675.webp"
+                  srcSet="/images/tentang-gudang-450.webp 450w, /images/tentang-gudang-675.webp 675w, /images/tentang-gudang-900.webp 900w"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
                   alt="ATTA Cargo warehouse operations"
                   loading="lazy"
                   decoding="async"

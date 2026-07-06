@@ -4,7 +4,10 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { createInertiaApp } from "@inertiajs/react";
 import { createRoot } from "react-dom/client";
 
+const cspNonce = document.querySelector('meta[name="csp-nonce"]')?.content;
+
 createInertiaApp({
+  nonce: cspNonce,
   title: (title) => {
     // Fallback ensures the brand stays in the tab title even if VITE_APP_NAME
     // isn't present at build time. Keep casing in sync with config('app.name').

@@ -1,0 +1,120 @@
+name: Deploy to attacargo.id
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.3"
+
+      - name: Install Composer Dependencies (Runner)
+        run: composer install --no-interaction --prefer-dist --no-scripts
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install NPM & Build Tailwind/Vite
+        run: |
+          npm install
+          npm run build
+
+      - name: Copy build ke server via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 65002
+          source: "public/build"
+          target: "/home/u465920647/domains/attacargo.id/public_html/public"
+          strip_components: 1
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 65002
+          script: |
+            APP=/home/u465920647/domains/attacargo.id/public_html
+            REPO=https://${{ secrets.GH_TOKEN }}@github.com/akmlrhim/attacargoid.git
+
+            PHP=$(command -v php8.3 2>/dev/null \
+              || command -v php83 2>/dev/null \
+              || command -v php 2>/dev/null)
+
+            echo "Menggunakan PHP: $PHP ($($PHP -r 'echo PHP_VERSION;'))"
+
+            if [ ! -d "$APP/.git" ]; then
+              echo "Pertama kali — setup repository..."
+              mkdir -p $APP
+              cd $APP
+              git init
+              git remote add origin $REPO
+              git fetch origin main
+              git reset --hard origin/main
+
+              COMPOSER_MEMORY_LIMIT=-1 composer install \
+                --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-scripts
+
+              $PHP artisan package:discover --ansi
+              $PHP artisan migrate --force
+              $PHP artisan storage:link || true
+              chmod -R 775 storage bootstrap/cache
+              echo "Setup awal selesai."
+            else
+              echo "Update — pulling latest code..."
+              cd $APP
+              $PHP artisan down || true
+              trap "cd $APP && $PHP artisan up" EXIT
+
+              git remote set-url origin $REPO
+              git fetch origin main
+              git reset --hard origin/main
+
+              COMPOSER_MEMORY_LIMIT=-1 composer install \
+                --no-interaction --prefer-dist --optimize-autoloader --no-dev --no-scripts
+
+              $PHP artisan package:discover --ansi
+              $PHP artisan migrate --force
+              $PHP artisan optimize:clear
+            fi
+
+            cd $APP
+
+            # Pastikan APP_KEY tersedia — generate hanya jika belum ada
+            # (regenerate tiap deploy akan merusak session & data terenkripsi)
+            if [ -f .env ] && ! grep -q '^APP_KEY=base64:' .env; then
+              echo "APP_KEY belum ada — generate key baru..."
+              $PHP artisan key:generate --force
+            else
+              echo "APP_KEY sudah ada — lewati generate."
+            fi
+
+            # Symlink storage (public/storage -> storage/app/public)
+            $PHP artisan storage:link --force 2>/dev/null || \
+              ln -sfn $APP/storage/app/public $APP/public/storage 2>/dev/null || \
+              true
+
+            $PHP artisan config:cache
+            $PHP artisan route:cache
+            $PHP artisan event:cache
+            $PHP artisan view:cache
+            chmod -R 775 storage bootstrap/cache
+            trap - EXIT
+            $PHP artisan up
+            echo "Deploy sukses: $(date)"s

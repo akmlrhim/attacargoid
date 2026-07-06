@@ -4,11 +4,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="csp-nonce" content="{{ Vite::cspNonce() }}">
 
   @php
     $appName = config('app.name', 'ATTA Cargo');
     $defaultDescription =
-        'ATTA Cargo — mitra penerusan barang & last mile distribution terpercaya dengan hub di Banjarmasin, menjangkau Kalimantan Selatan & Tengah.';
+        'ATTA Cargo - mitra penerusan barang & last mile distribution terpercaya dengan hub di Banjarmasin, menjangkau Kalimantan Selatan & Tengah.';
 
     $seo = array_merge(
         [
@@ -66,12 +67,22 @@
       href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap">
   </noscript>
 
-  {{-- Preload hero image (self-hosted WebP): only on the Home page, where it's actually rendered --}}
-  @if (($page['component'] ?? null) === 'Home')
-    <link rel="preload" as="image" fetchpriority="high" href="/images/hero/hero-1200.webp"
-      imagesrcset="/images/hero/hero-800.webp 800w,
-                           /images/hero/hero-1200.webp 1200w,
-                           /images/hero/hero-1920.webp 1920w"
+  {{-- Preload the LCP hero image (self-hosted WebP): only on the page where it's actually rendered --}}
+  @php
+    $heroPreloads = [
+        'Home' => 'hero/hero',
+        'Services' => 'layanan-hero',
+        'Contact' => 'kontak-hero',
+        'Calculator' => 'kalkulator-hero',
+        'About' => 'tentang-hero',
+    ];
+    $heroSlug = $heroPreloads[$page['component'] ?? null] ?? null;
+  @endphp
+  @if ($heroSlug)
+    <link rel="preload" as="image" fetchpriority="high" href="/images/{{ $heroSlug }}-1200.webp"
+      imagesrcset="/images/{{ $heroSlug }}-800.webp 800w,
+                           /images/{{ $heroSlug }}-1200.webp 1200w,
+                           /images/{{ $heroSlug }}-1920.webp 1920w"
       imagesizes="100vw">
   @endif
 
@@ -128,7 +139,7 @@
   @if (!empty($seo['jsonld']))
     <script type="application/ld+json">
                 {!! json_encode($seo['jsonld'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
-            </script>
+    </script>
   @endif
 
   @viteReactRefresh
