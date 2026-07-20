@@ -8,15 +8,17 @@ export default function ServicesSection() {
     <section
       id="layanan"
       ref={ref}
-      className="relative overflow-hidden min-h-[75vh] flex items-center"
+      className="relative overflow-hidden min-h-[60vh] sm:min-h-[70vh] lg:min-h-[75vh] flex items-center"
     >
-      {/* Background image */}
+      {/* Background image — responsive srcSet; framed to keep the truck in view on narrow screens */}
       <img
         src="/images/layanan.webp"
+        srcSet="/images/layanan-640.webp 640w, /images/layanan-960.webp 960w, /images/layanan.webp 1200w"
+        sizes="100vw"
         alt="ATTA Cargo distribution services"
         loading="lazy"
         decoding="async"
-        className="absolute inset-0 w-full h-full object-cover object-center"
+        className="absolute inset-0 w-full h-full object-cover object-[38%_center] sm:object-center"
       />
 
       {/* Gradient overlay — dark on right, transparent on left */}
