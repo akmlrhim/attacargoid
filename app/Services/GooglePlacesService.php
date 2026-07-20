@@ -17,18 +17,29 @@ class GooglePlacesService
 
     private const API_URL = 'https://serpapi.com/search.json';
 
+    private readonly TestimonialsStore $store;
+
     public function __construct(
         private readonly string $apiKey = '',
         private readonly string $dataId = '',
-    ) {}
+        ?TestimonialsStore $store = null,
+    ) {
+        $this->store = $store ?? new TestimonialsStore;
+    }
 
+    /**
+     * Reviews that qualify for display (5 stars, non-empty text), merged
+     * into and served from the durable JSON store in `storage/app/testimonials.json`.
+     *
+     * @return array<int, array{name: string, avatar: string|null, rating: int, text: string, date: string}>
+     */
     public function getReviews(): array
     {
         if (! $this->apiKey || ! $this->dataId) {
-            return [];
+            return $this->store->read();
         }
 
-        return $this->getData()['reviews'] ?? [];
+        return $this->store->sync($this->getData()['reviews'] ?? []);
     }
 
     public function getRating(): ?array
