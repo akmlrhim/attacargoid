@@ -1,7 +1,7 @@
 import { lazy, Suspense } from "react";
-import { Head } from "@inertiajs/react";
 import { router } from "@inertiajs/react";
 import AppLayout from "../Components/Layout/AppLayout";
+import PageHead from "../Components/Shared/PageHead";
 import { ServicesListSkeleton } from "../Components/Skeletons/SectionSkeletons";
 
 const ServicesList = lazy(() => import("../Components/Sections/ServicesList"));
@@ -9,7 +9,12 @@ const ServicesList = lazy(() => import("../Components/Sections/ServicesList"));
 export default function Services({ services = [] }) {
   return (
     <>
-      <Head title="Layanan" />
+      <PageHead
+        title="Layanan"
+        description="Solusi distribusi lengkap ATTA Cargo: penerusan barang, distribusi retail & modern trade, pengiriman B2B, proyek & industri, hingga pengiriman khusus di seluruh Kalimantan."
+        path="/layanan"
+        image="/images/layanan.webp"
+      />
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
@@ -148,7 +153,7 @@ export default function Services({ services = [] }) {
             <span className="text-orange font-medium">Layanan</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Layanan Kami
+            Layanan Logistik & Distribusi Kalimantan
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
             Solusi distribusi lengkap untuk kebutuhan bisnis Anda di seluruh

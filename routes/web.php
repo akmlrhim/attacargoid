@@ -8,6 +8,7 @@ use App\Models\Service;
 use App\Models\TariffService;
 use App\Models\TariffZone;
 use App\Services\GooglePlacesService;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -44,12 +45,15 @@ Route::get('/', function () {
         'coverageRegions' => $coverageRegions,
         'reviews' => $places->getReviews(),
         'googleRating' => $places->getRating(),
-    ])->withViewData(['seo' => pageSeo(
-        'Mitra Logistik Terpercaya di Kalimantan',
-        'ATTA Cargo, mitra penerusan barang & last mile distribution dengan hub di Banjarmasin. Distribusi cepat, aman, dan terpantau ke seluruh Kalimantan Selatan & Tengah.',
-        '/',
+    ])->withViewData(['seo' => array_merge(
+        pageSeo(
+            'Mitra Logistik Terpercaya di Kalimantan',
+            'ATTA Cargo, mitra penerusan barang & last mile distribution dengan hub di Banjarmasin. Distribusi cepat, aman, dan terpantau ke seluruh Kalimantan Selatan & Tengah.',
+            '/',
+        ),
+        ['jsonld' => faqSchemaJsonLd(CompanySetting::current())],
     )]);
-});
+})->name('home');
 
 Route::get('/tentang-kami', function () {
     return Inertia::render('About')->withViewData(['seo' => array_merge(
@@ -63,7 +67,7 @@ Route::get('/tentang-kami', function () {
             ['name' => 'Tentang Kami', 'url' => url('/tentang-kami')],
         ]],
     )]);
-});
+})->name('about');
 
 Route::get('/layanan', function () {
     $services = Service::active()->get(['id', 'title', 'short_title', 'description', 'details', 'image_url', 'image_alt'])
@@ -106,7 +110,7 @@ Route::get('/layanan', function () {
                 'jsonld' => $serviceSchema,
             ],
         )]);
-});
+})->name('services');
 
 Route::get('/kalkulator', function () {
     return Inertia::render('Calculator', [
@@ -123,7 +127,7 @@ Route::get('/kalkulator', function () {
             ['name' => 'Kalkulator', 'url' => url('/kalkulator')],
         ]],
     )]);
-});
+})->name('calculator');
 
 Route::get('/kontak', function () {
     $office = config('company.office');
@@ -147,7 +151,7 @@ Route::get('/kontak', function () {
             ['name' => 'Kontak', 'url' => url('/kontak')],
         ]],
     )]);
-});
+})->name('contact');
 
 Route::post('/kontak', ContactController::class);
 
@@ -158,12 +162,26 @@ Route::get('/robots.txt', function () {
 });
 
 Route::get('/sitemap.xml', function () {
-    $urls = ['/', '/tentang-kami', '/layanan', '/kalkulator', '/kontak'];
+    $latestService = Service::max('updated_at');
+
+    $pages = [
+        ['path' => '/', 'priority' => '1.0', 'changefreq' => 'weekly', 'lastmod' => $latestService],
+        ['path' => '/layanan', 'priority' => '0.9', 'changefreq' => 'weekly', 'lastmod' => $latestService],
+        ['path' => '/kalkulator', 'priority' => '0.7', 'changefreq' => 'monthly', 'lastmod' => null],
+        ['path' => '/tentang-kami', 'priority' => '0.6', 'changefreq' => 'monthly', 'lastmod' => null],
+        ['path' => '/kontak', 'priority' => '0.6', 'changefreq' => 'monthly', 'lastmod' => null],
+    ];
 
     $xml = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
-    foreach ($urls as $path) {
-        $xml .= '  <url><loc>'.e(url($path)).'</loc><changefreq>weekly</changefreq></url>'."\n";
+    foreach ($pages as $page) {
+        $xml .= '  <url><loc>'.e(url($page['path'])).'</loc>';
+        if ($page['lastmod']) {
+            $xml .= '<lastmod>'.Carbon::parse($page['lastmod'])->toAtomString().'</lastmod>';
+        }
+        $xml .= '<changefreq>'.$page['changefreq'].'</changefreq>';
+        $xml .= '<priority>'.$page['priority'].'</priority>';
+        $xml .= '</url>'."\n";
     }
     $xml .= '</urlset>'."\n";
 

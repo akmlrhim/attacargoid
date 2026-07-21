@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\CompanySetting;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('resolveImageUrl')) {
@@ -30,6 +31,43 @@ if (! function_exists('pageSeo')) {
             'canonical' => url($path),
             'og_type' => 'website',
             'image' => url($image ?? '/images/hero/hero-1200.webp'),
+        ];
+    }
+}
+
+if (! function_exists('faqSchemaJsonLd')) {
+    /**
+     * Build FAQPage JSON-LD for the home page FAQ section.
+     *
+     * Mirrors the questions/answers in resources/js/constants/faq.js —
+     * keep both in sync manually if the FAQ content changes.
+     *
+     * @return array<string, mixed>
+     */
+    function faqSchemaJsonLd(CompanySetting $company): array
+    {
+        $items = [
+            ['q' => 'Apa itu ATTA Cargo dan layanan apa saja yang ditawarkan?', 'a' => 'ATTA Cargo (PT. Tumbuh Kuat Sejahtera) adalah mitra penerusan barang & last mile distribution dengan hub utama di Banjarmasin. Kami melayani distribusi general cargo, FMCG, dan pengiriman antar kota untuk kebutuhan bisnis maupun perorangan ke seluruh Kalimantan Selatan & Tengah.'],
+            ['q' => 'Wilayah mana saja yang dijangkau ATTA Cargo?', 'a' => 'Jaringan distribusi kami mencakup puluhan kota di Kalimantan Selatan (Banjarmasin sebagai hub, Banjarbaru, Martapura, Kotabaru, dan lainnya) serta Kalimantan Tengah (Palangka Raya, Sampit, Pangkalan Bun, dan lainnya).'],
+            ['q' => 'Bagaimana cara menghitung estimasi biaya pengiriman?', 'a' => 'Gunakan Kalkulator di website: pilih zona tujuan dan jenis layanan, lalu masukkan berat barang. Estimasi dihitung dari tarif per kilogram zona dikalikan pengali layanan, dengan berat minimum tertentu.'],
+            ['q' => 'Berapa lama estimasi waktu pengiriman?', 'a' => 'Waktu pengiriman bergantung pada zona tujuan dan jenis layanan yang dipilih (contoh: layanan Reguler estimasi 3–6 hari). Estimasi waktu setiap layanan tampil di kalkulator.'],
+            ['q' => 'Apakah saya bisa memantau status pengiriman?', 'a' => 'Bisa. Tim operasional memberikan update status secara aktif, mulai dari barang tiba di hub, dimuat ke armada, hingga diterima dengan konfirmasi penerima.'],
+            ['q' => 'Jenis barang apa saja yang bisa dikirim?', 'a' => 'Kami menangani general cargo, FMCG, dan berbagai jenis muatan dengan armada yang disesuaikan volume serta area tujuan.'],
+            ['q' => 'Apakah ATTA Cargo melayani pengiriman rutin untuk bisnis?', 'a' => 'Tentu. Kami terbiasa menangani distribusi general cargo dan FMCG untuk kebutuhan bisnis, termasuk pengiriman rutin dengan volume tertentu.'],
+            ['q' => 'Bagaimana cara memulai pengiriman atau berkonsultasi?', 'a' => "Silakan hubungi tim kami melalui layanan WhatsApp atau telepon di {$company->phone}, via email ke {$company->email}, atau dengan mengisi formulir pesan di halaman Kontak."],
+        ];
+
+        return [
+            '@context' => 'https://schema.org',
+            '@type' => 'FAQPage',
+            'mainEntity' => array_map(fn (array $item) => [
+                '@type' => 'Question',
+                'name' => $item['q'],
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => $item['a'],
+                ],
+            ], $items),
         ];
     }
 }

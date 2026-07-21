@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
-import { Head } from "@inertiajs/react";
 import AppLayout from "../Components/Layout/AppLayout";
+import PageHead from "../Components/Shared/PageHead";
 import { AboutContentSkeleton } from "../Components/Skeletons/SectionSkeletons";
 
 const AboutContent = lazy(() => import("../Components/Sections/AboutContent"));
@@ -8,7 +8,11 @@ const AboutContent = lazy(() => import("../Components/Sections/AboutContent"));
 export default function About() {
   return (
     <>
-      <Head title="Tentang Kami" />
+      <PageHead
+        title="Tentang Kami"
+        description="Mengenal ATTA Cargo (PT. Tumbuh Kuat Sejahtera), perusahaan jasa logistik penerusan barang & last mile distribution berbasis di Banjarmasin, Kalimantan Selatan."
+        path="/tentang-kami"
+      />
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
@@ -127,7 +131,7 @@ export default function About() {
             <span className="text-orange font-medium">Tentang Kami</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Tentang Kami
+            Tentang ATTA Cargo
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
             Mengenal lebih dekat ATTA Cargo, mitra distribusi terpercaya yang

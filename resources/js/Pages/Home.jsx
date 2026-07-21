@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
-import { Head } from "@inertiajs/react";
 import AppLayout from "../Components/Layout/AppLayout";
+import PageHead from "../Components/Shared/PageHead";
 import HeroSection from "../Components/Sections/Hero";
 import Skeleton from "react-loading-skeleton";
 import {
@@ -39,7 +39,11 @@ export default function Home({
 }) {
   return (
     <>
-      <Head title="Mitra Logistik Terpercaya di Kalimantan" />
+      <PageHead
+        title="Mitra Logistik Terpercaya di Kalimantan"
+        description="ATTA Cargo, mitra penerusan barang & last mile distribution dengan hub di Banjarmasin. Distribusi cepat, aman, dan terpantau ke seluruh Kalimantan Selatan & Tengah."
+        path="/"
+      />
 
       <HeroSection />
 

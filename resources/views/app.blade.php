@@ -38,7 +38,10 @@
             'canonical' => url()->current(),
             'og_type' => 'website',
             'image' => url('/images/hero/hero-1200.webp'),
-            'robots' => 'index, follow',
+            // Error pages (403/404/419/429/500/503) render the ErrorPage component
+            // via Inertia::handleExceptionsUsing() and never call pageSeo(), so this
+            // is the only place to keep them out of the index.
+            'robots' => ($page['component'] ?? null) === 'ErrorPage' ? 'noindex, nofollow' : 'index, follow',
         ],
         $seo ?? [],
     );
@@ -46,25 +49,25 @@
     $fullTitle = $seo['title'] === $appName ? $seo['title'] : $seo['title'] . ' - ' . $appName;
   @endphp
 
-  <title inertia>{{ $fullTitle }}</title>
-  <meta name="description" content="{{ $seo['description'] }}">
+  <title data-inertia>{{ $fullTitle }}</title>
+  <meta data-inertia="description" name="description" content="{{ $seo['description'] }}">
   <meta name="robots" content="{{ $seo['robots'] }}">
-  <link rel="canonical" href="{{ $seo['canonical'] }}">
+  <link data-inertia="canonical" rel="canonical" href="{{ $seo['canonical'] }}">
 
   {{-- Open Graph --}}
   <meta property="og:type" content="{{ $seo['og_type'] }}">
   <meta property="og:site_name" content="{{ $appName }}">
-  <meta property="og:title" content="{{ $fullTitle }}">
-  <meta property="og:description" content="{{ $seo['description'] }}">
-  <meta property="og:url" content="{{ $seo['canonical'] }}">
-  <meta property="og:image" content="{{ $seo['image'] }}">
+  <meta data-inertia="og-title" property="og:title" content="{{ $fullTitle }}">
+  <meta data-inertia="og-description" property="og:description" content="{{ $seo['description'] }}">
+  <meta data-inertia="og-url" property="og:url" content="{{ $seo['canonical'] }}">
+  <meta data-inertia="og-image" property="og:image" content="{{ $seo['image'] }}">
   <meta property="og:locale" content="id_ID">
 
   {{-- Twitter Card --}}
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ $fullTitle }}">
-  <meta name="twitter:description" content="{{ $seo['description'] }}">
-  <meta name="twitter:image" content="{{ $seo['image'] }}">
+  <meta data-inertia="twitter-title" name="twitter:title" content="{{ $fullTitle }}">
+  <meta data-inertia="twitter-description" name="twitter:description" content="{{ $seo['description'] }}">
+  <meta data-inertia="twitter-image" name="twitter:image" content="{{ $seo['image'] }}">
 
   {{-- Favicon --}}
   <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
@@ -136,6 +139,19 @@
                     'https://wa.me/'.$company->whatsapp_number,
                     ...array_column($company->social_links ?? [], 'url'),
                 ])),
+            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+        </script>
+
+  {{-- WebSite structured data (site identity signal for Google Sitelinks) --}}
+  <script type="application/ld+json">
+            {!! json_encode([
+                '@context' => 'https://schema.org',
+                '@type' => 'WebSite',
+                '@id' => url('/').'#website',
+                'name' => 'ATTA Cargo',
+                'url' => url('/'),
+                'publisher' => ['@id' => url('/').'#organization'],
+                'inLanguage' => 'id-ID',
             ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
         </script>
 
