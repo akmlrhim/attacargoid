@@ -74,7 +74,7 @@ export default function HeroSection() {
           <div className="hero-anim-ctas flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 sm:mb-14 justify-center">
             <a
               href="/kontak"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-semibold px-8 py-4 text-base rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-navy-dark font-semibold px-8 py-4 text-base rounded-xl transition-all duration-200 hover:scale-105 active:scale-95"
             >
               Konsultasi Sekarang
             </a>

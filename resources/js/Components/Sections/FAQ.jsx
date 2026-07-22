@@ -47,8 +47,10 @@ export default function FaqSection() {
               >
                 <button
                   type="button"
+                  id={`faq-trigger-${i}`}
                   onClick={() => setOpenIndex(isOpen ? -1 : i)}
                   aria-expanded={isOpen}
+                  aria-controls={`faq-panel-${i}`}
                   className="flex w-full items-center justify-between gap-2 py-1 text-left"
                 >
                   <span className="text-black text-sm sm:text-base leading-snug">
@@ -57,7 +59,7 @@ export default function FaqSection() {
                   <span
                     className={`shrink-0 grid place-items-center w-7 h-7 rounded-full transition-all duration-300 ${
                       isOpen
-                        ? "bg-orange text-white rotate-180"
+                        ? "bg-orange text-navy-dark rotate-180"
                         : "bg-transparent text-navy"
                     }`}
                   >
@@ -76,6 +78,9 @@ export default function FaqSection() {
                 </button>
 
                 <div
+                  id={`faq-panel-${i}`}
+                  role="region"
+                  aria-labelledby={`faq-trigger-${i}`}
                   className={`grid transition-all duration-300 ease-out ${
                     isOpen
                       ? "grid-rows-[1fr] opacity-100"

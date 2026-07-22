@@ -75,6 +75,7 @@ export default function LocationMap({
       center={position}
       zoom={zoom}
       scrollWheelZoom={false}
+      aria-label={label ? `Peta lokasi ${label}` : "Peta lokasi"}
       className={className}
       style={{ height, width: "100%" }}
     >

@@ -47,6 +47,7 @@ function GoogleLogo({ size = 5 }) {
     <svg
       viewBox="0 0 24 24"
       className={`w-${size} h-${size} shrink-0`}
+      role="img"
       aria-label="Google"
     >
       <path
@@ -96,7 +97,7 @@ function ReviewCard({ r }) {
             <p className="text-sm font-bold text-gray-900 leading-tight">
               {r.name}
             </p>
-            <p className="text-[11px] text-gray-400 mt-0.5">{r.date}</p>
+            <p className="text-[11px] text-gray-500 mt-0.5">{r.date}</p>
           </div>
         </div>
         <GoogleLogo size={4} />

@@ -169,7 +169,7 @@ export default function Navbar() {
             <div className="hidden lg:block">
               <Link
                 href="/kontak"
-                className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-white font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
+                className="inline-flex items-center gap-2 bg-orange hover:bg-orange-dark text-navy-dark font-semibold px-5 py-2.5 rounded-full text-sm transition-colors"
               >
                 Konsultasi
                 <svg viewBox="0 0 24 24" fill="none" className="w-3.5 h-3.5">
@@ -294,7 +294,7 @@ export default function Navbar() {
           <div className="px-5 pt-2 pb-8 border-t border-gray-100">
             <Link
               href="/kontak"
-              className="w-full flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-white font-semibold px-5 py-4 rounded-2xl text-base transition-colors"
+              className="w-full flex items-center justify-center gap-2 bg-orange hover:bg-orange-dark text-navy-dark font-semibold px-5 py-4 rounded-2xl text-base transition-colors"
             >
               Hubungi Kami
               <svg viewBox="0 0 24 24" fill="none" className="w-4 h-4">

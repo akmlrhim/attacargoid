@@ -66,10 +66,15 @@ export default function PriceCalculator({ zones = [], services = [] }) {
 
               <div className="space-y-5">
                 <div>
-                  <label className="block text-xs font-semibold text-black mb-2">
+                  <label
+                    id="calc-zone-label"
+                    className="block text-xs font-semibold text-black mb-2"
+                  >
                     Kota / Wilayah Tujuan
                   </label>
                   <SearchableSelect
+                    id="calc-zone"
+                    aria-labelledby="calc-zone-label"
                     options={zones.map((zone) => ({
                       value: zone.slug,
                       label: zone.label,
@@ -83,10 +88,14 @@ export default function PriceCalculator({ zones = [], services = [] }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-black mb-2">
+                  <label
+                    htmlFor="calc-weight"
+                    className="block text-xs font-semibold text-black mb-2"
+                  >
                     Berat Barang (kg)
                   </label>
                   <input
+                    id="calc-weight"
                     type="number"
                     min="1"
                     inputMode="numeric"
@@ -98,16 +107,24 @@ export default function PriceCalculator({ zones = [], services = [] }) {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-black mb-2.5">
+                  <label
+                    id="calc-service-label"
+                    className="block text-xs font-semibold text-black mb-2.5"
+                  >
                     Jenis Layanan
                   </label>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                  <div
+                    role="group"
+                    aria-labelledby="calc-service-label"
+                    className="grid grid-cols-1 sm:grid-cols-3 gap-2.5"
+                  >
                     {services.map((service) => {
                       const active = service.slug === serviceId;
                       return (
                         <button
                           key={service.slug}
                           type="button"
+                          aria-pressed={active}
                           onClick={() => setServiceId(service.slug)}
                           className={`text-left px-3.5 py-3 rounded-xl border transition-colors ${
                             active
@@ -132,7 +149,10 @@ export default function PriceCalculator({ zones = [], services = [] }) {
             </div>
 
             {/* ── Result ── */}
-            <div className="bg-navy p-7 sm:p-10 flex flex-col text-white">
+            <div
+              aria-live="polite"
+              className="bg-navy p-7 sm:p-10 flex flex-col text-white"
+            >
               <p className="text-white text-sm font-medium">
                 Perkiraan Biaya Pengiriman
               </p>
@@ -174,7 +194,7 @@ export default function PriceCalculator({ zones = [], services = [] }) {
                     href={buildWhatsAppUrl(whatsapp_number, waMessage)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-8 flex items-center justify-center gap-2.5 w-full rounded-xl bg-[#25D366] hover:bg-[#1ebe5d] active:scale-95 transition-all px-5 py-3.5 text-white font-bold text-sm"
+                    className="mt-8 flex items-center justify-center gap-2.5 w-full rounded-xl bg-[#25D366] hover:bg-[#1ebe5d] active:scale-95 transition-all px-5 py-3.5 text-navy-dark font-bold text-sm"
                   >
                     <svg
                       className="w-5 h-5 shrink-0"

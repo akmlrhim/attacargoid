@@ -188,6 +188,7 @@ export default function CoverageMap({ regions: regionsProp } = {}) {
             <button
               key={r.name}
               onClick={() => setActiveRegion(key)}
+              aria-pressed={activeRegion === key}
               className={`flex-1 sm:flex-none px-5 sm:px-6 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 ${
                 activeRegion === key
                   ? "bg-navy text-white shadow-sm"
@@ -213,6 +214,7 @@ export default function CoverageMap({ regions: regionsProp } = {}) {
                 scrollWheelZoom={false}
                 zoomControl={false}
                 tapTolerance={25}
+                aria-label="Peta cakupan wilayah distribusi ATTA Cargo"
                 className="absolute inset-0 z-0"
                 style={{ height: "100%", width: "100%" }}
               >
@@ -256,7 +258,7 @@ export default function CoverageMap({ regions: regionsProp } = {}) {
 
           {/* Sidebar: region info + city list */}
           <div className="lg:col-span-2 flex flex-col">
-            <p className="flex items-center gap-1.5 text-[11px] text-black/50 mb-2 px-1">
+            <p className="flex items-center gap-1.5 text-[11px] text-black/70 mb-2 px-1">
               <svg
                 className="w-3.5 h-3.5 text-navy/50"
                 viewBox="0 0 24 24"
@@ -278,14 +280,14 @@ export default function CoverageMap({ regions: regionsProp } = {}) {
                     onClick={() => selectCity(city.name)}
                     className={`flex items-center gap-2 w-full h-full px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-xl border text-left cursor-pointer transition-all duration-150 ${
                       city.hub
-                        ? "bg-orange text-white border-orange"
+                        ? "bg-orange text-navy-dark border-orange"
                         : isActive
                           ? "bg-navy/5 border-navy/40 ring-1 ring-navy/20"
                           : "bg-white border-gray-100 hover:border-navy/20 hover:bg-gray-50"
                     }`}
                   >
                     <svg
-                      className={`w-3 h-3 shrink-0 ${city.hub ? "text-white" : "text-orange"}`}
+                      className={`w-3 h-3 shrink-0 ${city.hub ? "text-navy-dark" : "text-orange"}`}
                       viewBox="0 0 24 24"
                       fill="currentColor"
                     >
@@ -296,7 +298,7 @@ export default function CoverageMap({ regions: regionsProp } = {}) {
                       />
                     </svg>
                     <span
-                      className={`flex-1 min-w-0 text-xs sm:text-sm font-semibold truncate ${city.hub ? "text-white" : "text-black"}`}
+                      className={`flex-1 min-w-0 text-xs sm:text-sm font-semibold truncate ${city.hub ? "text-navy-dark" : "text-black"}`}
                     >
                       {city.name}
                     </span>

@@ -86,7 +86,7 @@ export default function WhatsAppFloat() {
             href={buildWhatsAppUrl(whatsapp_number)}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-white font-semibold py-2.5 rounded-xl text-sm transition-colors"
+            className="mt-3 flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-[#1ebe5d] text-navy-dark font-semibold py-2.5 rounded-xl text-sm transition-colors"
           >
             <WaIcon className="w-4 h-4 shrink-0" />
             Mulai Chat
@@ -99,7 +99,7 @@ export default function WhatsAppFloat() {
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Tutup chat WhatsApp" : "Buka chat WhatsApp"}
         aria-expanded={open}
-        className="relative w-14 h-14 rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/30 flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 pointer-events-auto"
+        className="relative w-14 h-14 rounded-full bg-[#25D366] text-navy-dark shadow-lg shadow-[#25D366]/30 flex items-center justify-center transition-transform duration-200 hover:scale-110 active:scale-95 pointer-events-auto"
       >
 
         {open ? (

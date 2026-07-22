@@ -129,7 +129,11 @@ export default function ContactSection() {
           <div className="sr sr-right">
             <div className="bg-white rounded-2xl p-5 sm:p-6 lg:p-8 border border-gray-100">
               {submitted ? (
-                <div className="text-center py-10">
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="text-center py-10"
+                >
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <svg
                       className="w-8 h-8 text-green-600"
@@ -169,27 +173,45 @@ export default function ContactSection() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-black mb-1.5">
+                      <label
+                        htmlFor="contact-name"
+                        className="block text-xs font-semibold text-black mb-1.5"
+                      >
                         Nama <span className="text-red-400">*</span>
                       </label>
                       <input
+                        id="contact-name"
                         type="text"
+                        required
+                        aria-required="true"
+                        aria-invalid={!!errors.name}
+                        aria-describedby={
+                          errors.name ? "contact-name-error" : undefined
+                        }
                         value={data.name}
                         onChange={(e) => setData("name", e.target.value)}
                         placeholder="Nama Anda"
                         className={inputClass}
                       />
                       {errors.name && (
-                        <p className="text-red-500 text-xs mt-1">
+                        <p
+                          id="contact-name-error"
+                          role="alert"
+                          className="text-red-500 text-xs mt-1"
+                        >
                           {errors.name}
                         </p>
                       )}
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-black mb-1.5">
+                      <label
+                        htmlFor="contact-company"
+                        className="block text-xs font-semibold text-black mb-1.5"
+                      >
                         Perusahaan
                       </label>
                       <input
+                        id="contact-company"
                         type="text"
                         value={data.company}
                         onChange={(e) => setData("company", e.target.value)}
@@ -200,10 +222,20 @@ export default function ContactSection() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-black mb-1.5">
+                    <label
+                      htmlFor="contact-needs"
+                      className="block text-xs font-semibold text-black mb-1.5"
+                    >
                       Kebutuhan <span className="text-red-400">*</span>
                     </label>
                     <textarea
+                      id="contact-needs"
+                      required
+                      aria-required="true"
+                      aria-invalid={!!errors.needs}
+                      aria-describedby={
+                        errors.needs ? "contact-needs-error" : undefined
+                      }
                       value={data.needs}
                       onChange={(e) => setData("needs", e.target.value)}
                       placeholder="Ceritakan kebutuhan distribusi atau pengiriman Anda..."
@@ -211,7 +243,11 @@ export default function ContactSection() {
                       className={`${inputClass} resize-none`}
                     />
                     {errors.needs && (
-                      <p className="text-red-500 text-xs mt-1">
+                      <p
+                        id="contact-needs-error"
+                        role="alert"
+                        className="text-red-500 text-xs mt-1"
+                      >
                         {errors.needs}
                       </p>
                     )}
@@ -219,10 +255,14 @@ export default function ContactSection() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label className="block text-xs font-semibold text-black mb-1.5">
+                      <label
+                        htmlFor="contact-destination"
+                        className="block text-xs font-semibold text-black mb-1.5"
+                      >
                         Kota Tujuan
                       </label>
                       <input
+                        id="contact-destination"
                         type="text"
                         value={data.destination_city}
                         onChange={(e) =>
@@ -233,18 +273,32 @@ export default function ContactSection() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-black mb-1.5">
+                      <label
+                        htmlFor="contact-phone"
+                        className="block text-xs font-semibold text-black mb-1.5"
+                      >
                         No. WhatsApp <span className="text-red-400">*</span>
                       </label>
                       <input
+                        id="contact-phone"
                         type="tel"
+                        required
+                        aria-required="true"
+                        aria-invalid={!!errors.phone}
+                        aria-describedby={
+                          errors.phone ? "contact-phone-error" : undefined
+                        }
                         value={data.phone}
                         onChange={(e) => setData("phone", e.target.value)}
                         placeholder="08xxxxxxxxxx"
                         className={inputClass}
                       />
                       {errors.phone && (
-                        <p className="text-red-500 text-xs mt-1">
+                        <p
+                          id="contact-phone-error"
+                          role="alert"
+                          className="text-red-500 text-xs mt-1"
+                        >
                           {errors.phone}
                         </p>
                       )}

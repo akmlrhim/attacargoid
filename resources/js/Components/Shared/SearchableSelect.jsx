@@ -8,12 +8,16 @@ export default function SearchableSelect({
   searchPlaceholder = "Cari...",
   emptyMessage = "Tidak ditemukan",
   className = "",
+  id,
+  "aria-labelledby": ariaLabelledBy,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const containerRef = useRef(null);
   const inputRef = useRef(null);
+  const triggerRef = useRef(null);
+  const listboxId = id ? `${id}-listbox` : undefined;
 
   const selected = options.find((option) => option.value === value) ?? null;
 
@@ -40,6 +44,12 @@ export default function SearchableSelect({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const closeDropdown = () => {
+    setIsOpen(false);
+    setQuery("");
+    triggerRef.current?.focus();
+  };
+
   useEffect(() => {
     setHighlightedIndex(0);
   }, [query, isOpen]);
@@ -52,8 +62,7 @@ export default function SearchableSelect({
 
   const selectOption = (option) => {
     onChange(option.value);
-    setIsOpen(false);
-    setQuery("");
+    closeDropdown();
   };
 
   const handleKeyDown = (event) => {
@@ -70,23 +79,28 @@ export default function SearchableSelect({
         selectOption(option);
       }
     } else if (event.key === "Escape") {
-      setIsOpen(false);
-      setQuery("");
+      closeDropdown();
     }
   };
 
   return (
     <div ref={containerRef} className={`relative ${className}`}>
       <button
+        ref={triggerRef}
+        id={id}
         type="button"
-        onClick={() => (isOpen ? setIsOpen(false) : openDropdown())}
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        aria-controls={listboxId}
+        aria-labelledby={ariaLabelledBy}
+        onClick={() => (isOpen ? closeDropdown() : openDropdown())}
         className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-gray-200 focus:border-navy focus:ring-2 focus:ring-navy/10 outline-none transition-all text-sm bg-white text-left cursor-pointer"
       >
-        <span className={selected ? "text-navy" : "text-gray-400"}>
+        <span className={selected ? "text-navy" : "text-gray-500"}>
           {selected ? selected.label : placeholder}
         </span>
         <svg
-          className={`w-4 h-4 text-gray-400 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          className={`w-4 h-4 text-gray-500 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -106,12 +120,13 @@ export default function SearchableSelect({
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder={searchPlaceholder}
+              aria-label={searchPlaceholder}
               className="w-full px-3 py-2 rounded-lg border border-gray-200 focus:border-navy focus:ring-2 focus:ring-navy/10 outline-none text-sm"
             />
           </div>
-          <ul role="listbox" className="max-h-56 overflow-y-auto py-1">
+          <ul id={listboxId} role="listbox" className="max-h-56 overflow-y-auto py-1">
             {filteredOptions.length === 0 ? (
-              <li className="px-4 py-3 text-sm text-gray-400">
+              <li className="px-4 py-3 text-sm text-gray-500">
                 {emptyMessage}
               </li>
             ) : (
