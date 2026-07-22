@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class ImageConverter
 {
     /**
-     * Maximum width (in pixels) for stored images. Larger images are scaled down.
+     * Default maximum width (in pixels) for stored images. Larger images are scaled down.
      */
     private const MAX_WIDTH = 1600;
 
@@ -24,8 +24,12 @@ class ImageConverter
      *
      * Returns the stored relative path (e.g. "services/abc.webp"). If the file
      * cannot be decoded as an image, it is stored as-is as a safe fallback.
+     *
+     * $maxWidth should match roughly 2x the widest the image is ever rendered at
+     * (retina headroom) — not the source photo's native resolution, otherwise
+     * the browser downloads far more bytes than the layout can ever show.
      */
-    public static function toWebp(UploadedFile $file, string $directory): string
+    public static function toWebp(UploadedFile $file, string $directory, ?int $maxWidth = null): string
     {
         $directory = trim($directory, '/');
 
@@ -35,7 +39,7 @@ class ImageConverter
             return $file->store($directory, 'public');
         }
 
-        $image = self::scaleDown($image);
+        $image = self::scaleDown($image, $maxWidth ?? self::MAX_WIDTH);
 
         ob_start();
         imagewebp($image, null, self::QUALITY);
@@ -73,16 +77,16 @@ class ImageConverter
         return $image instanceof GdImage ? $image : null;
     }
 
-    private static function scaleDown(GdImage $image): GdImage
+    private static function scaleDown(GdImage $image, int $maxWidth): GdImage
     {
         $width = imagesx($image);
         $height = imagesy($image);
 
-        if ($width <= self::MAX_WIDTH) {
+        if ($width <= $maxWidth) {
             return $image;
         }
 
-        $newWidth = self::MAX_WIDTH;
+        $newWidth = $maxWidth;
         $newHeight = (int) round($height * ($newWidth / $width));
 
         $resized = imagecreatetruecolor($newWidth, $newHeight);

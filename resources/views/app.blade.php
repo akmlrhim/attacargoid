@@ -4,20 +4,31 @@
 <head>
   <!-- Google Tag Manager -->
   <script>
-    (function(w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-        'gtm.start': new Date().getTime(),
-        event: 'gtm.js'
-      });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != 'dataLayer' ? '&l=' + l : '';
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'gtm.start': new Date().getTime(),
+      event: 'gtm.js'
+    });
+
+    // Deferred until the page is idle/loaded so GTM's request doesn't compete
+    // with the LCP image and critical CSS for bandwidth on the initial load.
+    function loadGtm() {
+      var f = document.getElementsByTagName('script')[0],
+        j = document.createElement('script');
       j.async = true;
-      j.src =
-        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-MRNC9C4X&l=dataLayer';
       f.parentNode.insertBefore(j, f);
-    })(window, document, 'script', 'dataLayer', 'GTM-MRNC9C4X');
+    }
+
+    if (document.readyState === 'complete') {
+      loadGtm();
+    } else {
+      window.addEventListener('load', function() {
+        ('requestIdleCallback' in window) ? requestIdleCallback(loadGtm, {
+          timeout: 4000
+        }) : setTimeout(loadGtm, 1);
+      });
+    }
   </script>
   <!-- End Google Tag Manager -->
 

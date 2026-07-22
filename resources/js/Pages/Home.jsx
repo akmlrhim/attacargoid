@@ -12,22 +12,13 @@ import {
   FaqSkeleton,
 } from "../Components/Skeletons/SectionSkeletons";
 
-// Below-fold sections are lazy-loaded so they don't block initial render.
-// motion (RotatingText) and Three.js are excluded from the
-// critical bundle this way — only downloaded after the hero is painted.
 const ScrollReveal = lazy(() => import("../Components/ReactBits/ScrollReveal"));
 const AboutSection = lazy(() => import("../Components/Sections/About"));
-const AdvantagesSection = lazy(
-  () => import("../Components/Sections/Advantages"),
-);
+const AdvantagesSection = lazy(() => import("../Components/Sections/Advantages"));
 const ServicesSection = lazy(() => import("../Components/Sections/Services"));
-const ProcessTimeline = lazy(
-  () => import("../Components/Sections/ProcessTimeline"),
-);
+const ProcessTimeline = lazy(() => import("../Components/Sections/ProcessTimeline"));
 const CoverageMap = lazy(() => import("../Components/Sections/CoverageMap"));
-const TestimonialsSection = lazy(
-  () => import("../Components/Sections/Testimonials"),
-);
+const TestimonialsSection = lazy(() => import("../Components/Sections/Testimonials"));
 const FaqSection = lazy(() => import("../Components/Sections/FAQ"));
 
 export default function Home({
@@ -58,11 +49,10 @@ export default function Home({
               textClassName="text-navy"
               wordAnimationEnd="bottom center"
             >
-              ATTA Cargo hadir sebagai mitra penerusan barang dan last mile
-              distribution terpercaya, dengan hub utama di Banjarmasin
-              menjangkau seluruh Kalimantan Selatan & Tengah. Kami berkomitmen
-              menghadirkan distribusi yang cepat, aman, dan terpantau — solusi
-              logistik terpercaya agar bisnis Anda tumbuh kuat bersama.
+              ATTA Cargo hadir sebagai mitra penerusan barang dan last mile distribution terpercaya,
+              dengan hub utama di Banjarmasin menjangkau seluruh Kalimantan Selatan & Tengah. Kami
+              berkomitmen menghadirkan distribusi yang cepat, aman, dan terpantau. Solusi logistik
+              terpercaya agar bisnis Anda tumbuh kuat bersama.
             </ScrollReveal>
           </Suspense>
         </div>

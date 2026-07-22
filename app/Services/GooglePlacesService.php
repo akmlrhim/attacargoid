@@ -52,6 +52,26 @@ class GooglePlacesService
     }
 
     /**
+     * Reviews + rating in one call, so callers needing both don't pay for two
+     * separate cache/lock round trips (see getReviews()/getRating() above).
+     *
+     * @return array{reviews: array<int, array{name: string, avatar: string|null, rating: int, text: string, date: string}>, rating: array{rating: mixed, total: mixed}|null}
+     */
+    public function getReviewsAndRating(): array
+    {
+        if (! $this->apiKey || ! $this->dataId) {
+            return ['reviews' => $this->store->read(), 'rating' => null];
+        }
+
+        $data = $this->getData();
+
+        return [
+            'reviews' => $this->store->sync($data['reviews'] ?? []),
+            'rating' => $data['rating'] ?? null,
+        ];
+    }
+
+    /**
      * Ambil data review dengan pola stale-while-revalidate + lock.
      *
      * Cache disimpan tanpa kadaluarsa; kesegaran dikontrol lewat `fetched_at`.

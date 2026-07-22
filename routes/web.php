@@ -38,13 +38,14 @@ Route::get('/', function () {
         apiKey: config('services.google_places.key', ''),
         dataId: config('services.google_places.place_id', ''),
     );
+    $placesData = $places->getReviewsAndRating();
 
     return Inertia::render('Home', [
         'services' => $services,
         'advantages' => $advantages,
         'coverageRegions' => $coverageRegions,
-        'reviews' => $places->getReviews(),
-        'googleRating' => $places->getRating(),
+        'reviews' => $placesData['reviews'],
+        'googleRating' => $placesData['rating'],
     ])->withViewData(['seo' => array_merge(
         pageSeo(
             'Jasa Ekspedisi & Cargo Kalimantan Terpercaya',
