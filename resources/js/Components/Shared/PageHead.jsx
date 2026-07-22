@@ -2,7 +2,7 @@ import { Head } from "@inertiajs/react";
 
 const APP_NAME = "ATTA Cargo";
 const DEFAULT_DESCRIPTION =
-  "ATTA Cargo - mitra penerusan barang & last mile distribution terpercaya dengan hub di Banjarmasin, menjangkau Kalimantan Selatan & Tengah.";
+  "ATTA Cargo - jasa ekspedisi & cargo terpercaya, hub di Banjarmasin. Melayani pengiriman barang, distribusi & logistik ke seluruh Kalimantan Selatan & Tengah.";
 const DEFAULT_IMAGE = "/images/hero/hero-1200.webp";
 
 function absoluteUrl(path) {

@@ -14,8 +14,8 @@ export default function Calculator() {
   return (
     <>
       <PageHead
-        title="Kalkulator Estimasi Tarif"
-        description="Hitung perkiraan biaya distribusi ATTA Cargo secara instan berdasarkan zona tujuan, berat, dan jenis layanan di wilayah Kalimantan."
+        title="Kalkulator Tarif Ongkir Cargo Kalimantan"
+        description="Cek estimasi ongkir & tarif cargo ATTA Cargo secara instan berdasarkan zona tujuan, berat, dan jenis layanan pengiriman di wilayah Kalimantan."
         path="/kalkulator"
       />
 
@@ -136,7 +136,7 @@ export default function Calculator() {
             <span className="text-orange font-medium">Kalkulator</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Kalkulator Estimasi Tarif Distribusi
+            Kalkulator Tarif Ongkir Cargo Kalimantan
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
             Hitung perkiraan biaya distribusi Anda secara instan. Angka yang

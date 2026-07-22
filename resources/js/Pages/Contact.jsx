@@ -12,8 +12,8 @@ export default function Kontak() {
   return (
     <>
       <PageHead
-        title="Kontak"
-        description={`Hubungi ATTA Cargo untuk kebutuhan distribusi dan penerusan barang Anda. Hub Banjarmasin — telepon ${phone} atau email ${email}.`}
+        title="Kontak Ekspedisi & Cargo Banjarmasin"
+        description={`Hubungi ATTA Cargo, jasa ekspedisi & cargo Banjarmasin, untuk kebutuhan pengiriman dan distribusi barang Anda — telepon ${phone} atau email ${email}.`}
         path="/kontak"
       />
 
@@ -148,7 +148,7 @@ export default function Kontak() {
             <span className="text-orange font-medium">Kontak</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Hubungi ATTA Cargo
+            Hubungi ATTA Cargo, Ekspedisi Banjarmasin
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
             Ada pertanyaan atau kebutuhan distribusi? Tim ATTA Cargo siap

@@ -29,7 +29,7 @@
   @php
     $appName = config('app.name', 'ATTA Cargo');
     $defaultDescription =
-        'ATTA Cargo - mitra penerusan barang & last mile distribution terpercaya dengan hub di Banjarmasin, menjangkau Kalimantan Selatan & Tengah.';
+        'ATTA Cargo - jasa ekspedisi & cargo terpercaya, hub di Banjarmasin. Melayani pengiriman barang, distribusi & logistik ke seluruh Kalimantan Selatan & Tengah.';
 
     $seo = array_merge(
         [

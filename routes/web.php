@@ -47,8 +47,8 @@ Route::get('/', function () {
         'googleRating' => $places->getRating(),
     ])->withViewData(['seo' => array_merge(
         pageSeo(
-            'Mitra Logistik Terpercaya di Kalimantan',
-            'ATTA Cargo, mitra penerusan barang & last mile distribution dengan hub di Banjarmasin. Distribusi cepat, aman, dan terpantau ke seluruh Kalimantan Selatan & Tengah.',
+            'Jasa Ekspedisi & Cargo Kalimantan Terpercaya',
+            'ATTA Cargo - jasa ekspedisi & cargo terpercaya, hub di Banjarmasin. Melayani pengiriman barang, distribusi & logistik ke seluruh Kalimantan Selatan & Tengah.',
             '/',
         ),
         ['jsonld' => faqSchemaJsonLd(CompanySetting::current())],
@@ -58,8 +58,8 @@ Route::get('/', function () {
 Route::get('/tentang-kami', function () {
     return Inertia::render('About')->withViewData(['seo' => array_merge(
         pageSeo(
-            'Tentang Kami',
-            'Mengenal ATTA Cargo (PT. Tumbuh Kuat Sejahtera), perusahaan jasa logistik penerusan barang & last mile distribution berbasis di Banjarmasin, Kalimantan Selatan.',
+            'Profil Perusahaan Jasa Ekspedisi Kalimantan',
+            'Mengenal ATTA Cargo (PT. Tumbuh Kuat Sejahtera), perusahaan jasa ekspedisi, cargo & logistik penerusan barang berbasis di Banjarmasin, Kalimantan Selatan.',
             '/tentang-kami',
         ),
         ['breadcrumbs' => [
@@ -83,7 +83,7 @@ Route::get('/layanan', function () {
                 '@type' => 'Service',
                 'name' => $service['title'],
                 'description' => trim(strip_tags($service['description'] ?? '')),
-                'serviceType' => 'Logistik & Distribusi Barang',
+                'serviceType' => 'Ekspedisi, Cargo & Distribusi Barang',
                 'areaServed' => 'Kalimantan',
                 'provider' => [
                     '@type' => 'Organization',
@@ -97,8 +97,8 @@ Route::get('/layanan', function () {
     return Inertia::render('Services', ['services' => $services])
         ->withViewData(['seo' => array_merge(
             pageSeo(
-                'Layanan',
-                'Solusi distribusi lengkap ATTA Cargo: penerusan barang, distribusi retail & modern trade, pengiriman B2B, proyek & industri, hingga pengiriman khusus di seluruh Kalimantan.',
+                'Layanan Ekspedisi & Distribusi Cargo Kalimantan',
+                'Layanan ekspedisi ATTA Cargo: penerusan barang, distribusi retail & modern trade, pengiriman B2B, proyek & industri ke seluruh Kalimantan Selatan & Tengah.',
                 '/layanan',
                 '/images/layanan.webp',
             ),
@@ -118,8 +118,8 @@ Route::get('/kalkulator', function () {
         'tariffServices' => TariffService::active()->get(['id', 'slug', 'label', 'note', 'multiplier']),
     ])->withViewData(['seo' => array_merge(
         pageSeo(
-            'Kalkulator Estimasi Tarif',
-            'Hitung perkiraan biaya distribusi ATTA Cargo secara instan berdasarkan zona tujuan, berat, dan jenis layanan di wilayah Kalimantan.',
+            'Kalkulator Tarif Ongkir Cargo Kalimantan',
+            'Cek estimasi ongkir & tarif cargo ATTA Cargo secara instan berdasarkan zona tujuan, berat, dan jenis layanan pengiriman di wilayah Kalimantan.',
             '/kalkulator',
         ),
         ['breadcrumbs' => [
@@ -142,8 +142,8 @@ Route::get('/kontak', function () {
         ],
     ])->withViewData(['seo' => array_merge(
         pageSeo(
-            'Kontak',
-            "Hubungi ATTA Cargo untuk kebutuhan distribusi dan penerusan barang Anda. Hub Banjarmasin — telepon {$company->phone} atau email {$company->email}.",
+            'Kontak Ekspedisi & Cargo Banjarmasin',
+            "Hubungi ATTA Cargo, jasa ekspedisi & cargo Banjarmasin, untuk kebutuhan pengiriman dan distribusi barang Anda — telepon {$company->phone} atau email {$company->email}.",
             '/kontak',
         ),
         ['breadcrumbs' => [

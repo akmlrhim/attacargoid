@@ -9,8 +9,8 @@ export default function About() {
   return (
     <>
       <PageHead
-        title="Tentang Kami"
-        description="Mengenal ATTA Cargo (PT. Tumbuh Kuat Sejahtera), perusahaan jasa logistik penerusan barang & last mile distribution berbasis di Banjarmasin, Kalimantan Selatan."
+        title="Profil Perusahaan Jasa Ekspedisi Kalimantan"
+        description="Mengenal ATTA Cargo (PT. Tumbuh Kuat Sejahtera), perusahaan jasa ekspedisi, cargo & logistik penerusan barang berbasis di Banjarmasin, Kalimantan Selatan."
         path="/tentang-kami"
       />
 
@@ -131,7 +131,7 @@ export default function About() {
             <span className="text-orange font-medium">Tentang Kami</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Tentang ATTA Cargo
+            Tentang ATTA Cargo, Ekspedisi Kalimantan
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
             Mengenal lebih dekat ATTA Cargo, mitra distribusi terpercaya yang

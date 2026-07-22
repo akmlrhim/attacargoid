@@ -10,8 +10,8 @@ export default function Services({ services = [] }) {
   return (
     <>
       <PageHead
-        title="Layanan"
-        description="Solusi distribusi lengkap ATTA Cargo: penerusan barang, distribusi retail & modern trade, pengiriman B2B, proyek & industri, hingga pengiriman khusus di seluruh Kalimantan."
+        title="Layanan Ekspedisi & Distribusi Cargo Kalimantan"
+        description="Layanan ekspedisi ATTA Cargo: penerusan barang, distribusi retail & modern trade, pengiriman B2B, proyek & industri ke seluruh Kalimantan Selatan & Tengah."
         path="/layanan"
         image="/images/layanan.webp"
       />
@@ -153,7 +153,7 @@ export default function Services({ services = [] }) {
             <span className="text-orange font-medium">Layanan</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Layanan Logistik & Distribusi Kalimantan
+            Layanan Ekspedisi, Logistik & Distribusi Kalimantan
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
             Solusi distribusi lengkap untuk kebutuhan bisnis Anda di seluruh

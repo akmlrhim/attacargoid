@@ -40,8 +40,8 @@ export default function Home({
   return (
     <>
       <PageHead
-        title="Mitra Logistik Terpercaya di Kalimantan"
-        description="ATTA Cargo, mitra penerusan barang & last mile distribution dengan hub di Banjarmasin. Distribusi cepat, aman, dan terpantau ke seluruh Kalimantan Selatan & Tengah."
+        title="Jasa Ekspedisi & Cargo Kalimantan Terpercaya"
+        description="ATTA Cargo - jasa ekspedisi & cargo terpercaya, hub di Banjarmasin. Melayani pengiriman barang, distribusi & logistik ke seluruh Kalimantan Selatan & Tengah."
         path="/"
       />
 
