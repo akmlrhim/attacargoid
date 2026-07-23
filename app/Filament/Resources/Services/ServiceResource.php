@@ -76,8 +76,7 @@ class ServiceResource extends Resource
 
             Section::make('Media & Pengaturan')
                 ->schema([
-                    WebpImageUpload::make('image_url', 'services')
-                        ->columnSpanFull(),
+                    ...WebpImageUpload::flexible('image_url', 'services'),
 
                     Toggle::make('is_active')
                         ->label('Aktif')

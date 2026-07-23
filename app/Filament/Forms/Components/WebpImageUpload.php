@@ -4,6 +4,10 @@ namespace App\Filament\Forms\Components;
 
 use App\Services\ImageConverter;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Component;
+use Filament\Schemas\Components\Utilities\Get;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class WebpImageUpload
@@ -18,7 +22,50 @@ class WebpImageUpload
      */
     public static function make(string $name, string $directory, string $label = 'Gambar', ?int $maxWidth = null): FileUpload
     {
-        return FileUpload::make($name)
+        return static::configureUpload(FileUpload::make($name), $directory, $label, $maxWidth);
+    }
+
+    /**
+     * Same as make(), but lets the admin pick between uploading a file or
+     * pasting an external image URL. Both write to the same `$name` column —
+     * pair this with HasFlexibleImage in the resource's Create/Edit pages to
+     * translate between the two on fill/save.
+     *
+     * @return array<int, Component>
+     */
+    public static function flexible(string $name, string $directory, string $label = 'Gambar', ?int $maxWidth = null): array
+    {
+        return [
+            Radio::make("{$name}_source")
+                ->label('Sumber Gambar')
+                ->options([
+                    'upload' => 'Unggah File',
+                    'link' => 'Link URL',
+                ])
+                ->inline()
+                ->live()
+                ->default('upload')
+                ->columnSpanFull(),
+
+            static::configureUpload(FileUpload::make("{$name}_file"), $directory, $label, $maxWidth)
+                ->visible(fn (Get $get) => $get("{$name}_source") !== 'link')
+                ->dehydrated(fn (Get $get) => $get("{$name}_source") !== 'link'),
+
+            TextInput::make("{$name}_link")
+                ->label('Link URL Gambar')
+                ->url()
+                ->maxLength(2048)
+                ->placeholder('https://contoh.com/gambar.jpg')
+                ->helperText('Gunakan gambar dari sumber eksternal tanpa upload.')
+                ->visible(fn (Get $get) => $get("{$name}_source") === 'link')
+                ->dehydrated(fn (Get $get) => $get("{$name}_source") === 'link')
+                ->columnSpanFull(),
+        ];
+    }
+
+    protected static function configureUpload(FileUpload $field, string $directory, string $label, ?int $maxWidth): FileUpload
+    {
+        return $field
             ->label($label)
             ->image()
             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp', 'image/gif'])

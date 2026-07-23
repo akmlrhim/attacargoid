@@ -2,11 +2,14 @@
 
 namespace App\Filament\Resources\Advantages\Pages;
 
+use App\Filament\Concerns\HasFlexibleImage;
 use App\Filament\Resources\Advantages\AdvantageResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateAdvantage extends CreateRecord
 {
+    use HasFlexibleImage;
+
     protected static string $resource = AdvantageResource::class;
 
     protected static bool $canCreateAnother = false;
@@ -14,5 +17,10 @@ class CreateAdvantage extends CreateRecord
     protected function getRedirectUrl(): string
     {
         return $this->getResource()::getUrl('index');
+    }
+
+    protected function mutateFormDataBeforeCreate(array $data): array
+    {
+        return $this->consolidateFlexibleImage($data, 'image_url');
     }
 }

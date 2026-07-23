@@ -12,29 +12,21 @@ export default function Kontak() {
   return (
     <>
       <PageHead
-        title="Kontak Ekspedisi & Cargo Banjarmasin"
-        description={`Hubungi ATTA Cargo, jasa ekspedisi & cargo Banjarmasin, untuk kebutuhan pengiriman dan distribusi barang Anda — telepon ${phone} atau email ${email}.`}
+        title="Kontak Jasa Cargo & Ekspedisi Banjarmasin"
+        tabTitle="Kontak"
+        description={`Hubungi ATTA Cargo, jasa pengiriman barang Banjarmasin & ekspedisi Kalimantan Selatan — telepon ${phone} atau email ${email}.`}
         path="/kontak"
       />
 
       {/* Hero */}
-      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
-        {/* Background photo */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/kontak-hero-1200.webp"
-            srcSet="/images/kontak-hero-800.webp 800w, /images/kontak-hero-1200.webp 1200w, /images/kontak-hero-1920.webp 1920w"
-            sizes="100vw"
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-navy-dark/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-navy-dark/20 to-transparent" />
-        </div>
+      <section className="relative flex flex-col justify-center overflow-hidden bg-navy-dark py-32 sm:py-40">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 100% at 50% 0%, #1a3a7a 0%, #060f26 65%)",
+          }}
+        />
 
         {/* Dot grid — left */}
         <svg
@@ -148,10 +140,11 @@ export default function Kontak() {
             <span className="text-orange font-medium">Kontak</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Hubungi ATTA Cargo, Ekspedisi Banjarmasin
+            Hubungi ATTA Cargo, Jasa Cargo Banjarmasin
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
-            Ada pertanyaan atau kebutuhan distribusi? Tim ATTA Cargo siap
+            Ada pertanyaan seputar jasa pengiriman barang Banjarmasin atau
+            ekspedisi Kalimantan Selatan &amp; Tengah? Tim ATTA Cargo siap
             membantu Anda.
           </p>
         </div>

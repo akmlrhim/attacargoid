@@ -440,6 +440,79 @@ export function AboutContentSkeleton() {
   );
 }
 
+/* ── Latest articles (Home page) ─────────────────────────────── */
+export function ArticlesSkeleton() {
+  return (
+    <section className="bg-white py-16 sm:py-24">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <LightTheme>
+          <div className="flex items-end justify-between gap-4 mb-10 sm:mb-14">
+            <Skeleton width={260} height={34} />
+            <Skeleton width={100} height={16} className="hidden sm:block" />
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+            <div>
+              <Skeleton
+                style={{ aspectRatio: "16 / 10", display: "block" }}
+                borderRadius={16}
+                className="mb-5"
+              />
+              <Skeleton width="85%" height={24} className="mb-2" />
+              <Skeleton width="60%" height={24} className="mb-3" />
+              <Skeleton width={120} height={14} />
+            </div>
+
+            <div className="flex flex-col divide-y divide-gray-100">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="flex items-start gap-4 py-4 first:pt-0 last:pb-0">
+                  <Skeleton width={88} height={88} borderRadius={12} />
+                  <div className="flex-1">
+                    <Skeleton width="90%" height={16} className="mb-1.5" />
+                    <Skeleton width="70%" height={16} className="mb-2" />
+                    <Skeleton width={90} height={12} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </LightTheme>
+      </div>
+    </section>
+  );
+}
+
+/* ── Articles grid (Artikel index page) ──────────────────────── */
+export function ArticlesGridSkeleton() {
+  return (
+    <section className="bg-white py-16 sm:py-24">
+      <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
+        <LightTheme>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {Array.from({ length: 9 }).map((_, i) => (
+              <div
+                key={i}
+                className="flex flex-col rounded-2xl overflow-hidden border border-gray-100 bg-white"
+              >
+                <Skeleton
+                  style={{ aspectRatio: "16 / 10", display: "block" }}
+                  borderRadius={0}
+                />
+                <div className="p-5">
+                  <Skeleton width="90%" height={18} className="mb-1.5" />
+                  <Skeleton width="60%" height={18} className="mb-3" />
+                  <Skeleton count={2} height={12} className="mb-1" />
+                  <Skeleton width={90} height={12} className="mt-3" />
+                </div>
+              </div>
+            ))}
+          </div>
+        </LightTheme>
+      </div>
+    </section>
+  );
+}
+
 /* ── Services list (Layanan page) ────────────────────────────── */
 export function ServicesListSkeleton() {
   return (

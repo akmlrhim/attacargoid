@@ -9,6 +9,7 @@ import {
   ProcessTimelineSkeleton,
   CoverageMapSkeleton,
   TestimonialsSkeleton,
+  ArticlesSkeleton,
   FaqSkeleton,
 } from "../Components/Skeletons/SectionSkeletons";
 
@@ -19,6 +20,7 @@ const ServicesSection = lazy(() => import("../Components/Sections/Services"));
 const ProcessTimeline = lazy(() => import("../Components/Sections/ProcessTimeline"));
 const CoverageMap = lazy(() => import("../Components/Sections/CoverageMap"));
 const TestimonialsSection = lazy(() => import("../Components/Sections/Testimonials"));
+const LatestArticles = lazy(() => import("../Components/Sections/LatestArticles"));
 const FaqSection = lazy(() => import("../Components/Sections/FAQ"));
 
 export default function Home({
@@ -27,12 +29,14 @@ export default function Home({
   coverageRegions = [],
   reviews = [],
   googleRating = null,
+  articles = [],
 }) {
   return (
     <>
       <PageHead
-        title="Jasa Ekspedisi & Cargo Kalimantan Terpercaya"
-        description="ATTA Cargo - jasa ekspedisi & cargo terpercaya, hub di Banjarmasin. Melayani pengiriman barang, distribusi & logistik ke seluruh Kalimantan Selatan & Tengah."
+        title="Jasa Ekspedisi Banjarmasin & Cargo Kalimantan Terpercaya"
+        tabTitle="Beranda"
+        description="ATTA Cargo — jasa ekspedisi & cargo Banjarmasin terpercaya, melayani pengiriman barang, distribusi & logistik ke Kalimantan Selatan & Kalimantan Tengah."
         path="/"
       />
 
@@ -80,6 +84,10 @@ export default function Home({
 
       <Suspense fallback={<TestimonialsSkeleton />}>
         <TestimonialsSection reviews={reviews} googleRating={googleRating} />
+      </Suspense>
+
+      <Suspense fallback={<ArticlesSkeleton />}>
+        <LatestArticles articles={articles} />
       </Suspense>
 
       <Suspense fallback={<FaqSkeleton />}>

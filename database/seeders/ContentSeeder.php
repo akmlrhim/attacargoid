@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Advantage;
-use App\Models\ProcessStep;
 use App\Models\Service;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +12,6 @@ class ContentSeeder extends Seeder
     {
         Service::truncate();
         Advantage::truncate();
-        ProcessStep::truncate();
 
         $services = [
             [
@@ -78,37 +76,6 @@ class ContentSeeder extends Seeder
 
         foreach ($advantages as $advantage) {
             Advantage::create(array_merge($advantage, ['is_active' => true]));
-        }
-
-        $processSteps = [
-            [
-                'step_number' => '01',
-                'title' => 'Penerimaan & Koordinasi',
-                'description' => 'Barang diterima melalui pelabuhan, gudang transit, atau titik distribusi sesuai instruksi pelanggan. Tim kami melakukan pengecekan dokumen, detail pengiriman, dan penyesuaian kebutuhan operasional.',
-                'sort_order' => 1,
-            ],
-            [
-                'step_number' => '02',
-                'title' => 'Sortir & Preparasi',
-                'description' => 'Barang diproses untuk penyesuaian rute distribusi, grouping area, pengecekan kondisi fisik, dan persiapan loading.',
-                'sort_order' => 2,
-            ],
-            [
-                'step_number' => '03',
-                'title' => 'Distribusi & Pengiriman',
-                'description' => 'Barang dikirim menggunakan armada yang sesuai dengan kebutuhan jenis muatan, volume, dan area tujuan.',
-                'sort_order' => 3,
-            ],
-            [
-                'step_number' => '04',
-                'title' => 'Monitoring & Update',
-                'description' => 'Tim operasional memberikan update status pengiriman secara aktif hingga barang diterima.',
-                'sort_order' => 4,
-            ],
-        ];
-
-        foreach ($processSteps as $step) {
-            ProcessStep::create(array_merge($step, ['is_active' => true]));
         }
     }
 }

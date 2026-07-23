@@ -58,8 +58,7 @@ class AdvantageResource extends Resource
                         ->extraInputAttributes(['style' => 'min-height: 14rem'])
                         ->columnSpanFull(),
 
-                    WebpImageUpload::make('image_url', 'advantages', maxWidth: 1300)
-                        ->columnSpanFull(),
+                    ...WebpImageUpload::flexible('image_url', 'advantages', maxWidth: 1300),
 
                     Toggle::make('is_active')
                         ->label('Aktif')

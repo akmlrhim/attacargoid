@@ -9,29 +9,21 @@ export default function About() {
   return (
     <>
       <PageHead
-        title="Profil Perusahaan Jasa Ekspedisi Kalimantan"
-        description="Mengenal ATTA Cargo (PT. Tumbuh Kuat Sejahtera), perusahaan jasa ekspedisi, cargo & logistik penerusan barang berbasis di Banjarmasin, Kalimantan Selatan."
+        title="Profil Perusahaan & Mitra Penerusan Barang Banjarmasin"
+        tabTitle="Tentang Kami"
+        description="Mengenal ATTA Cargo (PT. Tumbuh Kuat Sejahtera), vendor logistik & mitra penerusan barang di Banjarmasin, melayani ekspedisi ke Kalimantan Selatan & Tengah."
         path="/tentang-kami"
       />
 
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
-        {/* Background photo */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/tentang-hero-1200.webp"
-            srcSet="/images/tentang-hero-800.webp 800w, /images/tentang-hero-1200.webp 1200w, /images/tentang-hero-1920.webp 1920w"
-            sizes="100vw"
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-navy-dark/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-navy-dark/20 to-transparent" />
-        </div>
+      <section className="relative flex flex-col justify-center overflow-hidden bg-navy-dark py-32 sm:py-40">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 100% at 50% 0%, #1a3a7a 0%, #060f26 65%)",
+          }}
+        />
 
         {/* Dot grid — left */}
         <svg
@@ -131,11 +123,11 @@ export default function About() {
             <span className="text-orange font-medium">Tentang Kami</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Tentang ATTA Cargo, Ekspedisi Kalimantan
+            Tentang ATTA Cargo, Mitra Penerusan Barang Banjarmasin
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
-            Mengenal lebih dekat ATTA Cargo, mitra distribusi terpercaya yang
-            melayani seluruh wilayah Kalimantan.
+            Mengenal lebih dekat ATTA Cargo, vendor logistik &amp; mitra
+            penerusan barang terpercaya di seluruh Kalimantan Selatan &amp; Tengah.
           </p>
         </div>
       </section>

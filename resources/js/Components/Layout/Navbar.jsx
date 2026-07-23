@@ -4,25 +4,40 @@ import { Link, usePage } from "@inertiajs/react";
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
+  const moreRef = useRef(null);
+  const moreCloseTimer = useRef(null);
+
+  const openMore = () => {
+    clearTimeout(moreCloseTimer.current);
+    setMoreOpen(true);
+  };
+
+  const scheduleCloseMore = () => {
+    clearTimeout(moreCloseTimer.current);
+    moreCloseTimer.current = setTimeout(() => setMoreOpen(false), 200);
+  };
+
+  useEffect(() => () => clearTimeout(moreCloseTimer.current), []);
   const { url } = usePage();
 
   const isHome = url === "/" || url.startsWith("/?");
   const isAbout = url.startsWith("/tentang-kami");
   const isServices = url.startsWith("/layanan");
   const isKalkulator = url.startsWith("/kalkulator");
+  const isArtikel = url.startsWith("/artikel");
+  const isArtikelDetail = url.startsWith("/artikel/");
   const isKontak = url.startsWith("/kontak");
+
+  const isMoreActive = isAbout || isArtikel || isKontak;
 
   const activeKey = isHome
     ? "home"
-    : isAbout
-      ? "about"
-      : isServices
-        ? "services"
-        : isKalkulator
-          ? "kalkulator"
-          : isKontak
-            ? "kontak"
-            : null;
+    : isServices
+      ? "services"
+      : isKalkulator
+        ? "kalkulator"
+        : null;
 
   const navRef = useRef(null);
   const linkRefs = useRef({});
@@ -37,7 +52,19 @@ export default function Navbar() {
 
   useEffect(() => {
     setMobileOpen(false);
+    setMoreOpen(false);
   }, [url]);
+
+  useEffect(() => {
+    if (!moreOpen) return;
+    const onClickOutside = (e) => {
+      if (moreRef.current && !moreRef.current.contains(e.target)) {
+        setMoreOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, [moreOpen]);
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
@@ -60,7 +87,7 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", updateUnderline);
   }, [activeKey]);
 
-  const transparent = !scrolled && !mobileOpen;
+  const transparent = !scrolled && !mobileOpen && !isArtikelDetail;
 
   const linkCls = transparent
     ? "text-white hover:text-white hover:bg-white/10"
@@ -120,13 +147,74 @@ export default function Navbar() {
                 Beranda
               </Link>
 
-              <Link
-                ref={(el) => (linkRefs.current.about = el)}
-                href="/tentang-kami"
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isAbout ? activeCls : linkCls}`}
+              {/* "Perusahaan" dropdown */}
+              <div
+                ref={moreRef}
+                className="relative"
+                onMouseEnter={openMore}
+                onMouseLeave={scheduleCloseMore}
               >
-                Tentang Kami
-              </Link>
+                <button
+                  ref={(el) => (linkRefs.current.more = el)}
+                  type="button"
+                  onClick={() => setMoreOpen((open) => !open)}
+                  className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isMoreActive ? activeCls : linkCls}`}
+                  aria-haspopup="true"
+                  aria-expanded={moreOpen}
+                >
+                  Perusahaan
+                  <svg
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    className={`w-3.5 h-3.5 transition-transform duration-200 ${moreOpen ? "rotate-180" : ""}`}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </button>
+
+                <div
+                  className={`absolute left-0 top-full mt-2 w-72 rounded-sm bg-white border border-gray-100 shadow-xl overflow-hidden transition-all duration-150 ${
+                    moreOpen
+                      ? "opacity-100 translate-y-0 pointer-events-auto"
+                      : "opacity-0 -translate-y-1 pointer-events-none"
+                  }`}
+                >
+                  <Link
+                    href="/tentang-kami"
+                    className={`block px-5 py-3 border-l-4 text-sm transition-colors ${
+                      isAbout
+                        ? "border-l-navy bg-navy/5 text-navy font-medium"
+                        : "border-l-transparent text-gray-700 font-normal hover:bg-gray-50 hover:text-navy"
+                    }`}
+                  >
+                    Tentang Kami
+                  </Link>
+                  <Link
+                    href="/artikel"
+                    className={`block px-5 py-3 border-l-4 text-sm transition-colors ${
+                      isArtikel
+                        ? "border-l-navy bg-navy/5 text-navy font-medium"
+                        : "border-l-transparent text-gray-700 font-normal hover:bg-gray-50 hover:text-navy"
+                    }`}
+                  >
+                    Artikel
+                  </Link>
+                  <Link
+                    href="/kontak"
+                    className={`block px-5 py-3 border-l-4 text-sm transition-colors ${
+                      isKontak
+                        ? "border-l-navy bg-navy/5 text-navy font-medium"
+                        : "border-l-transparent text-gray-700 font-normal hover:bg-gray-50 hover:text-navy"
+                    }`}
+                  >
+                    Kontak
+                  </Link>
+                </div>
+              </div>
 
               <Link
                 ref={(el) => (linkRefs.current.services = el)}
@@ -142,14 +230,6 @@ export default function Navbar() {
                 className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isKalkulator ? activeCls : linkCls}`}
               >
                 Kalkulator
-              </Link>
-
-              <Link
-                ref={(el) => (linkRefs.current.kontak = el)}
-                href="/kontak"
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isKontak ? activeCls : linkCls}`}
-              >
-                Kontak
               </Link>
 
               {/* Sliding active-page underline */}
@@ -277,6 +357,17 @@ export default function Navbar() {
               }`}
             >
               Kalkulator
+            </Link>
+
+            <Link
+              href="/artikel"
+              className={`block px-4 py-3.5 text-base font-medium rounded-xl transition-colors ${
+                isArtikel
+                  ? "bg-navy/5 text-navy font-bold"
+                  : "text-black hover:text-navy hover:bg-gray-50"
+              }`}
+            >
+              Artikel
             </Link>
 
             <Link

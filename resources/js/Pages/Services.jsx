@@ -10,30 +10,22 @@ export default function Services({ services = [] }) {
   return (
     <>
       <PageHead
-        title="Layanan Ekspedisi & Distribusi Cargo Kalimantan"
-        description="Layanan ekspedisi ATTA Cargo: penerusan barang, distribusi retail & modern trade, pengiriman B2B, proyek & industri ke seluruh Kalimantan Selatan & Tengah."
+        title="Layanan Ekspedisi & Cargo Door to Door Kalimantan"
+        tabTitle="Layanan"
+        description="Layanan ekspedisi ATTA Cargo: jasa distribusi barang Kalimantan Selatan, pengiriman B2B, proyek & industri, hingga ekspedisi barang besar ke Kalimantan Tengah."
         path="/layanan"
         image="/images/layanan.webp"
       />
 
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
-        {/* Background photo */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/layanan-hero-1200.webp"
-            srcSet="/images/layanan-hero-800.webp 800w, /images/layanan-hero-1200.webp 1200w, /images/layanan-hero-1920.webp 1920w"
-            sizes="100vw"
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-navy-dark/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-navy-dark/20 to-transparent" />
-        </div>
+      <section className="relative flex flex-col justify-center overflow-hidden bg-navy-dark py-32 sm:py-40">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 100% at 50% 0%, #1a3a7a 0%, #060f26 65%)",
+          }}
+        />
 
         {/* Dot grid — left */}
         <svg
@@ -156,8 +148,9 @@ export default function Services({ services = [] }) {
             Layanan Ekspedisi, Logistik & Distribusi Kalimantan
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
-            Solusi distribusi lengkap untuk kebutuhan bisnis Anda di seluruh
-            wilayah Kalimantan.
+            Dari jasa cargo door to door, last mile delivery, hingga
+            pengiriman barang besar dari Banjarmasin — solusi distribusi
+            lengkap untuk bisnis Anda di seluruh Kalimantan Selatan &amp; Tengah.
           </p>
         </div>
       </section>

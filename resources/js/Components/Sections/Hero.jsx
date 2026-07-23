@@ -68,7 +68,7 @@ export default function HeroSection() {
 
           <p className="hero-anim-sub text-white text-[0.9rem] sm:text-md lg:text-lg max-w-2xl mx-auto mb-7 sm:mb-10 leading-relaxed">
             Bisnis Tumbuh Bersama. Mitra penerusan barang &amp; last mile
-            distribution dengan hub strategis di Banjarmasin.
+            delivery Kalimantan Selatan dengan hub strategis di Banjarmasin.
           </p>
 
           <div className="hero-anim-ctas flex flex-col sm:flex-row gap-3 sm:gap-4 mb-10 sm:mb-14 justify-center">

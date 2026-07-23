@@ -14,29 +14,21 @@ export default function Calculator() {
   return (
     <>
       <PageHead
-        title="Kalkulator Tarif Ongkir Cargo Kalimantan"
-        description="Cek estimasi ongkir & tarif cargo ATTA Cargo secara instan berdasarkan zona tujuan, berat, dan jenis layanan pengiriman di wilayah Kalimantan."
+        title="Kalkulator Ongkir & Ekspedisi Murah Banjarmasin"
+        tabTitle="Kalkulator"
+        description="Cek estimasi ongkir ekspedisi & cargo murah Banjarmasin ke Jakarta, Surabaya, dan kota lain secara instan berdasarkan zona, berat, dan jenis layanan."
         path="/kalkulator"
       />
 
       {/* Hero */}
-      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
-        {/* Background photo */}
-        <div className="absolute inset-0">
-          <img
-            src="/images/kalkulator-hero-1200.webp"
-            srcSet="/images/kalkulator-hero-800.webp 800w, /images/kalkulator-hero-1200.webp 1200w, /images/kalkulator-hero-1920.webp 1920w"
-            sizes="100vw"
-            alt=""
-            aria-hidden="true"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-navy-dark/80" />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-navy-dark/20 to-transparent" />
-        </div>
+      <section className="relative flex flex-col justify-center overflow-hidden bg-navy-dark py-32 sm:py-40">
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(120% 100% at 50% 0%, #1a3a7a 0%, #060f26 65%)",
+          }}
+        />
 
         {/* Dot grid — left */}
         <svg
@@ -136,11 +128,12 @@ export default function Calculator() {
             <span className="text-orange font-medium">Kalkulator</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Kalkulator Tarif Ongkir Cargo Kalimantan
+            Kalkulator Ongkir &amp; Ekspedisi Murah Banjarmasin
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
-            Hitung perkiraan biaya distribusi Anda secara instan. Angka yang
-            tampil bersifat estimasi. Biaya final dikonfirmasi oleh tim kami.
+            Hitung estimasi ongkir ekspedisi &amp; cargo murah Banjarmasin ke
+            Jakarta, Surabaya, dan kota lainnya secara instan. Biaya final
+            dikonfirmasi oleh tim kami.
           </p>
         </div>
       </section>
