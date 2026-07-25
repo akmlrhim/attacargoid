@@ -19,12 +19,12 @@ export function getFaqItems({ phone, email }) {
   {
     question: "Bagaimana cara menghitung estimasi biaya pengiriman?",
     answer:
-      "Gunakan Kalkulator di website: pilih zona tujuan dan jenis layanan, lalu masukkan berat barang. Estimasi dihitung dari tarif per kilogram zona dikalikan pengali layanan, dengan berat minimum tertentu (misalnya 5 kg). Angka yang muncul adalah estimasi; biaya final akan dikonfirmasi oleh tim kami.",
+      "Gunakan fitur Cek Ongkir di website: pilih zona tujuan dan jenis layanan, lalu masukkan berat barang. Estimasi dihitung dari tarif per kilogram zona dikalikan pengali layanan, dengan berat minimum tertentu (misalnya 5 kg). Angka yang muncul adalah estimasi; biaya final akan dikonfirmasi oleh tim kami.",
   },
   {
     question: "Berapa lama estimasi waktu pengiriman?",
     answer:
-      "Waktu pengiriman bergantung pada zona tujuan dan jenis layanan yang dipilih (contoh: layanan Reguler estimasi 3–6 hari). Estimasi waktu setiap layanan tampil di kalkulator. Untuk tujuan pelosok, tim kami akan menginformasikan estimasi yang lebih detail.",
+      "Waktu pengiriman bergantung pada zona tujuan dan jenis layanan yang dipilih (contoh: layanan Reguler estimasi 3–6 hari). Estimasi waktu setiap layanan tampil di fitur Cek Ongkir. Untuk tujuan pelosok, tim kami akan menginformasikan estimasi yang lebih detail.",
   },
   {
     question: "Bagaimana alur proses pengirimannya?",
@@ -44,12 +44,12 @@ export function getFaqItems({ phone, email }) {
   {
     question: "Apa perbedaan antar jenis layanan yang tersedia?",
     answer:
-      "Setiap jenis layanan berbeda pada estimasi waktu dan tarif per kilogramnya. Layanan yang lebih cepat memiliki pengali tarif lebih tinggi, sedangkan layanan Reguler lebih ekonomis dengan estimasi waktu yang lebih panjang. Anda bisa membandingkan estimasi waktu dan biaya tiap layanan langsung di Kalkulator pada website.",
+      "Setiap jenis layanan berbeda pada estimasi waktu dan tarif per kilogramnya. Layanan yang lebih cepat memiliki pengali tarif lebih tinggi, sedangkan layanan Reguler lebih ekonomis dengan estimasi waktu yang lebih panjang. Anda bisa membandingkan estimasi waktu dan biaya tiap layanan langsung di fitur Cek Ongkir pada website.",
   },
   {
     question: "Apakah ada berat minimum untuk setiap pengiriman?",
     answer:
-      "Ya, setiap pengiriman memiliki berat minimum yang menjadi dasar perhitungan (misalnya 5 kg). Jika berat barang di bawah minimum tersebut, biaya tetap dihitung berdasarkan berat minimum. Detailnya bisa Anda lihat saat menghitung estimasi di Kalkulator.",
+      "Ya, setiap pengiriman memiliki berat minimum yang menjadi dasar perhitungan (misalnya 5 kg). Jika berat barang di bawah minimum tersebut, biaya tetap dihitung berdasarkan berat minimum. Detailnya bisa Anda lihat saat menghitung estimasi di fitur Cek Ongkir.",
   },
   {
     question: "Bagaimana ketentuan pengemasan barang sebelum dikirim?",

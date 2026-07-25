@@ -288,7 +288,7 @@ export default function Services({ services = [] }) {
                 Konsultasi Sekarang
               </button>
               <button
-                onClick={() => router.visit("/kalkulator")}
+                onClick={() => router.visit("/cek-ongkir")}
                 className="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-black-dark font-bold px-7 py-3.5 rounded-full text-sm transition-colors border border-navy-dark/15"
               >
                 Hitung Tarif

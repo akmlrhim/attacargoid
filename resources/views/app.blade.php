@@ -107,7 +107,7 @@
         'Home' => 'hero/hero',
         'Services' => 'layanan-hero',
         'Contact' => 'kontak-hero',
-        'Calculator' => 'kalkulator-hero',
+        'Calculator' => 'cek-ongkir-hero',
         'About' => 'tentang-hero',
     ];
     $heroSlug = $heroPreloads[$page['component'] ?? null] ?? null;

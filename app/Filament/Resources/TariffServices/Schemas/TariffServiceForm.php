@@ -14,7 +14,7 @@ class TariffServiceForm
     {
         return $schema->components([
             Section::make('Informasi Layanan')
-                ->description('Nama dan keterangan jenis layanan yang ditampilkan di kalkulator.')
+                ->description('Nama dan keterangan jenis layanan yang ditampilkan di fitur Cek Ongkir.')
                 ->schema([
                     TextInput::make('label')
                         ->label('Nama Layanan')
@@ -51,7 +51,7 @@ class TariffServiceForm
 
                     Toggle::make('is_active')
                         ->label('Aktif')
-                        ->helperText('Nonaktifkan untuk menyembunyikan layanan dari kalkulator.')
+                        ->helperText('Nonaktifkan untuk menyembunyikan layanan dari fitur Cek Ongkir.')
                         ->default(true)
                         ->inline(false),
                 ])->columns(2),

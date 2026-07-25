@@ -14,14 +14,14 @@ class TariffZoneForm
     {
         return $schema->components([
             Section::make('Informasi Zona')
-                ->description('Nama zona tujuan pengiriman yang akan ditampilkan di kalkulator.')
+                ->description('Nama zona tujuan pengiriman yang akan ditampilkan di fitur Cek Ongkir.')
                 ->schema([
                     TextInput::make('label')
                         ->label('Nama Zona')
                         ->required()
                         ->maxLength(255)
                         ->placeholder('Contoh: Banjarmasin & Sekitarnya')
-                        ->helperText('Nama ini yang akan muncul di dropdown kalkulator.')
+                        ->helperText('Nama ini yang akan muncul di dropdown Cek Ongkir.')
                         ->live(onBlur: true)
                         ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state)))
                         ->columnSpanFull(),
@@ -55,7 +55,7 @@ class TariffZoneForm
 
                     Toggle::make('is_active')
                         ->label('Aktif')
-                        ->helperText('Nonaktifkan untuk menyembunyikan zona dari kalkulator.')
+                        ->helperText('Nonaktifkan untuk menyembunyikan zona dari fitur Cek Ongkir.')
                         ->default(true)
                         ->inline(false),
                 ])->columns(2),

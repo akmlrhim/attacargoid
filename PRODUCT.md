@@ -8,14 +8,14 @@ brand
 
 Dua segmen yang mengunjungi situs secara bersamaan:
 
-- **Pemilik UMKM/toko online**: mencari mitra pengiriman barang dalam jumlah reguler, sering membuka situs dari HP di sela kerja, butuh kepercayaan cepat dan estimasi harga yang jelas (Kalkulator).
+- **Pemilik UMKM/toko online**: mencari mitra pengiriman barang dalam jumlah reguler, sering membuka situs dari HP di sela kerja, butuh kepercayaan cepat dan estimasi harga yang jelas (Cek Ongkir).
 - **Perusahaan/distributor skala besar**: mengevaluasi kredibilitas mitra logistik dari desktop, mencari bukti jangkauan, armada, dan pengalaman operasional (hub Banjarmasin, last-mile distribution).
 
-Job utama di semua segmen: memutuskan apakah ATTA Cargo cukup terpercaya dan cukup jelas prosesnya untuk dihubungi — baik lewat konsultasi langsung maupun kalkulator harga mandiri.
+Job utama di semua segmen: memutuskan apakah ATTA Cargo cukup terpercaya dan cukup jelas prosesnya untuk dihubungi — baik lewat konsultasi langsung maupun cek ongkir mandiri.
 
 ## Product Purpose
 
-Situs marketing untuk ATTA Cargo, penyedia jasa penerusan barang & distribusi last-mile dengan hub strategis di Banjarmasin. Halaman: Beranda, Tentang Kami, Layanan, Kalkulator harga, Kontak. Tujuannya mengonversi pengunjung menjadi leads (konsultasi/WhatsApp) dengan membangun kepercayaan lewat kejelasan layanan, cakupan wilayah, dan bukti sosial (testimoni), bukan sekadar tampil modern.
+Situs marketing untuk ATTA Cargo, penyedia jasa penerusan barang & distribusi last-mile dengan hub strategis di Banjarmasin. Halaman: Beranda, Tentang Kami, Layanan, Cek Ongkir, Kontak. Tujuannya mengonversi pengunjung menjadi leads (konsultasi/WhatsApp) dengan membangun kepercayaan lewat kejelasan layanan, cakupan wilayah, dan bukti sosial (testimoni), bukan sekadar tampil modern.
 
 ## Brand Personality
 

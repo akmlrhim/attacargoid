@@ -26,7 +26,7 @@ class TariffZoneResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Zona Tarif';
 
-    protected static \UnitEnum|string|null $navigationGroup = 'Kalkulator';
+    protected static \UnitEnum|string|null $navigationGroup = 'Cek Ongkir';
 
     protected static ?int $navigationSort = 3;
 

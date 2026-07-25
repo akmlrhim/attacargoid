@@ -24,7 +24,7 @@ export default function Navbar() {
   const isHome = url === "/" || url.startsWith("/?");
   const isAbout = url.startsWith("/tentang-kami");
   const isServices = url.startsWith("/layanan");
-  const isKalkulator = url.startsWith("/kalkulator");
+  const isCekOngkir = url.startsWith("/cek-ongkir");
   const isArtikel = url.startsWith("/artikel");
   const isArtikelDetail = url.startsWith("/artikel/");
   const isKontak = url.startsWith("/kontak");
@@ -35,8 +35,8 @@ export default function Navbar() {
     ? "home"
     : isServices
       ? "services"
-      : isKalkulator
-        ? "kalkulator"
+      : isCekOngkir
+        ? "cekOngkir"
         : null;
 
   const navRef = useRef(null);
@@ -225,11 +225,11 @@ export default function Navbar() {
               </Link>
 
               <Link
-                ref={(el) => (linkRefs.current.kalkulator = el)}
-                href="/kalkulator"
-                className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isKalkulator ? activeCls : linkCls}`}
+                ref={(el) => (linkRefs.current.cekOngkir = el)}
+                href="/cek-ongkir"
+                className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${isCekOngkir ? activeCls : linkCls}`}
               >
-                Kalkulator
+                Cek Ongkir
               </Link>
 
               {/* Sliding active-page underline */}
@@ -349,14 +349,14 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="/kalkulator"
+              href="/cek-ongkir"
               className={`block px-4 py-3.5 text-base font-medium rounded-xl transition-colors ${
-                isKalkulator
+                isCekOngkir
                   ? "bg-navy/5 text-navy font-bold"
                   : "text-black hover:text-navy hover:bg-gray-50"
               }`}
             >
-              Kalkulator
+              Cek Ongkir
             </Link>
 
             <Link

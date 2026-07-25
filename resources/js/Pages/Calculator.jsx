@@ -14,10 +14,10 @@ export default function Calculator() {
   return (
     <>
       <PageHead
-        title="Kalkulator Ongkir & Ekspedisi Murah Banjarmasin"
-        tabTitle="Kalkulator"
+        title="Cek Ongkir & Ekspedisi Murah Banjarmasin"
+        tabTitle="Cek Ongkir"
         description="Cek estimasi ongkir ekspedisi & cargo murah Banjarmasin ke Jakarta, Surabaya, dan kota lain secara instan berdasarkan zona, berat, dan jenis layanan."
-        path="/kalkulator"
+        path="/cek-ongkir"
       />
 
       {/* Hero */}
@@ -125,10 +125,10 @@ export default function Calculator() {
               Beranda
             </a>
             <span className="text-white select-none">/</span>
-            <span className="text-orange font-medium">Kalkulator</span>
+            <span className="text-orange font-medium">Cek Ongkir</span>
           </nav>
           <h1 className="hero-anim-title text-3xl sm:text-5xl font-black text-white mb-4 leading-tight">
-            Kalkulator Ongkir &amp; Ekspedisi Murah Banjarmasin
+            Cek Ongkir &amp; Ekspedisi Murah Banjarmasin
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
             Hitung estimasi ongkir ekspedisi &amp; cargo murah Banjarmasin ke

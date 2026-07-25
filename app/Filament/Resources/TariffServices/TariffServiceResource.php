@@ -26,7 +26,7 @@ class TariffServiceResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Jenis Layanan';
 
-    protected static \UnitEnum|string|null $navigationGroup = 'Kalkulator';
+    protected static \UnitEnum|string|null $navigationGroup = 'Cek Ongkir';
 
     protected static ?int $navigationSort = 4;
 

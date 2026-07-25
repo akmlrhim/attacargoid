@@ -52,7 +52,7 @@ class ArticleSeeder extends Seeder
                     .'<h2>Layanan Ekspres</h2>'
                     .'<p>Diperuntukkan bagi pengiriman yang membutuhkan kecepatan lebih tinggi, dengan prioritas penanganan di setiap titik distribusi.</p>'
                     .'<h2>Cara Memilih Layanan yang Tepat</h2>'
-                    .'<ul><li>Pertimbangkan urgensi barang yang dikirim</li><li>Sesuaikan dengan anggaran pengiriman</li><li>Gunakan Kalkulator Tarif untuk membandingkan estimasi biaya</li></ul>',
+                    .'<ul><li>Pertimbangkan urgensi barang yang dikirim</li><li>Sesuaikan dengan anggaran pengiriman</li><li>Gunakan fitur Cek Ongkir untuk membandingkan estimasi biaya</li></ul>',
                 'image_url' => 'https://images.unsplash.com/photo-1578575436955-ef29da568c6d?auto=format&fit=crop&w=1200&q=80',
                 'image_alt' => 'Petugas gudang memeriksa paket',
                 'published_at' => Carbon::now()->subDays(14),
@@ -76,7 +76,7 @@ class ArticleSeeder extends Seeder
                     .'<h2>Faktor Penentu Tarif</h2>'
                     .'<ul><li>Zona atau wilayah tujuan pengiriman</li><li>Berat dan volume barang</li><li>Jenis layanan yang dipilih (reguler/ekspres)</li></ul>'
                     .'<h2>Cara Menghitung dengan Cepat</h2>'
-                    .'<p>Anda dapat menggunakan Kalkulator Tarif di website ATTA Cargo dengan memasukkan zona tujuan, berat barang, dan jenis layanan untuk mendapatkan estimasi biaya secara instan.</p>',
+                    .'<p>Anda dapat menggunakan fitur Cek Ongkir di website ATTA Cargo dengan memasukkan zona tujuan, berat barang, dan jenis layanan untuk mendapatkan estimasi biaya secara instan.</p>',
                 'image_url' => 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1200&q=80',
                 'image_alt' => 'Kalkulasi berat dan biaya pengiriman barang',
                 'published_at' => Carbon::now()->subDays(30),
