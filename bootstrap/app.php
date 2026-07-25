@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // Traffic reaches the origin through Cloudflare, so the visitor's real IP
+        // and scheme only exist in the forwarded headers.
+        $middleware->trustProxies(at: '*');
+
         $middleware->web(append: [
             SecurityHeaders::class,
             HandleInertiaRequests::class,
