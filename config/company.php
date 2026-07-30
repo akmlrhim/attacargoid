@@ -14,7 +14,7 @@ return [
     */
 
     'office' => [
-        'label' => env('OFFICE_LABEL', 'ATTA Cargo — Hub Banjarmasin'),
+        'label' => env('OFFICE_LABEL', 'ATTA Cargo Hub Banjarmasin'),
         'address' => env('OFFICE_ADDRESS', 'Jl. Raya Purna Sakti, Basirih, Kec. Banjarmasin Bar., Kota Banjarmasin, Kalimantan Selatan 70245'),
         'latitude' => (float) env('OFFICE_LATITUDE', -3.3333094966414754),
         'longitude' => (float) env('OFFICE_LONGITUDE', 114.56958427497203),

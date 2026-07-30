@@ -23,7 +23,7 @@ export default function AboutSection() {
         className="absolute inset-0 w-full h-full object-cover object-center"
       />
 
-      {/* Gradient overlay — gelap di kiri, transparan di kanan */}
+      {/* Gradient overlay - gelap di kiri, transparan di kanan */}
       <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/90 via-navy-dark/60 to-transparent" />
 
       {/* Content */}

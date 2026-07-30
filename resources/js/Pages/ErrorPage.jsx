@@ -24,7 +24,7 @@ const STATUS_CONTENT = {
   500: {
     title: "Terjadi Kesalahan",
     message:
-      "Ada masalah di server kami. Tim kami sudah diberi tahu — silakan coba lagi beberapa saat lagi.",
+      "Ada masalah di server kami. Tim kami sudah diberi tahu, silakan coba lagi beberapa saat lagi.",
   },
   503: {
     title: "Sedang Pemeliharaan",

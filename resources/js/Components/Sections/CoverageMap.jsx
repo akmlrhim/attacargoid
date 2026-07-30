@@ -98,7 +98,7 @@ function pinIcon({ hub, active }) {
 /**
  * Drives the map view from React state: fits the whole region into view when
  * the province changes, and smoothly flies to a city when it's selected. This
- * is the "position can change" piece — everything is derived from props/state.
+ * is the "position can change" piece - everything is derived from props/state.
  */
 function MapController({ cities, active }) {
   const map = useMap();
@@ -110,7 +110,7 @@ function MapController({ cities, active }) {
     map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10, animate: false });
   }, [map, cities]);
 
-  // Zoom in to the selected city — always jumps to a close-in zoom level so
+  // Zoom in to the selected city - always jumps to a close-in zoom level so
   // pressing a city gives a clear, visible zoom-in reaction.
   useEffect(() => {
     if (!active) {

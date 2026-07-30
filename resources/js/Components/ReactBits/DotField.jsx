@@ -162,7 +162,7 @@ const DotField = memo(({
 
       ctx.clearRect(0, 0, w, h);
 
-      // Cache gradient — recreate only after resize or first paint
+      // Cache gradient - recreate only after resize or first paint
       if (!gradCacheRef.current) {
         const g = ctx.createLinearGradient(0, 0, w, h);
         g.addColorStop(0, p.gradientFrom);

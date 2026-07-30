@@ -29,7 +29,7 @@ export const PROCESS_STEPS = [
   },
 ];
 
-/* Flat, on-brand SVG illustrations — one per step, no external assets. */
+/* Flat, on-brand SVG illustrations - one per step, no external assets. */
 
 export function Illustration1() {
   return (

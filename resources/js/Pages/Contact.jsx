@@ -14,7 +14,7 @@ export default function Kontak() {
       <PageHead
         title="Kontak Jasa Cargo & Ekspedisi Banjarmasin"
         tabTitle="Kontak"
-        description={`Hubungi ATTA Cargo, jasa pengiriman barang Banjarmasin & ekspedisi Kalimantan Selatan — telepon ${phone} atau email ${email}.`}
+        description={`Hubungi ATTA Cargo, jasa pengiriman barang Banjarmasin & ekspedisi Kalimantan Selatan. Telepon ${phone} atau email ${email}.`}
         path="/kontak"
       />
 
@@ -28,7 +28,7 @@ export default function Kontak() {
           }}
         />
 
-        {/* Dot grid — left */}
+        {/* Dot grid - left */}
         <svg
           className="pointer-events-none absolute left-0 top-0 h-full w-48 sm:w-72"
           aria-hidden="true"
@@ -73,7 +73,7 @@ export default function Kontak() {
           />
         </svg>
 
-        {/* Dot grid — right */}
+        {/* Dot grid - right */}
         <svg
           className="pointer-events-none absolute right-0 top-0 h-full w-48 sm:w-72"
           aria-hidden="true"

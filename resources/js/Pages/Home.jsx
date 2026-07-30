@@ -36,7 +36,7 @@ export default function Home({
       <PageHead
         title="Jasa Ekspedisi Banjarmasin & Cargo Kalimantan Terpercaya"
         tabTitle="Beranda"
-        description="ATTA Cargo — jasa ekspedisi & cargo Banjarmasin terpercaya, melayani pengiriman barang, distribusi & logistik ke Kalimantan Selatan & Kalimantan Tengah."
+        description="ATTA Cargo, jasa ekspedisi & cargo Banjarmasin terpercaya, melayani pengiriman barang, distribusi & logistik ke Kalimantan Selatan & Kalimantan Tengah."
         path="/"
       />
 

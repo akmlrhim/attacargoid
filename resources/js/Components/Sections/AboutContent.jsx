@@ -105,7 +105,7 @@ export default function AboutContent() {
                   {item.desc}
                 </p>
 
-                {/* Illustration — bleeds to the bottom edge and fades into the
+                {/* Illustration - bleeds to the bottom edge and fades into the
                     card background so its lower part is only partially visible. */}
                 <div className="relative -mx-5 -mb-5 mt-auto px-5 max-h-40 overflow-hidden">
                   {item.illustration}
@@ -131,7 +131,7 @@ export default function AboutContent() {
               "linear-gradient(135deg, #dbeafe 0%, #eff6ff 35%, #f5f8ff 65%, #ffffff 100%)",
           }}
         >
-          {/* Pixel grid — left */}
+          {/* Pixel grid - left */}
           <svg
             className="pointer-events-none absolute left-0 top-0 h-full w-52 sm:w-72"
             aria-hidden="true"
@@ -172,7 +172,7 @@ export default function AboutContent() {
             />
           </svg>
 
-          {/* Pixel grid — right */}
+          {/* Pixel grid - right */}
           <svg
             className="pointer-events-none absolute right-0 top-0 h-full w-52 sm:w-72"
             aria-hidden="true"

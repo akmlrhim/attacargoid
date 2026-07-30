@@ -35,7 +35,7 @@ class ContentSeeder extends Seeder
             [
                 'title' => 'Pengiriman B2B',
                 'short_title' => 'B2B',
-                'description' => 'Distribusi antar pelaku bisnis — dari supplier, distributor, pabrik, hingga toko besar dengan volume muatan besar dan konsisten.',
+                'description' => 'Distribusi antar pelaku bisnis, dari supplier, distributor, pabrik, hingga toko besar dengan volume muatan besar dan konsisten.',
                 'details' => [['item' => 'Supplier ke distributor'], ['item' => 'Pabrik ke toko besar'], ['item' => 'Volume muatan fleksibel'], ['item' => 'Kontrak pengiriman berkala']],
                 'image_url' => 'https://images.unsplash.com/photo-1566576912321-d58ddd7a6088?auto=format&fit=crop&w=900&q=80',
                 'image_alt' => 'Pengiriman B2B antar bisnis',
@@ -53,7 +53,7 @@ class ContentSeeder extends Seeder
             [
                 'title' => 'Pengiriman Khusus',
                 'short_title' => 'Custom',
-                'description' => 'Solusi custom sesuai kebutuhan operasional pelanggan — kami siap merancang skema distribusi yang paling efisien untuk bisnis Anda.',
+                'description' => 'Solusi custom sesuai kebutuhan operasional pelanggan. Kami siap merancang skema distribusi yang paling efisien untuk bisnis Anda.',
                 'details' => [['item' => 'Konsultasi kebutuhan khusus'], ['item' => 'Skema distribusi custom'], ['item' => 'SLA pengiriman fleksibel'], ['item' => 'Dukungan tim dedicated']],
                 'image_url' => 'https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=900&q=80',
                 'image_alt' => 'Armada pengiriman khusus',

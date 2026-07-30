@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from "react";
 
-// Lightweight canvas dot-field (no Three.js) — deferred until after first paint.
+// Lightweight canvas dot-field (no Three.js) - deferred until after first paint.
 const DotField = lazy(() => import("../ReactBits/DotField"));
 
 export default function HeroSection() {
@@ -19,7 +19,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-navy-dark">
-      {/* Background photo — self-hosted WebP, responsive srcSet, preloaded in <head> */}
+      {/* Background photo - self-hosted WebP, responsive srcSet, preloaded in <head> */}
       <div className="absolute inset-0">
         <img
           src="/images/hero/hero-1200.webp"
@@ -37,7 +37,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/50 via-transparent to-navy-dark/20" />
       </div>
 
-      {/* DotField (canvas) — deferred until after first paint */}
+      {/* DotField (canvas) - deferred until after first paint */}
       {showFx && (
         <div className="absolute inset-0 pointer-events-none">
           <Suspense fallback={null}>
@@ -57,7 +57,7 @@ export default function HeroSection() {
       {/* Content */}
       <div className="relative max-w-7xl mx-auto px-5 sm:px-6 lg:px-8 pt-28 sm:pt-36 pb-20 sm:pb-24 w-full">
         <div className="max-w-3xl mx-auto text-center">
-          {/* H1 rendered immediately — no opacity:0, LCP records at first paint */}
+          {/* H1 rendered immediately - no opacity:0, LCP records at first paint */}
           <h1 className="hero-anim-title text-[2rem] sm:text-6xl lg:text-[4.5rem] xl:text-[5.5rem] font-black text-white leading-[1.1] sm:leading-[1.02] tracking-tight mb-4 sm:mb-6">
             Solusi <span className="text-orange">Logistik</span>
             <br />

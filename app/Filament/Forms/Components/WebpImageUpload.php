@@ -27,7 +27,7 @@ class WebpImageUpload
 
     /**
      * Same as make(), but lets the admin pick between uploading a file or
-     * pasting an external image URL. Both write to the same `$name` column —
+     * pasting an external image URL. Both write to the same `$name` column -
      * pair this with HasFlexibleImage in the resource's Create/Edit pages to
      * translate between the two on fill/save.
      *

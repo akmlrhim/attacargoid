@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\CompanySetting;
+use App\Services\SocialImage;
 use Illuminate\Support\Facades\Storage;
 
 if (! function_exists('resolveImageUrl')) {
@@ -21,16 +22,24 @@ if (! function_exists('pageSeo')) {
     /**
      * Build the per-page SEO payload consumed by the root Blade template.
      *
-     * @return array{title: string, description: string, canonical: string, og_type: string, image: string}
+     * `image` is always a 1200x630 JPEG derivative rather than the site's own
+     * WebP asset: WhatsApp and Instagram unfurl WebP unreliably, so sharing a
+     * link would otherwise show no thumbnail at all. See App\Services\SocialImage.
+     *
+     * @return array{title: string, description: string, canonical: string, og_type: string, image: string, image_alt: string, image_width: int, image_height: int, image_type: string}
      */
-    function pageSeo(string $title, string $description, string $path, ?string $image = null): array
+    function pageSeo(string $title, string $description, string $path, ?string $image = null, ?string $imageAlt = null): array
     {
         return [
             'title' => $title,
             'description' => $description,
             'canonical' => url($path),
             'og_type' => 'website',
-            'image' => url($image ?? '/images/hero/hero-1200.webp'),
+            'image' => SocialImage::url($image ?? '/images/hero/hero-1200.webp'),
+            'image_alt' => $imageAlt ?? $title,
+            'image_width' => SocialImage::WIDTH,
+            'image_height' => SocialImage::HEIGHT,
+            'image_type' => 'image/jpeg',
         ];
     }
 }
@@ -39,7 +48,7 @@ if (! function_exists('faqSchemaJsonLd')) {
     /**
      * Build FAQPage JSON-LD for the home page FAQ section.
      *
-     * Mirrors the questions/answers in resources/js/constants/faq.js —
+     * Mirrors the questions/answers in resources/js/constants/faq.js -
      * keep both in sync manually if the FAQ content changes.
      *
      * @return array<string, mixed>

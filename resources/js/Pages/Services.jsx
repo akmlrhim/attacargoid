@@ -27,7 +27,7 @@ export default function Services({ services = [] }) {
           }}
         />
 
-        {/* Dot grid — left */}
+        {/* Dot grid - left */}
         <svg
           className="pointer-events-none absolute left-0 top-0 h-full w-48 sm:w-72"
           aria-hidden="true"
@@ -78,7 +78,7 @@ export default function Services({ services = [] }) {
           />
         </svg>
 
-        {/* Dot grid — right */}
+        {/* Dot grid - right */}
         <svg
           className="pointer-events-none absolute right-0 top-0 h-full w-48 sm:w-72"
           aria-hidden="true"
@@ -149,7 +149,7 @@ export default function Services({ services = [] }) {
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
             Dari jasa cargo door to door, last mile delivery, hingga
-            pengiriman barang besar dari Banjarmasin — solusi distribusi
+            pengiriman barang besar dari Banjarmasin. Solusi distribusi
             lengkap untuk bisnis Anda di seluruh Kalimantan Selatan &amp; Tengah.
           </p>
         </div>
@@ -169,7 +169,7 @@ export default function Services({ services = [] }) {
               "linear-gradient(135deg, #dbeafe 0%, #eff6ff 35%, #f5f8ff 65%, #ffffff 100%)",
           }}
         >
-          {/* Pixel grid — left */}
+          {/* Pixel grid - left */}
           <svg
             className="pointer-events-none absolute left-0 top-0 h-full w-52 sm:w-72"
             aria-hidden="true"
@@ -220,7 +220,7 @@ export default function Services({ services = [] }) {
             />
           </svg>
 
-          {/* Pixel grid — right */}
+          {/* Pixel grid - right */}
           <svg
             className="pointer-events-none absolute right-0 top-0 h-full w-52 sm:w-72"
             aria-hidden="true"

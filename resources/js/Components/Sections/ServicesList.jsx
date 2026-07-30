@@ -1,7 +1,11 @@
-import { router } from "@inertiajs/react";
+import { useState } from "react";
+import { Link } from "@inertiajs/react";
 
 function ServiceCard({ service, index }) {
   const isEven = index % 2 === 0;
+  const [isExpanded, setIsExpanded] = useState(false);
+  const details = service.details || [];
+  const detailsId = `service-details-${service.id}`;
 
   return (
     <article
@@ -46,31 +50,105 @@ function ServiceCard({ service, index }) {
           {service.title}
         </h2>
 
-        <div
-          className="text-black text-sm sm:text-base leading-relaxed mb-5 line-clamp-4 [&>p]:m-0 [&>ul]:list-disc [&>ul]:pl-4 [&>ul]:space-y-1"
-          dangerouslySetInnerHTML={{ __html: service.description }}
-        />
+        {/*
+          The last paragraph of the description is forced inline so the
+          "Baca selengkapnya" toggle continues the sentence instead of
+          sitting below it as a second button competing with the CTA.
+        */}
+        <div className="text-black text-sm sm:text-base leading-relaxed [&_p]:m-0 [&_p+p]:mt-3 [&_ul]:list-disc [&_ul]:pl-4 [&_ul]:space-y-1 [&_p:last-of-type]:inline">
+          <div
+            className="contents"
+            dangerouslySetInnerHTML={{ __html: service.description }}
+          />
 
-        {(service.details || []).length > 0 && (
-          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-6">
-            {service.details.map((d, i) => (
-              <li key={i} className="flex items-start gap-2.5">
+          {details.length > 0 && (
+            <>
+              {" "}
+              <button
+                type="button"
+                onClick={() => setIsExpanded((prev) => !prev)}
+                aria-expanded={isExpanded}
+                aria-controls={detailsId}
+                className="inline-flex items-center gap-1 align-baseline font-semibold text-navy underline decoration-2 decoration-orange/50 underline-offset-4 hover:text-navy-light hover:decoration-orange focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy rounded-sm transition-colors duration-200"
+              >
+                {isExpanded ? "Tutup" : "Baca selengkapnya"}
                 <svg
-                  className="w-4 h-4 text-orange shrink-0 mt-0.5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
+                  className={`w-3.5 h-3.5 shrink-0 transition-transform duration-300 ease-out motion-reduce:transition-none ${
+                    isExpanded ? "-rotate-180" : ""
+                  }`}
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                  aria-hidden="true"
                 >
                   <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                    clipRule="evenodd"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M19.5 8.25l-7.5 7.5-7.5-7.5"
                   />
                 </svg>
-                <span className="text-sm text-black font-medium">{d.item}</span>
-              </li>
-            ))}
-          </ul>
+              </button>
+            </>
+          )}
+        </div>
+
+        {details.length > 0 && (
+          <div
+            id={detailsId}
+            inert={!isExpanded}
+            className={`grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none ${
+              isExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-5">
+                {details.map((d, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
+                    <svg
+                      className="w-4 h-4 text-orange shrink-0 mt-0.5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <span className="text-sm text-black font-medium">
+                      {d.item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
         )}
+
+        <div className="mt-6">
+          <Link
+            href="/cek-ongkir"
+            className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full bg-navy-dark px-7 py-3.5 text-sm font-bold text-white hover:bg-navy transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
+          >
+            Cek Ongkir
+            <svg
+              className="w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"
+              />
+            </svg>
+          </Link>
+        </div>
       </div>
     </article>
   );

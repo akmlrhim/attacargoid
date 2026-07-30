@@ -26,7 +26,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-navy-dark text-white relative overflow-hidden">
-      {/* Dot grid — left */}
+      {/* Dot grid - left */}
       <svg
         className="pointer-events-none absolute left-0 top-0 h-full w-64 sm:w-96"
         aria-hidden="true"
@@ -67,7 +67,7 @@ export default function Footer() {
         />
       </svg>
 
-      {/* Dot grid — right */}
+      {/* Dot grid - right */}
       <svg
         className="pointer-events-none absolute right-0 top-0 h-full w-64 sm:w-96"
         aria-hidden="true"

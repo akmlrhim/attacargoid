@@ -41,7 +41,7 @@ const ScrollReveal = ({
         : window;
 
     // Scope every tween/ScrollTrigger to this instance so cleanup only reverts
-    // what we created — never other sections' triggers.
+    // what we created - never other sections' triggers.
     const ctx = gsap.context(() => {
       gsap.fromTo(
         el,
@@ -84,7 +84,7 @@ const ScrollReveal = ({
       // Blur is the single most expensive scroll-time paint. Instead of
       // recomputing a per-word blur on every scrub frame (which tanks the
       // framerate and makes Lenis feel choppy), reveal it once on the whole
-      // block when it enters the viewport — same look, a fraction of the cost.
+      // block when it enters the viewport - same look, a fraction of the cost.
       if (enableBlur) {
         gsap.fromTo(
           el,

@@ -303,7 +303,7 @@ export function PriceCalculatorSkeleton() {
             </LightTheme>
           </div>
 
-          {/* Result — default empty state (no estimate yet) */}
+          {/* Result - default empty state (no estimate yet) */}
           <div className="bg-navy p-7 sm:p-10 flex flex-col">
             <DarkTheme>
               <Skeleton width="60%" height={14} />

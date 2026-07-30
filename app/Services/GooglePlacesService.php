@@ -92,7 +92,7 @@ class GooglePlacesService
 
         $lock = Cache::lock(self::LOCK_KEY, 180);
 
-        // Kalau ada data lama, jangan menunggu — sajikan yang lama dan biarkan
+        // Kalau ada data lama, jangan menunggu - sajikan yang lama dan biarkan
         // satu proses lain yang me-refresh. Kalau belum ada data sama sekali,
         // tunggu sebentar supaya hasil pertama sempat terisi.
         try {

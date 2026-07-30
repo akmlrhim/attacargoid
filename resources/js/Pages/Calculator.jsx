@@ -30,7 +30,7 @@ export default function Calculator() {
           }}
         />
 
-        {/* Dot grid — left */}
+        {/* Dot grid - left */}
         <svg
           className="pointer-events-none absolute left-0 top-0 h-full w-48 sm:w-72"
           aria-hidden="true"
@@ -71,7 +71,7 @@ export default function Calculator() {
           />
         </svg>
 
-        {/* Dot grid — right */}
+        {/* Dot grid - right */}
         <svg
           className="pointer-events-none absolute right-0 top-0 h-full w-48 sm:w-72"
           aria-hidden="true"

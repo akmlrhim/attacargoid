@@ -74,7 +74,7 @@ button {
   animation: heroBadgeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   animation-delay: 0.05s;
 }
-/* Transform-only — no opacity change so Chrome records LCP immediately */
+/* Transform-only - no opacity change so Chrome records LCP immediately */
 .hero-anim-title {
   animation: heroTitleIn 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -140,7 +140,7 @@ button {
   color: #000;
 }
 
-/* Newspaper column text — 2-col on md+, readable measure */
+/* Newspaper column text - 2-col on md+, readable measure */
 .newspaper-columns {
   column-count: 1;
   column-gap: 2.5rem;

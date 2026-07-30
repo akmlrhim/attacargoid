@@ -26,7 +26,7 @@ class ImageConverter
      * cannot be decoded as an image, it is stored as-is as a safe fallback.
      *
      * $maxWidth should match roughly 2x the widest the image is ever rendered at
-     * (retina headroom) — not the source photo's native resolution, otherwise
+     * (retina headroom) - not the source photo's native resolution, otherwise
      * the browser downloads far more bytes than the layout can ever show.
      */
     public static function toWebp(UploadedFile $file, string $directory, ?int $maxWidth = null): string

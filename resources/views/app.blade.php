@@ -48,7 +48,11 @@
             'description' => $defaultDescription,
             'canonical' => url()->current(),
             'og_type' => 'website',
-            'image' => url('/images/hero/hero-1200.webp'),
+            'image' => \App\Services\SocialImage::url('/images/hero/hero-1200.webp'),
+            'image_alt' => $appName,
+            'image_width' => \App\Services\SocialImage::WIDTH,
+            'image_height' => \App\Services\SocialImage::HEIGHT,
+            'image_type' => 'image/jpeg',
             // Error pages (403/404/419/429/500/503) render the ErrorPage component
             // via Inertia::handleExceptionsUsing() and never call pageSeo(), so this
             // is the only place to keep them out of the index.
@@ -58,6 +62,11 @@
     );
 
     $fullTitle = $seo['title'] === $appName ? $seo['title'] : $seo['title'] . ' - ' . $appName;
+
+    // WhatsApp and Instagram truncate preview titles at roughly 65 characters,
+    // so share cards use the bare title and let og:site_name carry the brand
+    // instead of spending those characters on a " - ATTA Cargo" suffix.
+    $shareTitle = $seo['share_title'] ?? $seo['title'];
   @endphp
 
   <title data-inertia>{{ $fullTitle }}</title>
@@ -65,20 +74,37 @@
   <meta name="robots" content="{{ $seo['robots'] }}">
   <link data-inertia="canonical" rel="canonical" href="{{ $seo['canonical'] }}">
 
-  {{-- Open Graph --}}
-  <meta property="og:type" content="{{ $seo['og_type'] }}">
+  {{-- Open Graph. WhatsApp and Instagram only read what the server renders
+       (their crawlers don't run JS), so every share-critical tag lives here. --}}
+  <meta data-inertia="og-type" property="og:type" content="{{ $seo['og_type'] }}">
   <meta property="og:site_name" content="{{ $appName }}">
-  <meta data-inertia="og-title" property="og:title" content="{{ $fullTitle }}">
+  <meta data-inertia="og-title" property="og:title" content="{{ $shareTitle }}">
   <meta data-inertia="og-description" property="og:description" content="{{ $seo['description'] }}">
   <meta data-inertia="og-url" property="og:url" content="{{ $seo['canonical'] }}">
-  <meta data-inertia="og-image" property="og:image" content="{{ $seo['image'] }}">
   <meta property="og:locale" content="id_ID">
+
+  {{-- og:image. WhatsApp needs an explicit type + dimensions to render the
+       large card instead of the small thumbnail, and refuses to guess. --}}
+  <meta data-inertia="og-image" property="og:image" content="{{ $seo['image'] }}">
+  <meta data-inertia="og-image-secure" property="og:image:secure_url" content="{{ $seo['image'] }}">
+  <meta data-inertia="og-image-type" property="og:image:type" content="{{ $seo['image_type'] }}">
+  <meta data-inertia="og-image-width" property="og:image:width" content="{{ $seo['image_width'] }}">
+  <meta data-inertia="og-image-height" property="og:image:height" content="{{ $seo['image_height'] }}">
+  <meta data-inertia="og-image-alt" property="og:image:alt" content="{{ $seo['image_alt'] }}">
+
+  @if ($seo['og_type'] === 'article')
+    <meta data-inertia="article-published" property="article:published_time" content="{{ $seo['published_time'] ?? '' }}">
+    <meta data-inertia="article-modified" property="article:modified_time" content="{{ $seo['modified_time'] ?? '' }}">
+    <meta data-inertia="article-section" property="article:section" content="{{ $seo['section'] ?? 'Logistik' }}">
+    <meta data-inertia="article-author" property="article:author" content="{{ $appName }}">
+  @endif
 
   {{-- Twitter Card --}}
   <meta name="twitter:card" content="summary_large_image">
-  <meta data-inertia="twitter-title" name="twitter:title" content="{{ $fullTitle }}">
+  <meta data-inertia="twitter-title" name="twitter:title" content="{{ $shareTitle }}">
   <meta data-inertia="twitter-description" name="twitter:description" content="{{ $seo['description'] }}">
   <meta data-inertia="twitter-image" name="twitter:image" content="{{ $seo['image'] }}">
+  <meta data-inertia="twitter-image-alt" name="twitter:image:alt" content="{{ $seo['image_alt'] }}">
 
   {{-- Favicon --}}
   <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">

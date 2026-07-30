@@ -10,7 +10,7 @@ export default function ServicesSection() {
       ref={ref}
       className="relative overflow-hidden min-h-[60vh] sm:min-h-[70vh] lg:min-h-[75vh] flex items-center"
     >
-      {/* Background image — responsive srcSet; framed to keep the truck in view on narrow screens */}
+      {/* Background image - responsive srcSet; framed to keep the truck in view on narrow screens */}
       <img
         src="/images/layanan.webp"
         srcSet="/images/layanan-640.webp 640w, /images/layanan-960.webp 960w, /images/layanan.webp 1200w"
@@ -21,10 +21,10 @@ export default function ServicesSection() {
         className="absolute inset-0 w-full h-full object-cover object-[38%_center] sm:object-center"
       />
 
-      {/* Gradient overlay — dark on right, transparent on left */}
+      {/* Gradient overlay - dark on right, transparent on left */}
       <div className="absolute inset-0 bg-gradient-to-l from-navy-dark/90 via-navy-dark/60" />
 
-      {/* Content — right-aligned */}
+      {/* Content - right-aligned */}
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-24 w-full flex justify-end">
         <div className="sr sr-right max-w-lg">
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">

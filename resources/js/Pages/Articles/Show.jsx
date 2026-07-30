@@ -5,7 +5,11 @@ import ArticleCard from "../../Components/Articles/ArticleCard";
 import ShareLinks from "../../Components/Articles/ShareLinks";
 import formatDate from "../../utils/formatDate";
 
-export default function ArticleShow({ article, relatedArticles = [] }) {
+export default function ArticleShow({
+  article,
+  relatedArticles = [],
+  shareImage,
+}) {
   return (
     <>
       <PageHead
@@ -13,6 +17,11 @@ export default function ArticleShow({ article, relatedArticles = [] }) {
         description={article.excerpt}
         path={`/artikel/${article.slug}`}
         image={article.image_url}
+        shareImage={shareImage}
+        imageAlt={article.image_alt || article.title}
+        ogType="article"
+        publishedTime={article.published_at}
+        modifiedTime={article.updated_at}
       />
 
       <article className="bg-white pt-28 sm:pt-36 pb-16 sm:pb-24">

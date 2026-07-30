@@ -62,7 +62,7 @@ export default function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-start">
-          {/* Left — info kontak */}
+          {/* Left - info kontak */}
           <div className="sr sr-left space-y-5">
             {/* Info list */}
             <div className="divide-y divide-gray-100">
@@ -125,7 +125,7 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* Right — form */}
+          {/* Right - form */}
           <div className="sr sr-right">
             <div className="bg-white rounded-2xl p-5 sm:p-6 lg:p-8 border border-gray-100">
               {submitted ? (
@@ -343,7 +343,7 @@ export default function ContactSection() {
           </div>
         </div>
 
-        {/* Map — full width, posisi di-drive dari data backend */}
+        {/* Map - full width, posisi di-drive dari data backend */}
         {location?.position && (
           <div className="sr mt-10 sm:mt-12 rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
             <LocationMap
