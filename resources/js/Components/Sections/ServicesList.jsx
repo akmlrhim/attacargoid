@@ -294,8 +294,13 @@ function ServiceDetail({ service, onClose }) {
           data-lenis-prevent
           className="min-h-0 flex-1 overflow-y-auto overscroll-contain"
         >
-          {/* Image */}
-          <div className="aspect-[16/10] w-full shrink-0 overflow-hidden bg-navy/5 sm:aspect-[21/9]">
+          {/*
+            Image. The box is 3:2 because that is the ratio the service photos
+            actually are - a 16/10 or 21/9 box makes `object-cover` slice the
+            top and bottom off, which is very visible in the phone sheet where
+            the image spans the full width.
+          */}
+          <div className="aspect-[3/2] w-full shrink-0 overflow-hidden bg-navy/5">
             {service.image_url ? (
               <img
                 src={service.image_url}
@@ -375,8 +380,9 @@ function ServiceCard({ service, index, onOpenDetail }) {
         isEven ? "" : "lg:flex-row-reverse"
       }`}
     >
-      {/* Image */}
-      <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden bg-white sm:aspect-[21/9] lg:aspect-[4/3] lg:w-[45%]">
+      {/* Image - 3:2 at every breakpoint, matching the source photos so
+          `object-cover` has nothing to slice off. */}
+      <div className="relative aspect-[3/2] w-full shrink-0 overflow-hidden bg-white lg:w-[45%]">
         {service.image_url ? (
           <>
             <img

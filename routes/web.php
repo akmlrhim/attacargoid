@@ -84,9 +84,23 @@ Route::get('/layanan', function () {
      */
     $excerptLimit = 100;
 
+    /**
+     * `description` is a RichEditor field, so an ampersand is stored as
+     * `&amp;`. `strip_tags` drops the tags but leaves entities untouched, and
+     * the excerpt is rendered as plain text - decode it or the card literally
+     * reads "&amp;".
+     */
+    $toPlainText = fn (?string $html): string => trim(preg_replace(
+        // `\x{00A0}` is spelled out because a decoded `&nbsp;` is not matched
+        // by `\s`, and the editor emits those freely.
+        '/[\s\x{00A0}]+/u',
+        ' ',
+        html_entity_decode(strip_tags((string) $html), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+    ));
+
     $services = Service::active()->get(['id', 'title', 'short_title', 'description', 'details', 'image_url', 'image_alt'])
-        ->map(function ($s) use ($excerptLimit) {
-            $plain = trim(preg_replace('/\s+/', ' ', strip_tags((string) $s->description)));
+        ->map(function ($s) use ($excerptLimit, $toPlainText) {
+            $plain = $toPlainText($s->description);
             $excerpt = Str::limit($plain, $excerptLimit, preserveWords: true);
 
             return array_merge($s->toArray(), [
@@ -105,7 +119,7 @@ Route::get('/layanan', function () {
             'item' => [
                 '@type' => 'Service',
                 'name' => $service['title'],
-                'description' => trim(strip_tags($service['description'] ?? '')),
+                'description' => $toPlainText($service['description'] ?? ''),
                 'serviceType' => 'Ekspedisi, Cargo & Distribusi Barang',
                 'areaServed' => 'Kalimantan',
                 'provider' => [
