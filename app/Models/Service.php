@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\HasSortOrder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
 
 class Service extends Model
@@ -14,6 +15,7 @@ class Service extends Model
         'title',
         'short_title',
         'slug',
+        'service_category_id',
         'description',
         'details',
         'image_url',
@@ -65,8 +67,26 @@ class Service extends Model
         return 'slug';
     }
 
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(ServiceCategory::class, 'service_category_id');
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true)->orderBy('sort_order');
+    }
+
+    /**
+     * Narrow the list to one category, identified by its slug. An unknown or
+     * empty slug is a no-op so the public page can pass the query string
+     * straight through without validating it first.
+     */
+    public function scopeInCategory($query, ?string $categorySlug)
+    {
+        return $query->when(
+            filled($categorySlug),
+            fn ($q) => $q->whereHas('category', fn ($c) => $c->where('slug', $categorySlug)),
+        );
     }
 }

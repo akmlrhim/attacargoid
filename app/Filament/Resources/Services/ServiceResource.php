@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Services;
 
 use App\Filament\Forms\Components\WebpImageUpload;
+use App\Filament\Resources\ServiceCategories\Schemas\ServiceCategoryForm;
 use App\Models\Service;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
@@ -10,6 +11,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
@@ -17,6 +19,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
@@ -51,6 +54,15 @@ class ServiceResource extends Resource
                     TextInput::make('slug')
                         ->hidden()
                         ->dehydrated(),
+
+                    Select::make('service_category_id')
+                        ->label('Kategori')
+                        ->relationship('category', 'name')
+                        ->searchable()
+                        ->preload()
+                        ->placeholder('Tanpa kategori')
+                        ->helperText('Dipakai sebagai filter di halaman Layanan.')
+                        ->createOptionForm(fn (Schema $schema): Schema => ServiceCategoryForm::configure($schema)),
 
                     RichEditor::make('description')
                         ->label('Deskripsi')
@@ -100,6 +112,12 @@ class ServiceResource extends Resource
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('category.name')
+                    ->label('Kategori')
+                    ->badge()
+                    ->placeholder('Tanpa kategori')
+                    ->sortable(),
+
                 TextColumn::make('short_title')
                     ->label('Judul Tab')
                     ->searchable()
@@ -116,6 +134,12 @@ class ServiceResource extends Resource
             ])
             ->defaultSort('sort_order')
             ->filters([
+                SelectFilter::make('service_category_id')
+                    ->label('Kategori')
+                    ->relationship('category', 'name')
+                    ->searchable()
+                    ->preload(),
+
                 TernaryFilter::make('is_active')->label('Status Aktif'),
             ])
             ->recordActions([

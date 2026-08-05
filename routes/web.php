@@ -6,9 +6,11 @@ use App\Models\Article;
 use App\Models\CompanySetting;
 use App\Models\CoverageArea;
 use App\Models\Service;
+use App\Models\ServiceCategory;
 use App\Models\TariffService;
 use App\Models\TariffZone;
 use App\Services\GooglePlacesService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
@@ -76,7 +78,7 @@ Route::get('/tentang-kami', function () {
     )]);
 })->name('about');
 
-Route::get('/layanan', function () {
+Route::get('/layanan', function (Request $request) {
     /**
      * Cards only show a trimmed excerpt; the full description and the detail
      * points are revealed together in the modal / bottom sheet, so the excerpt
@@ -98,17 +100,54 @@ Route::get('/layanan', function () {
         html_entity_decode(strip_tags((string) $html), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
     ));
 
-    $services = Service::active()->get(['id', 'title', 'short_title', 'description', 'details', 'image_url', 'image_alt'])
+    $services = Service::active()
+        ->with('category:id,name,slug,is_active')
+        ->get(['id', 'service_category_id', 'title', 'short_title', 'description', 'details', 'image_url', 'image_alt'])
         ->map(function ($s) use ($excerptLimit, $toPlainText) {
             $plain = $toPlainText($s->description);
             $excerpt = Str::limit($plain, $excerptLimit, preserveWords: true);
+
+            /**
+             * A service whose category was deactivated has no chip to sit
+             * under, so it is treated as uncategorised and only appears in
+             * "Semua" rather than disappearing from the page entirely.
+             */
+            $category = $s->category?->is_active ? $s->category : null;
 
             return array_merge($s->toArray(), [
                 'image_url' => resolveImageUrl($s->image_url),
                 'description_excerpt' => $excerpt,
                 'description_is_truncated' => $excerpt !== $plain,
+                'category' => $category ? ['name' => $category->name, 'slug' => $category->slug] : null,
             ]);
         });
+
+    /**
+     * Only categories that actually have a visible service get a filter chip -
+     * an empty one would just be a dead end for the visitor.
+     */
+    $usedCategorySlugs = $services->pluck('category.slug')->filter()->unique();
+
+    $categories = ServiceCategory::active()
+        ->whereIn('slug', $usedCategorySlugs)
+        ->get(['name', 'slug'])
+        ->map(fn ($c) => [
+            'name' => $c->name,
+            'slug' => $c->slug,
+            'count' => $services->where('category.slug', $c->slug)->count(),
+        ])
+        ->values();
+
+    /** Unknown slugs fall back to "Semua Kategori" instead of an empty list. */
+    $activeCategory = $request->query('kategori');
+    $activeCategory = $usedCategorySlugs->contains($activeCategory) ? $activeCategory : null;
+
+    /**
+     * The search box filters in the browser; this only seeds its initial value
+     * so a shared `?q=` link opens already filtered. Capped because the whole
+     * string is echoed back into the page as an input value.
+     */
+    $activeSearch = Str::limit(trim((string) $request->query('q')), 80, '');
 
     $serviceSchema = [
         '@context' => 'https://schema.org',
@@ -131,7 +170,12 @@ Route::get('/layanan', function () {
         ])->all(),
     ];
 
-    return Inertia::render('Services', ['services' => $services])
+    return Inertia::render('Services', [
+        'services' => $services,
+        'categories' => $categories,
+        'activeCategory' => $activeCategory,
+        'activeSearch' => $activeSearch,
+    ])
         ->withViewData(['seo' => array_merge(
             pageSeo(
                 'Layanan Ekspedisi & Cargo Door to Door Kalimantan',
