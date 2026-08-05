@@ -10,25 +10,25 @@ use Filament\Schemas\Schema;
 
 class Dashboard extends BaseDashboard
 {
-	use HasFiltersForm;
+    use HasFiltersForm;
 
-	public function filtersForm(Schema $schema): Schema
-	{
-		return $schema
-			->components([
-				Section::make()
-					->schema([
-						DatePicker::make('startDate')
-							->label('Dari Tanggal')
-							->native(false)
-							->default(today()->subDays(13)),
-						DatePicker::make('endDate')
-							->label('Sampai Tanggal')
-							->native(false)
-							->default(today()),
-					])
-					->columns(2)
-					->columnSpanFull(),
-			]);
-	}
+    public function filtersForm(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make()
+                    ->schema([
+                        DatePicker::make('startDate')
+                            ->label('Dari Tanggal')
+                            ->native(false)
+                            ->default(today()->subDays(13)),
+                        DatePicker::make('endDate')
+                            ->label('Sampai Tanggal')
+                            ->native(false)
+                            ->default(today()),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull(),
+            ]);
+    }
 }
