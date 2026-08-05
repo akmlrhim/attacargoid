@@ -13,9 +13,14 @@ class EditArticle extends EditRecord
 
     protected static string $resource = ArticleResource::class;
 
+    /**
+     * Save is mirrored from the form into the header so a long article can be
+     * saved without scrolling to the bottom first.
+     */
     protected function getHeaderActions(): array
     {
         return [
+            $this->getSaveFormAction()->formId('form'),
             DeleteAction::make(),
         ];
     }

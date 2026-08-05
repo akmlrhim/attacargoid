@@ -129,6 +129,21 @@ class ManageCompanySettings extends Page
             ->statePath('data');
     }
 
+    /**
+     * Mirrors the footer's save button into the page header. This one calls the
+     * Livewire method directly rather than submitting, because a header action
+     * is rendered outside the `<form>` element and so cannot submit it.
+     */
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('saveHeader')
+                ->label('Simpan')
+                ->action(fn () => $this->save())
+                ->keyBindings(['mod+s']),
+        ];
+    }
+
     public function save(): void
     {
         $data = $this->form->getState();
