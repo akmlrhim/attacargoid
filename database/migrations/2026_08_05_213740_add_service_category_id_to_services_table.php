@@ -6,14 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * The foreign key is nullable on purpose: services created before this
-     * migration have no category, and Filament writes a `BelongsTo` foreign key
-     * only after the record itself is saved. Uncategorised services still
-     * appear under "Semua" on the public page.
-     */
     public function up(): void
     {
         Schema::table('services', function (Blueprint $table) {
