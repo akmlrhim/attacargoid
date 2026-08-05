@@ -6,7 +6,12 @@ import { ServicesListSkeleton } from "../Components/Skeletons/SectionSkeletons";
 
 const ServicesList = lazy(() => import("../Components/Sections/ServicesList"));
 
-export default function Services({ services = [] }) {
+export default function Services({
+  services = [],
+  categories = [],
+  activeCategory = null,
+  activeSearch = "",
+}) {
   return (
     <>
       <PageHead
@@ -18,7 +23,12 @@ export default function Services({ services = [] }) {
       />
 
       {/* ── Hero ── */}
-      <section className="relative flex flex-col justify-center overflow-hidden bg-navy-dark py-32 sm:py-40">
+      {/*
+        The top padding clears the fixed navbar and is unchanged; only the
+        bottom is trimmed, so the filter bar that follows sits near the hero
+        instead of a full section gap below it.
+      */}
+      <section className="relative flex flex-col justify-center overflow-hidden bg-navy-dark pb-20 pt-32 sm:pb-24 sm:pt-40">
         <div
           className="absolute inset-0"
           style={{
@@ -52,22 +62,12 @@ export default function Services({ services = [] }) {
                 fillOpacity="0.07"
               />
             </pattern>
-            <linearGradient
-              id="layanan-fade-left"
-              x1="0"
-              y1="0"
-              x2="1"
-              y2="0"
-            >
+            <linearGradient id="layanan-fade-left" x1="0" y1="0" x2="1" y2="0">
               <stop offset="0%" stopColor="white" stopOpacity="1" />
               <stop offset="100%" stopColor="white" stopOpacity="0" />
             </linearGradient>
             <mask id="layanan-mask-left">
-              <rect
-                width="100%"
-                height="100%"
-                fill="url(#layanan-fade-left)"
-              />
+              <rect width="100%" height="100%" fill="url(#layanan-fade-left)" />
             </mask>
           </defs>
           <rect
@@ -103,13 +103,7 @@ export default function Services({ services = [] }) {
                 fillOpacity="0.07"
               />
             </pattern>
-            <linearGradient
-              id="layanan-fade-right"
-              x1="1"
-              y1="0"
-              x2="0"
-              y2="0"
-            >
+            <linearGradient id="layanan-fade-right" x1="1" y1="0" x2="0" y2="0">
               <stop offset="0%" stopColor="white" stopOpacity="1" />
               <stop offset="100%" stopColor="white" stopOpacity="0" />
             </linearGradient>
@@ -148,16 +142,21 @@ export default function Services({ services = [] }) {
             Layanan Ekspedisi, Logistik & Distribusi Kalimantan
           </h1>
           <p className="hero-anim-sub text-white text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
-            Dari jasa cargo door to door, last mile delivery, hingga
-            pengiriman barang besar dari Banjarmasin. Solusi distribusi
-            lengkap untuk bisnis Anda di seluruh Kalimantan Selatan &amp; Tengah.
+            Dari jasa cargo door to door, last mile delivery, hingga pengiriman
+            barang besar dari Banjarmasin. Solusi distribusi lengkap untuk
+            bisnis Anda di seluruh Kalimantan Selatan &amp; Tengah.
           </p>
         </div>
       </section>
 
       {/* Services List */}
       <Suspense fallback={<ServicesListSkeleton />}>
-        <ServicesList services={services} />
+        <ServicesList
+          services={services}
+          categories={categories}
+          activeCategory={activeCategory}
+          activeSearch={activeSearch}
+        />
       </Suspense>
 
       {/* CTA Section */}
