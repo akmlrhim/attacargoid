@@ -34,7 +34,7 @@ it('sends each service with its category to the services page', function () {
 
     $this->get('/layanan')
         ->assertInertia(fn ($page) => $page
-            ->component('Services')
+            ->component('Services/Index')
             ->has('services', 2)
             ->where('services.0.category.slug', 'distribusi-penerusan')
             ->where('services.0.category.name', 'Distribusi & Penerusan')

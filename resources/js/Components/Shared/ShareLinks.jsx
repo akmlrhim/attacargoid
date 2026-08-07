@@ -98,14 +98,18 @@ const GHOST_BUTTON =
   "flex items-center justify-center w-9 h-9 rounded-full text-black hover:text-navy hover:bg-navy/10 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy";
 
 /**
- * Article share rail.
+ * Share rail, used by both the article and the service detail pages.
+ *
+ * `subject` only names the thing being shared inside the screen-reader labels
+ * ("Bagikan artikel ini" / "Bagikan layanan ini"); everything else is identical
+ * between the two.
  *
  * Instagram has no web share endpoint, so the only two honest paths are the
  * OS share sheet (`navigator.share`, which lists Instagram and WhatsApp on
  * mobile) and copying the link to paste into a story or bio. Both are offered
  * rather than pretending an `instagram.com/share?url=` intent exists.
  */
-export default function ShareLinks({ title, path }) {
+export default function ShareLinks({ title, path, subject = "halaman" }) {
   const [url, setUrl] = useState(path);
   const [canNativeShare, setCanNativeShare] = useState(false);
   const [feedback, setFeedback] = useState("");
@@ -195,7 +199,7 @@ export default function ShareLinks({ title, path }) {
         <button
           type="button"
           onClick={nativeShare}
-          aria-label="Bagikan artikel ini"
+          aria-label={`Bagikan ${subject} ini`}
           className="flex items-center justify-center w-9 h-9 rounded-full bg-navy-dark text-white hover:bg-navy transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy"
         >
           <ShareIcon />
@@ -241,7 +245,7 @@ export default function ShareLinks({ title, path }) {
       <button
         type="button"
         onClick={() => copyLink()}
-        aria-label="Salin tautan artikel"
+        aria-label={`Salin tautan ${subject}`}
         className={GHOST_BUTTON}
       >
         <LinkIcon />

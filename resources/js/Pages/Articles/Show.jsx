@@ -2,7 +2,7 @@ import { Link } from "@inertiajs/react";
 import AppLayout from "../../Components/Layout/AppLayout";
 import PageHead from "../../Components/Shared/PageHead";
 import ArticleCard from "../../Components/Articles/ArticleCard";
-import ShareLinks from "../../Components/Articles/ShareLinks";
+import ShareLinks from "../../Components/Shared/ShareLinks";
 import formatDate from "../../utils/formatDate";
 
 export default function ArticleShow({

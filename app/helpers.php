@@ -18,6 +18,26 @@ if (! function_exists('resolveImageUrl')) {
     }
 }
 
+if (! function_exists('richTextToPlainText')) {
+    /**
+     * Flatten RichEditor HTML into a single line of readable text.
+     *
+     * `strip_tags` drops the tags but leaves entities untouched, so an
+     * ampersand stored as `&amp;` would literally read "&amp;" once rendered
+     * as plain text - hence the decode. `\x{00A0}` is spelled out because a
+     * decoded `&nbsp;` is not matched by `\s`, and the editor emits those
+     * freely.
+     */
+    function richTextToPlainText(?string $html): string
+    {
+        return trim(preg_replace(
+            '/[\s\x{00A0}]+/u',
+            ' ',
+            html_entity_decode(strip_tags((string) $html), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
+        ));
+    }
+}
+
 if (! function_exists('pageSeo')) {
     /**
      * Build the per-page SEO payload consumed by the root Blade template.

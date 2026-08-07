@@ -131,7 +131,7 @@
   @php
     $heroPreloads = [
         'Home' => 'hero/hero',
-        'Services' => 'layanan-hero',
+        'Services/Index' => 'layanan-hero',
         'Contact' => 'kontak-hero',
         'Calculator' => 'cek-ongkir-hero',
         'About' => 'tentang-hero',

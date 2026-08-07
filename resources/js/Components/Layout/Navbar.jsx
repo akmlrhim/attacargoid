@@ -69,8 +69,16 @@ export default function Navbar() {
   const isServices = url.startsWith("/layanan");
   const isCekOngkir = url.startsWith("/cek-ongkir");
   const isArtikel = url.startsWith("/artikel");
-  const isArtikelDetail = url.startsWith("/artikel/");
   const isKontak = url.startsWith("/kontak");
+
+  /**
+   * Detail pages open straight onto white content instead of a dark hero, so
+   * the navbar has nothing to sit over and stays solid from the top. Their
+   * list pages (`/artikel`, `/layanan`) keep the transparent treatment, hence
+   * the trailing slash.
+   */
+  const opensOnLightContent =
+    url.startsWith("/artikel/") || url.startsWith("/layanan/");
 
   const isMoreActive = isAbout || isArtikel || isKontak;
 
@@ -175,7 +183,7 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", updateUnderline);
   }, [activeKey]);
 
-  const transparent = !scrolled && !mobileOpen && !isArtikelDetail;
+  const transparent = !scrolled && !mobileOpen && !opensOnLightContent;
 
   const linkCls = transparent
     ? "text-white hover:text-white hover:bg-white/10"

@@ -81,32 +81,15 @@ Route::get('/tentang-kami', function () {
 Route::get('/layanan', function (Request $request) {
     /**
      * Cards only show a trimmed excerpt; the full description and the detail
-     * points are revealed together in the modal / bottom sheet, so the excerpt
-     * is built server side where the raw HTML can be stripped safely.
+     * points live on the service's own page, so the excerpt is built server
+     * side where the raw HTML can be stripped safely.
      */
     $excerptLimit = 100;
 
-    /**
-     * `description` is a RichEditor field, so an ampersand is stored as
-     * `&amp;`. `strip_tags` drops the tags but leaves entities untouched, and
-     * the excerpt is rendered as plain text - decode it or the card literally
-     * reads "&amp;".
-     */
-    $toPlainText = fn (?string $html): string => trim(preg_replace(
-        // `\x{00A0}` is spelled out because a decoded `&nbsp;` is not matched
-        // by `\s`, and the editor emits those freely.
-        '/[\s\x{00A0}]+/u',
-        ' ',
-        html_entity_decode(strip_tags((string) $html), ENT_QUOTES | ENT_HTML5, 'UTF-8'),
-    ));
-
     $services = Service::active()
         ->with('category:id,name,slug,is_active')
-        ->get(['id', 'service_category_id', 'title', 'short_title', 'description', 'details', 'image_url', 'image_alt'])
-        ->map(function ($s) use ($excerptLimit, $toPlainText) {
-            $plain = $toPlainText($s->description);
-            $excerpt = Str::limit($plain, $excerptLimit, preserveWords: true);
-
+        ->get(['id', 'service_category_id', 'title', 'short_title', 'slug', 'description', 'details', 'image_url', 'image_alt'])
+        ->map(function ($s) use ($excerptLimit) {
             /**
              * A service whose category was deactivated has no chip to sit
              * under, so it is treated as uncategorised and only appears in
@@ -116,8 +99,7 @@ Route::get('/layanan', function (Request $request) {
 
             return array_merge($s->toArray(), [
                 'image_url' => resolveImageUrl($s->image_url),
-                'description_excerpt' => $excerpt,
-                'description_is_truncated' => $excerpt !== $plain,
+                'description_excerpt' => Str::limit(richTextToPlainText($s->description), $excerptLimit, preserveWords: true),
                 'category' => $category ? ['name' => $category->name, 'slug' => $category->slug] : null,
             ]);
         });
@@ -158,9 +140,10 @@ Route::get('/layanan', function (Request $request) {
             'item' => [
                 '@type' => 'Service',
                 'name' => $service['title'],
-                'description' => $toPlainText($service['description'] ?? ''),
+                'description' => richTextToPlainText($service['description'] ?? ''),
                 'serviceType' => 'Ekspedisi, Cargo & Distribusi Barang',
                 'areaServed' => 'Kalimantan',
+                'url' => url("/layanan/{$service['slug']}"),
                 'provider' => [
                     '@type' => 'Organization',
                     'name' => 'ATTA Cargo',
@@ -170,7 +153,7 @@ Route::get('/layanan', function (Request $request) {
         ])->all(),
     ];
 
-    return Inertia::render('Services', [
+    return Inertia::render('Services/Index', [
         'services' => $services,
         'categories' => $categories,
         'activeCategory' => $activeCategory,
@@ -192,6 +175,89 @@ Route::get('/layanan', function (Request $request) {
             ],
         )]);
 })->name('services');
+
+Route::get('/layanan/{slug}', function (string $slug) {
+    $service = Service::active()
+        ->with('category:id,name,slug,is_active')
+        ->where('slug', $slug)
+        ->firstOrFail();
+
+    $service->image_url = resolveImageUrl($service->image_url);
+
+    /** A deactivated category has no filter chip to link back to. */
+    $category = $service->category?->is_active ? $service->category : null;
+
+    /** Meta descriptions are cut off around 160 characters in the SERP. */
+    $description = Str::limit(richTextToPlainText($service->description), 155, preserveWords: true);
+
+    /**
+     * Siblings from the same category come first so the block reads as "more
+     * like this", then the rest of the catalogue fills the row.
+     */
+    $relatedServices = Service::query()
+        ->where('is_active', true)
+        ->where('id', '!=', $service->id)
+        ->when(
+            $service->service_category_id,
+            fn ($q) => $q->orderByRaw(
+                'CASE WHEN service_category_id = ? THEN 0 ELSE 1 END',
+                [$service->service_category_id],
+            ),
+        )
+        ->orderBy('sort_order')
+        ->limit(3)
+        ->get(['id', 'title', 'slug', 'description', 'image_url', 'image_alt'])
+        ->map(fn ($s) => [
+            'id' => $s->id,
+            'title' => $s->title,
+            'slug' => $s->slug,
+            'image_url' => resolveImageUrl($s->image_url),
+            'image_alt' => $s->image_alt,
+            'description_excerpt' => Str::limit(richTextToPlainText($s->description), 90, preserveWords: true),
+        ]);
+
+    $serviceSeo = pageSeo(
+        $service->title,
+        $description,
+        "/layanan/{$service->slug}",
+        $service->image_url,
+        $service->image_alt ?: $service->title,
+    );
+
+    return Inertia::render('Services/Show', [
+        'service' => array_merge($service->toArray(), [
+            'category' => $category ? ['name' => $category->name, 'slug' => $category->slug] : null,
+        ]),
+        'relatedServices' => $relatedServices,
+        'metaDescription' => $description,
+        'shareImage' => $serviceSeo['image'],
+    ])->withViewData(['seo' => array_merge(
+        $serviceSeo,
+        [
+            'share_title' => $service->title,
+            'breadcrumbs' => [
+                ['name' => 'Beranda', 'url' => url('/')],
+                ['name' => 'Layanan', 'url' => url('/layanan')],
+                ['name' => $service->title, 'url' => url("/layanan/{$service->slug}")],
+            ],
+            'jsonld' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'Service',
+                'name' => $service->title,
+                'description' => $description,
+                'serviceType' => $category?->name ?? 'Ekspedisi, Cargo & Distribusi Barang',
+                'areaServed' => 'Kalimantan',
+                'url' => url("/layanan/{$service->slug}"),
+                'image' => array_values(array_filter([$serviceSeo['image'], $service->image_url])),
+                'provider' => [
+                    '@type' => 'Organization',
+                    'name' => 'ATTA Cargo',
+                    '@id' => url('/').'#organization',
+                ],
+            ],
+        ],
+    )]);
+})->name('services.show');
 
 Route::permanentRedirect('/kalkulator', '/cek-ongkir');
 
@@ -335,6 +401,15 @@ Route::get('/sitemap.xml', function () {
         ['path' => '/tentang-kami', 'priority' => '0.6', 'changefreq' => 'monthly', 'lastmod' => null],
         ['path' => '/kontak', 'priority' => '0.6', 'changefreq' => 'monthly', 'lastmod' => null],
     ];
+
+    foreach (Service::active()->get(['slug', 'updated_at']) as $service) {
+        $pages[] = [
+            'path' => "/layanan/{$service->slug}",
+            'priority' => '0.7',
+            'changefreq' => 'monthly',
+            'lastmod' => $service->updated_at,
+        ];
+    }
 
     foreach (Article::published()->get(['slug', 'updated_at']) as $article) {
         $pages[] = [

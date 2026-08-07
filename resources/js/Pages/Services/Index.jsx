@@ -1,10 +1,12 @@
 import { lazy, Suspense } from "react";
 import { router } from "@inertiajs/react";
-import AppLayout from "../Components/Layout/AppLayout";
-import PageHead from "../Components/Shared/PageHead";
-import { ServicesListSkeleton } from "../Components/Skeletons/SectionSkeletons";
+import AppLayout from "../../Components/Layout/AppLayout";
+import PageHead from "../../Components/Shared/PageHead";
+import { ServicesListSkeleton } from "../../Components/Skeletons/SectionSkeletons";
 
-const ServicesList = lazy(() => import("../Components/Sections/ServicesList"));
+const ServicesList = lazy(
+  () => import("../../Components/Sections/ServicesList"),
+);
 
 export default function Services({
   services = [],
