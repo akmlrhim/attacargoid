@@ -1,22 +1,22 @@
 import { Link } from "@inertiajs/react";
 
-const BOUNDARY_COUNT = 2;
-const SIBLING_COUNT = 1;
+const COMPACT_WINDOW = { boundary: 1, sibling: 0 };
+const FULL_WINDOW = { boundary: 2, sibling: 1 };
 
-function buildPageItems(current, last) {
+function buildPageItems(current, last, { boundary, sibling }) {
   const pages = new Set();
 
-  for (let page = 1; page <= Math.min(BOUNDARY_COUNT, last); page++) {
+  for (let page = 1; page <= Math.min(boundary, last); page++) {
     pages.add(page);
   }
 
-  for (let page = Math.max(last - BOUNDARY_COUNT + 1, 1); page <= last; page++) {
+  for (let page = Math.max(last - boundary + 1, 1); page <= last; page++) {
     pages.add(page);
   }
 
   for (
-    let page = Math.max(current - SIBLING_COUNT, 1);
-    page <= Math.min(current + SIBLING_COUNT, last);
+    let page = Math.max(current - sibling, 1);
+    page <= Math.min(current + sibling, last);
     page++
   ) {
     pages.add(page);
@@ -55,6 +55,91 @@ function buildPageUrl(links, page) {
   return `${url.pathname}${url.search}`;
 }
 
+function PageRail({ paginator, links, current, items, compact, className }) {
+  const itemBase = compact
+    ? "flex h-9 min-w-9 items-center justify-center rounded-full px-1.5 text-xs font-semibold transition-colors"
+    : "flex h-11 min-w-11 items-center justify-center rounded-full px-3 text-sm font-semibold transition-colors";
+  const linkClasses = `${itemBase} text-navy hover:bg-navy/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy`;
+  const mutedClasses = `${itemBase} text-gray-300 select-none`;
+
+  return (
+    <ul
+      className={`${className} flex-wrap items-center justify-center ${
+        compact ? "gap-1" : "gap-1.5"
+      }`}
+    >
+      <li>
+        {paginator.prev_page_url ? (
+          <Link
+            href={paginator.prev_page_url}
+            preserveScroll
+            aria-label="Halaman sebelumnya"
+            rel="prev"
+            className={linkClasses}
+          >
+            ‹
+          </Link>
+        ) : (
+          <span aria-hidden="true" className={mutedClasses}>
+            ‹
+          </span>
+        )}
+      </li>
+
+      {items.map((item, index) => {
+        if (item === "ellipsis") {
+          return (
+            <li key={`ellipsis-${index}`} aria-hidden="true">
+              <span className={`${itemBase} text-gray-400 select-none`}>…</span>
+            </li>
+          );
+        }
+
+        if (item === current) {
+          return (
+            <li key={item}>
+              <span aria-current="page" className={`${itemBase} bg-navy text-white`}>
+                {item}
+              </span>
+            </li>
+          );
+        }
+
+        return (
+          <li key={item}>
+            <Link
+              href={buildPageUrl(links, item)}
+              preserveScroll
+              aria-label={`Halaman ${item}`}
+              className={linkClasses}
+            >
+              {item}
+            </Link>
+          </li>
+        );
+      })}
+
+      <li>
+        {paginator.next_page_url ? (
+          <Link
+            href={paginator.next_page_url}
+            preserveScroll
+            aria-label="Halaman berikutnya"
+            rel="next"
+            className={linkClasses}
+          >
+            ›
+          </Link>
+        ) : (
+          <span aria-hidden="true" className={mutedClasses}>
+            ›
+          </span>
+        )}
+      </li>
+    </ul>
+  );
+}
+
 export default function Pagination({ paginator, className = "mt-14" }) {
   const current = paginator?.current_page ?? 1;
   const last = paginator?.last_page ?? 1;
@@ -64,89 +149,21 @@ export default function Pagination({ paginator, className = "mt-14" }) {
     return null;
   }
 
-  const items = buildPageItems(current, last);
-  const baseClasses =
-    "block min-w-[2.75rem] px-3.5 py-2.5 rounded-full text-sm font-semibold text-center transition-colors";
-  const linkClasses = `${baseClasses} text-navy hover:bg-navy/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy`;
-  const mutedClasses = `${baseClasses} text-gray-300 select-none`;
+  const shared = { paginator, links, current };
 
   return (
     <nav aria-label="Navigasi halaman" className={className}>
-      <ul className="flex flex-wrap items-center justify-center gap-1.5">
-        <li>
-          {paginator.prev_page_url ? (
-            <Link
-              href={paginator.prev_page_url}
-              preserveScroll
-              aria-label="Halaman sebelumnya"
-              rel="prev"
-              className={linkClasses}
-            >
-              ‹
-            </Link>
-          ) : (
-            <span aria-hidden="true" className={mutedClasses}>
-              ‹
-            </span>
-          )}
-        </li>
-
-        {items.map((item, index) => {
-          if (item === "ellipsis") {
-            return (
-              <li key={`ellipsis-${index}`} aria-hidden="true">
-                <span className={`${baseClasses} text-gray-400 select-none`}>
-                  …
-                </span>
-              </li>
-            );
-          }
-
-          if (item === current) {
-            return (
-              <li key={item}>
-                <span
-                  aria-current="page"
-                  className={`${baseClasses} bg-navy text-white`}
-                >
-                  {item}
-                </span>
-              </li>
-            );
-          }
-
-          return (
-            <li key={item}>
-              <Link
-                href={buildPageUrl(links, item)}
-                preserveScroll
-                aria-label={`Halaman ${item}`}
-                className={linkClasses}
-              >
-                {item}
-              </Link>
-            </li>
-          );
-        })}
-
-        <li>
-          {paginator.next_page_url ? (
-            <Link
-              href={paginator.next_page_url}
-              preserveScroll
-              aria-label="Halaman berikutnya"
-              rel="next"
-              className={linkClasses}
-            >
-              ›
-            </Link>
-          ) : (
-            <span aria-hidden="true" className={mutedClasses}>
-              ›
-            </span>
-          )}
-        </li>
-      </ul>
+      <PageRail
+        {...shared}
+        items={buildPageItems(current, last, COMPACT_WINDOW)}
+        compact
+        className="flex sm:hidden"
+      />
+      <PageRail
+        {...shared}
+        items={buildPageItems(current, last, FULL_WINDOW)}
+        className="hidden sm:flex"
+      />
 
       <p role="status" aria-live="polite" className="sr-only">
         Halaman {current} dari {last}
