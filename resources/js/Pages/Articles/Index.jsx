@@ -7,13 +7,19 @@ import { ArticlesGridSkeleton } from "../../Components/Skeletons/SectionSkeleton
 const ArticlesGrid = lazy(() => import("../../Components/Sections/ArticlesGrid"));
 
 export default function ArticlesIndex({ articles }) {
+  const page = articles?.current_page ?? 1;
+  const lastPage = articles?.last_page ?? 1;
+  const pageSuffix = page > 1 ? ` - Halaman ${page}` : "";
+
   return (
     <>
       <PageHead
-        title="Artikel & Berita Seputar Ekspedisi Kalimantan"
-        tabTitle="Artikel"
-        description="Kumpulan artikel dan berita terbaru seputar jasa ekspedisi, cargo, dan logistik dari ATTA Cargo untuk wilayah Kalimantan Selatan & Tengah."
-        path="/artikel"
+        title={`Artikel & Berita Seputar Ekspedisi Kalimantan${pageSuffix}`}
+        tabTitle={`Artikel${pageSuffix}`}
+        description={`Kumpulan artikel dan berita terbaru seputar jasa ekspedisi, cargo, dan logistik dari ATTA Cargo untuk wilayah Kalimantan Selatan & Tengah.${
+          page > 1 ? ` Halaman ${page} dari ${lastPage}.` : ""
+        }`}
+        path={page > 1 ? `/artikel?page=${page}` : "/artikel"}
       />
 
       {/* ── Hero ── */}

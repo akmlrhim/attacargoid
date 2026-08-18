@@ -1,48 +1,5 @@
-import { Link } from "@inertiajs/react";
 import ArticleCard from "../Articles/ArticleCard";
-
-function Pagination({ links = [] }) {
-  if (links.length <= 3) {
-    return null;
-  }
-
-  return (
-    <nav
-      aria-label="Navigasi halaman"
-      className="flex flex-wrap items-center justify-center gap-1.5 mt-14"
-    >
-      {links.map((link, i) => {
-        const label = link.label
-          .replace("&laquo; Previous", "‹")
-          .replace("Next &raquo;", "›");
-
-        if (!link.url) {
-          return (
-            <span
-              key={i}
-              className="px-3.5 py-2 rounded-full text-sm font-semibold text-gray-300 select-none"
-              dangerouslySetInnerHTML={{ __html: label }}
-            />
-          );
-        }
-
-        return (
-          <Link
-            key={i}
-            href={link.url}
-            preserveScroll
-            className={`px-3.5 py-2 rounded-full text-sm font-semibold transition-colors ${
-              link.active
-                ? "bg-navy text-white"
-                : "text-navy hover:bg-navy/5"
-            }`}
-            dangerouslySetInnerHTML={{ __html: label }}
-          />
-        );
-      })}
-    </nav>
-  );
-}
+import Pagination from "../Shared/Pagination";
 
 export default function ArticlesGrid({ articles }) {
   const items = articles?.data ?? [];
@@ -62,7 +19,7 @@ export default function ArticlesGrid({ articles }) {
               ))}
             </div>
 
-            <Pagination links={articles.links} />
+            <Pagination paginator={articles} />
           </>
         )}
       </div>

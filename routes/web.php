@@ -307,15 +307,22 @@ Route::post('/kontak', ContactController::class);
 Route::get('/artikel', function () {
     $articles = Article::published()
         ->paginate(9, ['id', 'title', 'slug', 'excerpt', 'image_url', 'image_alt', 'published_at'])
+        ->onEachSide(1)
         ->withQueryString()
         ->through(fn ($a) => array_merge($a->toArray(), ['image_url' => resolveImageUrl($a->image_url)]));
+
+    if ($articles->isEmpty() && $articles->currentPage() > 1) {
+        abort(404);
+    }
+
+    $page = $articles->currentPage();
 
     return Inertia::render('Articles/Index', ['articles' => $articles])
         ->withViewData(['seo' => array_merge(
             pageSeo(
-                'Artikel & Berita Seputar Ekspedisi Kalimantan',
-                'Kumpulan artikel dan berita terbaru seputar jasa ekspedisi, cargo, dan logistik dari ATTA Cargo untuk wilayah Kalimantan Selatan & Tengah.',
-                '/artikel',
+                'Artikel & Berita Seputar Ekspedisi Kalimantan'.($page > 1 ? " - Halaman {$page}" : ''),
+                'Kumpulan artikel dan berita terbaru seputar jasa ekspedisi, cargo, dan logistik dari ATTA Cargo untuk wilayah Kalimantan Selatan & Tengah.'.($page > 1 ? " Halaman {$page} dari {$articles->lastPage()}." : ''),
+                $page > 1 ? "/artikel?page={$page}" : '/artikel',
             ),
             ['breadcrumbs' => [
                 ['name' => 'Beranda', 'url' => url('/')],
