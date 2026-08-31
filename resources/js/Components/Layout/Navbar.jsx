@@ -1,49 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
 
-/** Shared geometry for the three dropdown glyphs, kept stroke-only to match the nav. */
-function GlyphFrame({ children }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.6}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="h-[18px] w-[18px]"
-      aria-hidden="true"
-    >
-      {children}
-    </svg>
-  );
-}
-
-function OfficeGlyph() {
-  return (
-    <GlyphFrame>
-      <path d="M3 21h18M5 21V5.5A1.5 1.5 0 016.5 4h7A1.5 1.5 0 0115 5.5V21M15 10h3.5A1.5 1.5 0 0120 11.5V21M8.5 8h3M8.5 12h3M8.5 16h3" />
-    </GlyphFrame>
-  );
-}
-
-function JournalGlyph() {
-  return (
-    <GlyphFrame>
-      <path d="M4.5 5.5A1.5 1.5 0 016 4h9a1.5 1.5 0 011.5 1.5V19a1 1 0 001 1H6.5a2 2 0 01-2-2V5.5zM16.5 8H19a1 1 0 011 1v9a2 2 0 01-2 2M8 8h5M8 11.5h5M8 15h3" />
-    </GlyphFrame>
-  );
-}
-
-function RouteGlyph() {
-  return (
-    <GlyphFrame>
-      <path d="M12 21s6.5-6.06 6.5-10.5a6.5 6.5 0 10-13 0C5.5 14.94 12 21 12 21z" />
-      <circle cx="12" cy="10.5" r="2.25" />
-    </GlyphFrame>
-  );
-}
-
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -82,34 +39,10 @@ export default function Navbar() {
 
   const isMoreActive = isAbout || isArtikel || isKontak;
 
-  /**
-   * Each entry carries a one-line description: the three destinations behind
-   * "Perusahaan" are unrelated to each other, so a bare label list makes the
-   * visitor guess. The copy stays specific to the hub (Banjarmasin, WITA)
-   * rather than reading like a generic company menu.
-   */
   const companyLinks = [
-    {
-      href: "/tentang-kami",
-      label: "Tentang Kami",
-      description: "Profil perusahaan, legalitas & hub Banjarmasin",
-      isActive: isAbout,
-      icon: <OfficeGlyph />,
-    },
-    {
-      href: "/artikel",
-      label: "Artikel",
-      description: "Kabar pengiriman & tips logistik Kalimantan",
-      isActive: isArtikel,
-      icon: <JournalGlyph />,
-    },
-    {
-      href: "/kontak",
-      label: "Kontak",
-      description: "Alamat kantor, jam operasional WITA & peta",
-      isActive: isKontak,
-      icon: <RouteGlyph />,
-    },
+    { href: "/tentang-kami", label: "Tentang Kami", isActive: isAbout },
+    { href: "/artikel", label: "Artikel", isActive: isArtikel },
+    { href: "/kontak", label: "Kontak", isActive: isKontak },
   ];
 
   const activeKey = isHome
@@ -272,78 +205,15 @@ export default function Navbar() {
                   </svg>
                 </button>
 
-                {/*
-                  The panel is navy-dark rather than white: navy is the brand's
-                  authority surface (hero and footer are the page's two
-                  bookends), so the menu reads as a piece of that world dropping
-                  out of the navbar instead of a generic light card. It also
-                  keeps its own contrast whether the navbar behind it is
-                  transparent or scrolled-white.
-                */}
                 <div
                   id="navbar-perusahaan-menu"
-                  className={`absolute left-0 top-full mt-3 w-[21.5rem] origin-top-left overflow-hidden rounded-2xl bg-navy-dark shadow-2xl shadow-navy-dark/40 ring-1 ring-white/12 transition-[opacity,translate,scale,visibility] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
+                  className={`absolute left-0 top-full mt-3 w-56 origin-top-left overflow-hidden rounded-2xl bg-white shadow-2xl shadow-black/10 ring-1 ring-black/5 transition-[opacity,translate,scale,visibility] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:transition-none ${
                     moreOpen
                       ? "visible translate-y-0 scale-100 opacity-100"
                       : "invisible -translate-y-2 scale-[0.97] opacity-0"
                   }`}
                 >
-                  {/*
-                    The dot grid is the site's existing signature (hero and the
-                    section CTAs use the same pattern), reused here at a small
-                    scale so the menu belongs to the same visual family.
-                  */}
-                  <svg
-                    className="pointer-events-none absolute right-0 top-0 h-32 w-40"
-                    aria-hidden="true"
-                    preserveAspectRatio="xMaxYMin slice"
-                  >
-                    <defs>
-                      <pattern
-                        id="navbar-more-dots"
-                        x="0"
-                        y="0"
-                        width="14"
-                        height="14"
-                        patternUnits="userSpaceOnUse"
-                      >
-                        <rect
-                          x="3"
-                          y="3"
-                          width="5"
-                          height="5"
-                          rx="1"
-                          fill="white"
-                          fillOpacity="0.09"
-                        />
-                      </pattern>
-                      <linearGradient
-                        id="navbar-more-fade"
-                        x1="1"
-                        y1="0"
-                        x2="0"
-                        y2="1"
-                      >
-                        <stop offset="0%" stopColor="white" stopOpacity="1" />
-                        <stop offset="100%" stopColor="white" stopOpacity="0" />
-                      </linearGradient>
-                      <mask id="navbar-more-mask">
-                        <rect
-                          width="100%"
-                          height="100%"
-                          fill="url(#navbar-more-fade)"
-                        />
-                      </mask>
-                    </defs>
-                    <rect
-                      width="100%"
-                      height="100%"
-                      fill="url(#navbar-more-dots)"
-                      mask="url(#navbar-more-mask)"
-                    />
-                  </svg>
-
-                  <div className="relative p-2">
+                  <div className="p-2">
                     {companyLinks.map((item, i) => (
                       /*
                         The entrance sits on this wrapper, not on the link
@@ -368,32 +238,13 @@ export default function Navbar() {
                         <Link
                           href={item.href}
                           aria-current={item.isActive ? "page" : undefined}
-                          className={`group flex items-start gap-3.5 rounded-xl px-3 py-3 transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange motion-reduce:transition-none ${
-                            item.isActive ? "bg-white/8" : "hover:bg-white/6"
+                          className={`block rounded-xl px-3.5 py-2.5 text-sm font-bold transition-colors duration-200 ease-out focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy motion-reduce:transition-none ${
+                            item.isActive
+                              ? "bg-navy/5 text-navy"
+                              : "text-black hover:bg-gray-50 hover:text-navy"
                           }`}
                         >
-                          <span
-                            className={`mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors duration-200 ${
-                              item.isActive
-                                ? "bg-orange/15 text-orange"
-                                : "bg-white/8 text-white/70 group-hover:bg-white/12 group-hover:text-white"
-                            }`}
-                          >
-                            {item.icon}
-                          </span>
-
-                          <span className="min-w-0">
-                            <span
-                              className={`block text-sm font-bold leading-tight transition-colors duration-200 ${
-                                item.isActive ? "text-orange" : "text-white"
-                              }`}
-                            >
-                              {item.label}
-                            </span>
-                            <span className="mt-0.5 block text-xs leading-snug text-white/60">
-                              {item.description}
-                            </span>
-                          </span>
+                          {item.label}
                         </Link>
                       </div>
                     ))}
@@ -416,6 +267,14 @@ export default function Navbar() {
               >
                 Cek Ongkir
               </Link>
+
+              {/* Standalone page (its own layout, outside the Inertia app), so a plain anchor forces a full navigation instead of an Inertia visit. */}
+              <a
+                href="/cek-resi"
+                className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors ${linkCls}`}
+              >
+                Cek Resi
+              </a>
 
               {/* Sliding active-page underline */}
               <span
@@ -543,6 +402,13 @@ export default function Navbar() {
             >
               Cek Ongkir
             </Link>
+
+            <a
+              href="/cek-resi"
+              className="block px-4 py-3.5 text-base font-medium rounded-xl transition-colors text-black hover:text-navy hover:bg-gray-50"
+            >
+              Cek Resi
+            </a>
 
             <Link
               href="/artikel"

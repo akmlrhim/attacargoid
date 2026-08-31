@@ -6,7 +6,12 @@ import { ArticlesGridSkeleton } from "../../Components/Skeletons/SectionSkeleton
 
 const ArticlesGrid = lazy(() => import("../../Components/Sections/ArticlesGrid"));
 
-export default function ArticlesIndex({ articles }) {
+export default function ArticlesIndex({
+  articles,
+  activeSearch = "",
+  activeDateFrom = null,
+  activeDateTo = null,
+}) {
   const page = articles?.current_page ?? 1;
   const lastPage = articles?.last_page ?? 1;
   const pageSuffix = page > 1 ? ` - Halaman ${page}` : "";
@@ -108,7 +113,12 @@ export default function ArticlesIndex({ articles }) {
 
       {/* Grid */}
       <Suspense fallback={<ArticlesGridSkeleton />}>
-        <ArticlesGrid articles={articles} />
+        <ArticlesGrid
+          articles={articles}
+          activeSearch={activeSearch}
+          activeDateFrom={activeDateFrom}
+          activeDateTo={activeDateTo}
+        />
       </Suspense>
     </>
   );
