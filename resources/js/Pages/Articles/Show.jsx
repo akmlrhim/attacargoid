@@ -86,16 +86,7 @@ export default function ArticleShow({
             </div>
 
             <div
-              className="text-black text-base leading-relaxed
-                [&>h2]:text-xl [&>h2]:sm:text-2xl [&>h2]:font-black [&>h2]:text-navy [&>h2]:mt-8 [&>h2]:mb-4
-                [&>h3]:text-lg [&>h3]:sm:text-xl [&>h3]:font-bold [&>h3]:text-navy [&>h3]:mt-6 [&>h3]:mb-3
-                [&>p]:mb-5
-                [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:mb-4 [&>ul]:space-y-1
-                [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:mb-4 [&>ol]:space-y-1
-                [&>blockquote]:border-l-4 [&>blockquote]:border-orange [&>blockquote]:pl-4 [&>blockquote]:italic [&>blockquote]:text-gray-600 [&>blockquote]:my-6
-                [&_a]:text-orange [&_a]:underline [&_a]:font-medium
-                [&_img]:rounded-2xl [&_img]:my-6
-                [&_strong]:font-bold"
+              className="article-content"
               dangerouslySetInnerHTML={{ __html: article.content }}
             />
           </div>

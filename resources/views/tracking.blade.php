@@ -2,14 +2,17 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b1f4d">
     <title>Cek Status Pengiriman - ATTA Cargo</title>
     <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico">
-    <link rel="stylesheet" href="{{ asset('css/tracking.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tracking.css') }}?v=4">
 </head>
 <body>
 
 <div class="container">
+
+    <a href="/" class="back-link">&larr; Kembali ke Beranda</a>
 
     <div class="header">
         <img src="{{ asset('logo.webp') }}" alt="ATTA Cargo" class="logo">
@@ -21,7 +24,7 @@
         <label class="search-label" for="awbInput">Nomor Resi</label>
 
         <div class="search-row">
-            <input type="text" id="awbInput" class="search-input" autocomplete="off" spellcheck="false">
+            <input type="search" id="awbInput" class="search-input" autocomplete="off" spellcheck="false" autocapitalize="none" enterkeyhint="search" inputmode="search">
             <button id="searchButton" class="search-button" onclick="searchAWB()">Cari</button>
         </div>
 

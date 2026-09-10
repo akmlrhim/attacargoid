@@ -28,9 +28,12 @@ function SearchIcon({ className }) {
  */
 function DateRangeFilter({ from, to, onFromChange, onToChange }) {
   return (
-    <div className="flex items-center gap-2">
-      <label className="sr-only" htmlFor="artikel-date-from">
-        Dari tanggal
+    <div className="flex w-full min-w-0 flex-1 flex-col gap-2 sm:w-auto sm:flex-none sm:flex-row sm:items-center sm:gap-2">
+      <label
+        className="mb-1 block text-xs font-semibold text-gray-500 sm:hidden"
+        htmlFor="artikel-date-from"
+      >
+        Dari
       </label>
       <input
         id="artikel-date-from"
@@ -38,15 +41,22 @@ function DateRangeFilter({ from, to, onFromChange, onToChange }) {
         value={from}
         max={to || undefined}
         onChange={(e) => onFromChange(e.target.value)}
-        className="w-[9.5rem] rounded-xl border border-gray-200 bg-white px-3 py-3 text-sm text-black outline-none transition-all focus:border-navy focus:ring-2 focus:ring-navy/10"
+        aria-label="Dari tanggal"
+        className="w-full rounded-xl border border-gray-200 bg-white px-3 py-3 text-sm text-black outline-none transition-all focus:border-navy focus:ring-2 focus:ring-navy/10 sm:w-[9.5rem]"
       />
 
-      <span className="text-sm text-gray-500" aria-hidden="true">
+      <span
+        className="hidden text-sm text-gray-500 sm:block"
+        aria-hidden="true"
+      >
         &ndash;
       </span>
 
-      <label className="sr-only" htmlFor="artikel-date-to">
-        Sampai tanggal
+      <label
+        className="mb-1 block text-xs font-semibold text-gray-500 sm:hidden"
+        htmlFor="artikel-date-to"
+      >
+        Sampai
       </label>
       <input
         id="artikel-date-to"
@@ -54,7 +64,8 @@ function DateRangeFilter({ from, to, onFromChange, onToChange }) {
         value={to}
         min={from || undefined}
         onChange={(e) => onToChange(e.target.value)}
-        className="w-[9.5rem] rounded-xl border border-gray-200 bg-white px-3 py-3 text-sm text-black outline-none transition-all focus:border-navy focus:ring-2 focus:ring-navy/10"
+        aria-label="Sampai tanggal"
+        className="w-full rounded-xl border border-gray-200 bg-white px-3 py-3 text-sm text-black outline-none transition-all focus:border-navy focus:ring-2 focus:ring-navy/10 sm:w-[9.5rem]"
       />
     </div>
   );
@@ -75,7 +86,7 @@ function FilterBar({ query, onQueryChange, dateFrom, dateTo, onDateFromChange, o
         />
       </div>
 
-      <div className="flex items-center gap-3">
+      <div className="flex w-full items-end gap-3 lg:w-auto">
         <DateRangeFilter
           from={dateFrom}
           to={dateTo}

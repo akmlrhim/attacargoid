@@ -72,7 +72,7 @@ class ArticleResource extends Resource
                         ->toolbarButtons([
                             'bold', 'italic', 'underline', 'strike',
                             'h2', 'h3', 'blockquote',
-                            'bulletList', 'orderedList', 'link', 'attachFiles',
+                            'bulletList', 'orderedList', 'link', 'table', 'attachFiles',
                             'undo', 'redo',
                         ])
                         ->fileAttachmentsDisk('public')
