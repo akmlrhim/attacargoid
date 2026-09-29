@@ -35,3 +35,8 @@ CLAUDE.md
 AGENTS.md
 DESIGN.md
 PRODUCT.md
+.impeccable/
+.mcp.json
+.opencode/
+boost.json
+skills-lock.json

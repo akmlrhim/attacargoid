@@ -1,9 +1,0 @@
-{
-  "detector": {
-    "ignoreRules": [],
-    "ignoreFiles": [
-      "public/css/tracking.css"
-    ],
-    "ignoreValues": []
-  }
-}
