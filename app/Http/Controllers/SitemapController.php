@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Service;
 use Illuminate\Http\Response;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
 
 class SitemapController extends Controller
 {
@@ -17,6 +18,15 @@ class SitemapController extends Controller
     }
 
     public function sitemap(): Response
+    {
+        $xml = Cache::remember('sitemap.xml', now()->addDay(), function (): string {
+            return $this->buildSitemap();
+        });
+
+        return response($xml, 200, ['Content-Type' => 'application/xml']);
+    }
+
+    private function buildSitemap(): string
     {
         $latestService = Service::max('updated_at');
         $latestArticle = Article::published()->max('updated_at');
@@ -61,6 +71,6 @@ class SitemapController extends Controller
         }
         $xml .= '</urlset>'."\n";
 
-        return response($xml, 200, ['Content-Type' => 'application/xml']);
+        return $xml;
     }
 }

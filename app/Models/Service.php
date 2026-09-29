@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\HasSortOrder;
+use App\Models\Concerns\InvalidatesSitemap;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
@@ -10,6 +11,7 @@ use Illuminate\Support\Str;
 class Service extends Model
 {
     use HasSortOrder;
+    use InvalidatesSitemap;
 
     protected $fillable = [
         'title',

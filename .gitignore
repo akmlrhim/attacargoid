@@ -38,5 +38,6 @@ PRODUCT.md
 .impeccable/
 .mcp.json
 .opencode/
+opencode.json
 boost.json
 skills-lock.json

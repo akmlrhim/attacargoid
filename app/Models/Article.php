@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\InvalidatesSitemap;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class Article extends Model
 {
+    use InvalidatesSitemap;
+
     protected $fillable = [
         'title',
         'slug',

@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use App\Models\CompanySetting;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->registerRateLimiters();
+
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
@@ -38,6 +43,31 @@ class AppServiceProvider extends ServiceProvider
                     'status' => $response->statusCode(),
                 ])->withSharedData();
             }
+        });
+    }
+
+    private function registerRateLimiters(): void
+    {
+        RateLimiter::for('site', function (Request $request) {
+            return Limit::perMinute(120)->by('site:'.$request->ip());
+        });
+
+        RateLimiter::for('contact', function (Request $request) {
+            $ip = $request->ip();
+
+            return [
+                Limit::perMinute(3)->by('contact:burst:'.$ip),
+                Limit::perHour(10)->by('contact:hour:'.$ip),
+                Limit::perDay(20)->by('contact:day:'.$ip),
+            ];
+        });
+
+        RateLimiter::for('search', function (Request $request) {
+            return Limit::perMinute(30)->by('search:'.$request->ip());
+        });
+
+        RateLimiter::for('admin-login', function (Request $request) {
+            return Limit::perMinute(20)->by('admin-login:'.$request->ip());
         });
     }
 }
